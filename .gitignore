@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.DS_Store
+*.local
+*.log
+*.crdownload
+brand_manual_summary.txt
+.vscode/
+.idea/
+test_shots/
+numa.png
+public/meditacion_guiada/
+scratch/
+

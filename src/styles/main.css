@@ -1,0 +1,9 @@
+/* Hoja de Estilos Maestra — NÜMA Frecuencia del Ser */
+@import './variables.css';
+@import './reset.css';
+@import './typography.css';
+@import './animations.css';
+@import './components.css';
+@import './layout.css';
+@import './responsive.css';
+@import './bot.css';
