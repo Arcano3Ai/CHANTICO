@@ -520,15 +520,19 @@ function initNahualSelectionModal(numaBot) {
     numaBot.applyActiveNahualAvatar(selectedNahualId, false);
   }
 
-  // Pop-up automático al ingresar a la página si es primera visita
-  const hasSeenModal = localStorage.getItem('chantico_nahual_modal_seen');
-  if (!hasSeenModal && modal) {
-    setTimeout(() => {
-      if (modal && !modal.classList.contains('is-active') && !numaBot?.isOpen) {
-        modal.classList.add('is-active');
-        document.body.style.overflow = 'hidden';
+  // Enlaces directos al Espejo de Obsidiana: cerrar modales y navegar con precisión
+  document.querySelectorAll('a[href="#espejo-obsidiana"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      closeModal();
+      const target = document.getElementById('espejo-obsidiana');
+      if (target) {
+        e.preventDefault();
+        history.pushState(null, null, '#espejo-obsidiana');
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    }, 1300);
-  }
+    });
+  });
+
+  // El selector de Nahual se activa a voluntad del usuario desde el Header (#header-nahual-btn)
 }
 
