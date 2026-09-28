@@ -334,15 +334,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 10. Wishlist Drawer / Modal Trigger
+  // 10. Wishlist Trigger -> Redirige directamente a la Tienda Oficial CHANTICO
   const wishlistBtn = document.getElementById('header-wishlist-btn');
   if (wishlistBtn) {
     wishlistBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      if (store.wishlist.length === 0) {
-        alert('Aún no tienes elementos en tu lista de deseos.');
+      const tiendaSection = document.getElementById('tienda');
+      if (tiendaSection) {
+        tiendaSection.scrollIntoView({ behavior: 'smooth' });
       } else {
-        alert(`Tienes ${store.wishlist.length} artículo(s) sagrado(s) guardado(s) en tu lista.`);
+        window.location.hash = '#tienda';
       }
     });
   }
@@ -379,4 +380,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!document.hidden) tryPlay();
     });
   });
+
+  // 13. Protección Móvil Contra Zoom Accidental y Desacomodo (iOS & Android)
+  document.addEventListener('gesturestart', (e) => {
+    e.preventDefault();
+  }, { passive: false });
+  document.addEventListener('gesturechange', (e) => {
+    e.preventDefault();
+  }, { passive: false });
+  document.addEventListener('gestureend', (e) => {
+    e.preventDefault();
+  }, { passive: false });
 });
