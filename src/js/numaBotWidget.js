@@ -18,11 +18,11 @@ import nahualQuetzal from '../../assets/images/nahuales/nahual_cuauhtli_quetzal.
 export const AVAILABLE_NAHUAL_AVATARS = [
   {
     id: 'tolteca',
-    name: 'Guía Tolteca',
-    shortName: 'Tolteca',
-    icon: '🐾',
+    name: 'Máscara Sagrada Tolteca',
+    shortName: 'Máscara Tolteca',
+    icon: '🎭',
     src: mascotGreeting,
-    greeting: '¡Niltze! Soy la Guía Tolteca de CHANTICO, guardián del fuego del hogar y el tarot de obsidiana. 🔥'
+    greeting: '¡Niltze! Soy el Guardián de la Máscara Tolteca de Jade y Turquesa. Custodio del fuego sagrado de Chantico y la sabiduría ancestral de Tula. 🎭✨'
   },
   {
     id: 'ocelotl',

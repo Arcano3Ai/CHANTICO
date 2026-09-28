@@ -1998,11 +1998,11 @@ main, header, footer {
   margin: 0;
 }
 
-/* Grid de los 4 Nahuales */
+/* Grid de Nahuales y Guardianes Sagrados */
 .nahual-cards-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 1.15rem;
   margin-bottom: 2rem;
 }
 
