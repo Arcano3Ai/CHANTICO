@@ -74,8 +74,8 @@ export class MeditacionGuiadaPlayer {
   }
 
   play() {
-    // Si el reproductor de cuencos global está sonando, pausarlo
-    const globalAudio = document.getElementById('numa-sound-audio');
+    // Si el reproductor de sonido superior está sonando, pausarlo
+    const globalAudio = document.getElementById('chantico-sound-audio') || document.getElementById('numa-sound-audio');
     if (globalAudio && !globalAudio.paused) {
       globalAudio.pause();
     }
