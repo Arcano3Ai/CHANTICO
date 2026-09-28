@@ -229,8 +229,8 @@ export const TRANSLATIONS = {
     footer_community_desc: 'Únete a nuestra sintonía compartiendo tus rituales en Instagram con la etiqueta:',
     footer_dedication_lead: 'Hecho con cariño por',
     footer_dedication_name: 'Sergio',
-    footer_dedication_tail: ', para alguien especial.',
-    footer_dedication_sub: 'Que esta pequeña experiencia te recuerde lo importante que eres.',
+    footer_dedication_tail: ', para unas hermanas que tienen una hermosa marca: Isabela y Nabil.',
+    footer_dedication_sub: 'Que el fuego sagrado de Chantico continúe iluminando su camino con sabiduría y amor.',
     footer_rights: '© 2026 CHANTICO — Tarot, Misticismo Tolteca & Fuego Sagrado. Todos los derechos reservados.',
 
     // Cart Drawer
@@ -474,8 +474,8 @@ export const TRANSLATIONS = {
     footer_community_desc: 'Join our collective resonance by sharing your rituals on Instagram with hashtag:',
     footer_dedication_lead: 'Crafted with affection by',
     footer_dedication_name: 'Sergio',
-    footer_dedication_tail: ', for someone special.',
-    footer_dedication_sub: 'May this gentle experience remind you how cherished you are.',
+    footer_dedication_tail: ', for two sisters who created a beautiful brand: Isabela and Nabil.',
+    footer_dedication_sub: 'May the sacred flame of Chantico forever illuminate your path with wisdom and love.',
     footer_rights: '© 2026 CHANTICO — Tarot, Toltec Mysticism & Sacred Fire. All rights reserved.',
 
     // Cart Drawer
