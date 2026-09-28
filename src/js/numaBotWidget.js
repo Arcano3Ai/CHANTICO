@@ -56,6 +56,19 @@ export const TOLTEC_MASCOT_STATES = {
   }
 };
 
+/**
+ * Voces y palabras sagradas en lengua Tolteca / Náhuatl clásico que expresa el Nahual
+ */
+export const TOLTEC_VOICES = [
+  { toltec: '«¡Niltze! Cualli tonalli»', trans: '¡Saludos! Que tu luz sea propicia ✨', badge: '🗣️ ¡Niltze!' },
+  { toltec: '«¡Nican ca moyollo! ¿Tinechitta?»', trans: '¡Aquí está tu nahual! ¿Me ves? 👋', badge: '👀 ¿Tinechitta?' },
+  { toltec: '«¡Xipantlaza moyolotl!»', trans: '¡Despierta el fuego en tu corazón! 🔥', badge: '🔥 Moyolotl' },
+  { toltec: '«¡Toteotl mitzpalehuiltz!»', trans: '¡La energía sagrada te acompaña! 🔮', badge: '✨ Toteotl' },
+  { toltec: '«¡Tlazohcamati, noikniuh!»', trans: '¡Gracias desde el corazón, hermane! 🙏', badge: '💛 Tlazohcamati' },
+  { toltec: '«¡Chantico tlazotla!»', trans: '¡El fuego de Chantico protege tu hogar! 🕯️', badge: '🛡️ Chantico' },
+  { toltec: '«¡Yolotl ihuan tlamatiliztli!»', trans: '¡Sabiduría y corazón ancestral! 📜', badge: '🦅 Tlamatiliztli' }
+];
+
 export class NumaBotWidget {
   constructor(options = {}) {
     this.onOpenProduct = options.onOpenProduct || (() => {});
@@ -66,16 +79,21 @@ export class NumaBotWidget {
     this.idleTimer = null;
     this.launcherCycleTimer = null;
     this.calloutDismissTimer = null;
+    this.toltecVoiceTimer = null;
+    this.currentVoiceIdx = 0;
 
     this.initDOM();
     this.bindEvents();
     this.sendInitialGreeting();
     this.startLauncherCycle();
 
-    // Saludo proactivo del Nahual tras unos segundos de navegación: "¡Ey! Aquí estoy... ¿me ves?"
+    // Saludo proactivo del Nahual hablando en lengua Tolteca
     setTimeout(() => {
       this.showProactiveGreeting();
-    }, 3800);
+    }, 3200);
+
+    // Ciclo periódico de palabras sagradas en Tolteca
+    this.startToltecVoiceCycle();
   }
 
   /**
@@ -202,29 +220,53 @@ export class NumaBotWidget {
   }
 
   /**
-   * Saludo proactivo animado: El Nahual saluda con su patita/mano y pregunta "¡Ey! Aquí estoy... ¿me ves?"
+   * Cambia la voz y frase sagrada en lengua Tolteca que expresa el Nahual
+   */
+  setToltecVoice(index = 0) {
+    this.currentVoiceIdx = index % TOLTEC_VOICES.length;
+    const voice = TOLTEC_VOICES[this.currentVoiceIdx];
+    const toltecEl = document.getElementById('numa-bot-callout-toltec');
+    const transEl = document.getElementById('numa-bot-callout-trans');
+    const badgeEl = document.getElementById('numa-bot-badge');
+
+    if (toltecEl) toltecEl.textContent = voice.toltec;
+    if (transEl) transEl.textContent = voice.trans;
+    if (badgeEl && !this.isOpen) badgeEl.textContent = voice.badge;
+  }
+
+  /**
+   * Cicla periódicamente las palabras sagradas en lengua Tolteca
+   */
+  startToltecVoiceCycle() {
+    this.toltecVoiceTimer = setInterval(() => {
+      if (this.isOpen) return;
+      this.currentVoiceIdx = (this.currentVoiceIdx + 1) % TOLTEC_VOICES.length;
+      this.setToltecVoice(this.currentVoiceIdx);
+    }, 7000);
+  }
+
+  /**
+   * Saludo proactivo animado: El Nahual saluda con su patita y habla en lengua Tolteca
    */
   showProactiveGreeting() {
     if (this.isOpen) return;
     const callout = document.getElementById('numa-bot-callout');
     const launcherImg = document.getElementById('toltec-mascot-launcher');
-    const badgeEl = document.getElementById('numa-bot-badge');
+
+    this.setToltecVoice(0);
 
     if (launcherImg) {
       launcherImg.src = TOLTEC_MASCOT_STATES.greeting.src;
       launcherImg.classList.add('toltec-mascot-waving');
     }
-    if (badgeEl) {
-      badgeEl.textContent = '👋 ¡Ey! Aquí estoy';
-    }
     if (callout) {
       callout.classList.add('is-visible');
     }
 
-    // Ocultar suavemente después de 8.5 segundos si no se interactúa
+    // Ocultar suavemente después de 9 segundos si no se interactúa
     this.calloutDismissTimer = setTimeout(() => {
       this.hideCallout();
-    }, 8500);
+    }, 9000);
   }
 
   hideCallout() {
@@ -248,6 +290,8 @@ export class NumaBotWidget {
   initDOM() {
     if (document.getElementById('numa-bot-launcher')) return;
 
+    const initialVoice = TOLTEC_VOICES[0];
+
     // 1. Launcher Flotante con Mascota Tolteca
     const launcher = document.createElement('div');
     launcher.id = 'numa-bot-launcher';
@@ -256,9 +300,12 @@ export class NumaBotWidget {
     launcher.setAttribute('aria-label', 'Abrir Nahual Guía CHANTICO');
     launcher.setAttribute('title', 'Nahual Guía CHANTICO · Tarot Tolteca & Fuego Sagrado');
     launcher.innerHTML = `
-      <!-- Burbuja proactiva de saludo -->
-      <div class="numa-bot-callout" id="numa-bot-callout" role="tooltip" aria-label="Saludo del Nahual">
-        <span class="numa-bot-callout-text">¡Ey! Aquí estoy... ¿me ves? 👋✨</span>
+      <!-- Burbuja de voz en lengua Tolteca del Nahual -->
+      <div class="numa-bot-callout is-visible" id="numa-bot-callout" role="tooltip" aria-label="El Nahual habla en lengua Tolteca">
+        <div class="numa-bot-callout-bubble">
+          <span class="numa-bot-callout-toltec" id="numa-bot-callout-toltec">${initialVoice.toltec}</span>
+          <span class="numa-bot-callout-trans" id="numa-bot-callout-trans">${initialVoice.trans}</span>
+        </div>
         <button type="button" class="numa-bot-callout-close" id="numa-bot-callout-close" aria-label="Cerrar saludo">&times;</button>
       </div>
 

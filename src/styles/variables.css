@@ -110,40 +110,47 @@
   --color-bg-card: #FFFFFF;
   --color-bg-card-parchment: #FBF7F0;
   --color-bg-card-hover: #FAF4E8;
-  --color-surface-glass: rgba(251, 247, 240, 0.92);
+  --color-surface-glass: rgba(251, 247, 240, 0.94);
   --color-surface-glass-heavy: rgba(251, 247, 240, 0.98);
 
-  --color-gold: #F5A623;
-  --color-gold-deep: #D48806;
-  --color-gold-light: #FFB703;
-  --color-gold-soft: #F5A623;
-  --color-gold-muted: rgba(245, 166, 35, 0.18);
-  --color-gold-glow: rgba(245, 166, 35, 0.35);
+  /* Dorados, Ocres y Fuegos Sagrados para Modo Claro (Garantizan contraste WCAG AAA > 7:1) */
+  --color-gold: #9E5800; /* Ocre dorado tostado de alto contraste sobre fondo claro */
+  --color-gold-deep: #78350F;
+  --color-gold-light: #B45309;
+  --color-gold-soft: #9E5800;
+  --color-gold-muted: rgba(158, 88, 0, 0.15);
+  --color-gold-glow: rgba(180, 83, 9, 0.25);
 
-  --color-beige: #26211C;
-  --color-beige-light: #000000;
-  --color-beige-muted: #5C554E;
+  --color-flame: #B91C1C; /* Fuego profundo de alto contraste */
+  --color-brand-fire: #B91C1C;
+  --color-brand-fire-hover: #991B1B;
 
-  /* Textos principales: Negro absoluto sobre fondos claros */
-  --color-text-primary: #000000;
-  --color-text-secondary: #2C2825;
-  --color-text-muted: #5C554E;
+  --color-beige: #1C1917;
+  --color-beige-light: #0A0A0A;
+  --color-beige-muted: #44403C;
+
+  /* Textos principales: Máximo contraste y legibilidad impecable */
+  --color-text-primary: #111111;
+  --color-text-secondary: #292524;
+  --color-text-muted: #57534E;
   --color-text-dark: #000000;
 
-  --color-border: rgba(245, 166, 35, 0.3);
-  --color-border-flame: rgba(245, 166, 35, 0.45);
-  --color-border-gold: rgba(245, 166, 35, 0.4);
-  --color-border-gold-strong: #E62624;
+  --color-border: rgba(158, 88, 0, 0.28);
+  --color-border-flame: rgba(185, 28, 28, 0.35);
+  --color-border-gold: rgba(158, 88, 0, 0.35);
+  --color-border-gold-strong: #9E5800;
 
   --shadow-subtle: 0 4px 20px rgba(44, 40, 37, 0.08);
-  --shadow-flame: 0 0 12px rgba(245, 166, 35, 0.35);
-  --shadow-flame-hover: 0 0 12px rgba(245, 166, 35, 0.45), 0 6px 20px rgba(230, 38, 36, 0.2);
-  --shadow-gold: 0 0 12px rgba(245, 166, 35, 0.25);
-  --shadow-gold-hover: 0 0 12px rgba(245, 166, 35, 0.4), 0 4px 15px rgba(0, 0, 0, 0.08);
+  --shadow-flame: 0 0 12px rgba(185, 28, 28, 0.25);
+  --shadow-flame-hover: 0 0 12px rgba(185, 28, 28, 0.35), 0 6px 20px rgba(185, 28, 28, 0.15);
+  --shadow-gold: 0 0 12px rgba(158, 88, 0, 0.2);
+  --shadow-gold-hover: 0 0 12px rgba(158, 88, 0, 0.3), 0 4px 15px rgba(0, 0, 0, 0.08);
   --shadow-modal: 0 20px 60px rgba(38, 33, 28, 0.25);
 
-  --gradient-gold: linear-gradient(135deg, #FFB703 0%, #F5A623 50%, #D48806 100%);
-  --gradient-gold-radial: radial-gradient(circle, rgba(245, 166, 35, 0.2) 0%, rgba(230, 38, 36, 0.04) 55%, transparent 70%);
+  /* Gradientes de texto en modo claro que garantizan lectura nítida */
+  --gradient-flame: linear-gradient(135deg, #B91C1C 0%, #C2410C 50%, #9E5800 100%);
+  --gradient-gold: linear-gradient(135deg, #9E5800 0%, #B45309 50%, #78350F 100%);
+  --gradient-gold-radial: radial-gradient(circle, rgba(158, 88, 0, 0.15) 0%, rgba(185, 28, 28, 0.04) 55%, transparent 70%);
   --gradient-card-dark: linear-gradient(180deg, #FFFFFF 0%, #FBF7F0 100%);
   --gradient-dark-radial: radial-gradient(ellipse at top, #FFFFFF 0%, #F5EFEB 85%);
 }

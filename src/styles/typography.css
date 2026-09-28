@@ -76,16 +76,19 @@ body, p, input, select, textarea, button, .font-sans {
   line-height: 1.05;
   letter-spacing: 0.15em;
   margin-bottom: 0.5rem;
+  color: #FFFFFF !important;
+  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.95), 0 0 35px rgba(0, 0, 0, 0.9) !important;
 }
 
 .hero-subtitle {
   font-family: var(--font-sans);
   font-size: clamp(0.9rem, 2vw, 1.25rem);
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.4em;
   text-transform: uppercase;
-  color: var(--color-beige);
+  color: #FFD166 !important;
   margin-bottom: 1.75rem;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 0 25px rgba(0, 0, 0, 0.9) !important;
 }
 
 .hero-quote {
@@ -93,20 +96,20 @@ body, p, input, select, textarea, button, .font-sans {
   font-size: clamp(1.8rem, 3.5vw, 2.75rem);
   font-style: italic;
   font-weight: 300;
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   line-height: 1.2;
   margin-bottom: 1.25rem;
-  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.95), 0 0 35px rgba(0, 0, 0, 0.9);
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.95), 0 0 35px rgba(0, 0, 0, 0.9) !important;
 }
 
 .hero-lead {
   font-size: clamp(1rem, 1.25vw, 1.15rem);
   font-weight: 400;
   line-height: 1.7;
-  color: var(--color-beige-light);
+  color: #FDFDFD !important;
   max-width: 680px;
   margin: 0 auto 2.5rem;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95), 0 0 20px rgba(0, 0, 0, 0.85);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95), 0 0 20px rgba(0, 0, 0, 0.85) !important;
 }
 
 .section-title {
@@ -138,4 +141,56 @@ body, p, input, select, textarea, button, .font-sans {
   background: var(--gradient-gold);
   margin: 1.5rem auto 0;
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+/* --- REGLAS DE CONTRASTE ALTO PARA MODO CLARO (WCAG AAA) --- */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6,
+[data-theme="light"] .font-serif {
+  color: #111111;
+}
+
+[data-theme="light"] p,
+[data-theme="light"] span,
+[data-theme="light"] label,
+[data-theme="light"] li {
+  color: inherit;
+}
+
+[data-theme="light"] .section-title {
+  color: #111111;
+}
+
+[data-theme="light"] .section-subtitle,
+[data-theme="light"] .section-desc {
+  color: #292524;
+}
+
+[data-theme="light"] .eyebrow {
+  color: #B91C1C;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+[data-theme="light"] .text-gold {
+  color: #9E5800;
+  font-weight: 600;
+}
+
+[data-theme="light"] .text-flame,
+[data-theme="light"] .text-fire {
+  color: #B91C1C;
+  font-weight: 600;
+}
+
+[data-theme="light"] .text-beige {
+  color: #1C1917;
+}
+
+[data-theme="light"] .text-muted {
+  color: #57534E;
 }

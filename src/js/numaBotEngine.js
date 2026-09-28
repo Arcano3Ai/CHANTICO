@@ -659,9 +659,30 @@ Puedes reproducir las sesiones directamente desde la sección **MEDITACIÓN GUIA
     };
   }
 
+  if (norm.includes('tolteca') || norm.includes('nahuatl') || norm.includes('lengua') || norm.includes('palabra') || norm.includes('idioma') || norm.includes('niltze')) {
+    return {
+      text: `🦅 **Sabiduría de la Lengua Sagrada Tolteca en CHANTICO**
+      
+El Nahual se comunica a través de la vibración ancestral:
+• ✨ **¡Niltze! Cualli tonalli**: *«¡Saludos sagrados! Que tu luz y destino sean propicios»*.
+• 🔥 **¡Xipantlaza moyolotl!**: *«¡Despierta el fuego que habita en tu corazón!»*.
+• 🔮 **¡Toteotl mitzpalehuiltz!**: *«¡Que la gran energía sagrada guíe tu caminar!»*.
+• 🙏 **¡Tlazohcamati!**: *«¡Gracias con amor desde el fondo del corazón!»*.
+• 🛡️ **¡Chantico tlazotla!**: *«¡El fuego sagrado del hogar bendice y protege tu espacio!»*.
+• 🐾 **Nahual**: *«Tu espíritu guía, alter ego sagrado y protector interior»*.`,
+      products: [PRODUCTS[1], PRODUCTS[0]],
+      quickReplies: [
+        'Calcular mi Nahual y Camino de Vida',
+        'Ver Curso de Tarot Tolteca',
+        '¿Cómo activar mi fuego sagrado?',
+        'Ver catálogo de productos'
+      ]
+    };
+  }
+
   if (norm.includes('hola') || norm.includes('buen') || norm.includes('saludos') || norm.includes('namaste') || norm.includes('inicio')) {
     return {
-      text: `🕊️ Saludos y bienvenida a este espacio sagrado. Soy tu **Guía Tolteca de CHANTICO**, guardián del fuego sagrado, el tarot tolteca y tus nahuales.
+      text: `🕊️ **¡Niltze! Cualli tonalli.** Saludos sagrados y bienvenida a este espacio místico. Soy tu **Guía Tolteca de CHANTICO**, guardián del fuego sagrado, el tarot tolteca y tus nahuales.
 
 ¿En qué sabiduría ancestral puedo orientarte hoy?
 • 🦅 Revelar tu **Nahual y Camino de Vida** a partir de tu fecha de nacimiento.
