@@ -899,7 +899,69 @@
 }
 
 /* ==========================================================================
-   ZONA: MEDITACIÓN GUIADA NÜMA
+   ZONA: CUENCOS Y REPRODUCTOR DE SONIDO SAGRADO
+   ========================================================================== */
+.sound-player-card {
+  max-width: 580px;
+  width: 100%;
+  margin: 0 auto;
+  background: rgba(18, 18, 18, 0.75);
+  border: 1px solid var(--color-border-gold);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-sizing: border-box;
+}
+
+.sound-player-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.sound-player-info {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.sound-player-badge {
+  margin-bottom: 0.2rem;
+  font-size: 0.68rem;
+  display: block;
+}
+
+.sound-player-title {
+  font-family: var(--font-serif-display);
+  font-size: 1.15rem;
+  color: var(--color-beige-light);
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.sound-player-desc {
+  font-size: 0.75rem;
+  color: var(--color-gold-light);
+  word-break: break-word;
+  line-height: 1.4;
+  margin-top: 0.2rem;
+}
+
+.sound-player-play-btn {
+  width: 48px;
+  height: 48px;
+  background: var(--gradient-gold);
+  color: #0A0A0A;
+  border: none;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   ZONA: MEDITACIÓN GUIADA NÜMA / CHANTICO
    ========================================================================== */
 .meditacion-grid-wrapper {
   display: grid;
@@ -907,6 +969,15 @@
   gap: 2.5rem;
   align-items: stretch;
   margin-top: 2rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.meditacion-grid-wrapper > * {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 992px) {
@@ -929,6 +1000,10 @@
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .med-main-player::before {
@@ -1081,6 +1156,9 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   cursor: pointer;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
 }
 
@@ -1119,6 +1197,7 @@
 .track-meta {
   flex: 1;
   min-width: 0;
+  overflow: hidden;
 }
 
 .track-header-row {
@@ -1126,6 +1205,7 @@
   align-items: center;
   gap: 0.6rem;
   margin-bottom: 0.25rem;
+  flex-wrap: wrap;
 }
 
 .track-tag {
@@ -1148,6 +1228,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .track-intention {
@@ -1157,12 +1238,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0;
+  max-width: 100%;
 }
 
 .track-duration {
   font-size: 0.78rem;
   color: var(--color-text-muted);
   font-family: monospace;
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 

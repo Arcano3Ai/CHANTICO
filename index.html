@@ -874,16 +874,16 @@
           </p>
 
           <!-- Reproductor de Audio Real -->
-          <div style="max-width: 580px; margin: 0 auto; background: rgba(18,18,18,0.75); border: 1px solid var(--color-border-gold); border-radius: var(--radius-md); padding: 1.75rem; backdrop-filter: blur(10px);">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
-              <div style="text-align: left;">
-                <span class="eyebrow" style="margin-bottom: 0.2rem; font-size: 0.68rem;" data-i18n="sound_track_badge">Música Sagrada Oficial CHANTICO</span>
-                <div style="font-family: var(--font-serif-display); font-size: 1.15rem; color: var(--color-beige-light);" data-i18n="sound_track_title">
+          <div class="sound-player-card">
+            <div class="sound-player-header">
+              <div class="sound-player-info">
+                <span class="eyebrow sound-player-badge" data-i18n="sound_track_badge">Música Sagrada Oficial CHANTICO</span>
+                <div class="sound-player-title" data-i18n="sound_track_title">
                   Chantico Purificación
                 </div>
-                <div style="font-size: 0.75rem; color: var(--color-gold-light);" data-i18n="sound_track_desc">Composición Sagrada Oficial · Fuego & Purificación</div>
+                <div class="sound-player-desc" data-i18n="sound_track_desc">Composición Sagrada Oficial · Fuego & Purificación</div>
               </div>
-              <button id="sound-play-btn" class="btn-icon" style="width: 48px; height: 48px; background: var(--gradient-gold); color: #0A0A0A; border: none; box-shadow: 0 0 20px rgba(255,215,0,0.4);" title="Reproducir audio">
+              <button id="sound-play-btn" class="btn-icon sound-player-play-btn" title="Reproducir audio">
                 <!-- Play Icon -->
                 <svg id="sound-play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
@@ -1002,7 +1002,7 @@
 
           <!-- Lista de Pistas de Meditación Guiada -->
           <div>
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
               <h4 style="font-family: var(--font-serif-display); font-size: 1.15rem; color: var(--color-beige-light); margin: 0;" data-i18n="med_playlist_title">
                 Sintonías Sagradas Disponibles
               </h4>

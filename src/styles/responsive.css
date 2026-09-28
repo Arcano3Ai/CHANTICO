@@ -1,4 +1,14 @@
-/* Optimizaciones Mobile-First & Responsive */
+/* ==========================================================================
+   CHANTICO — Mobile-First & Ultra Responsive Architecture (Android & iOS)
+   Estándar Senior Principal: Cero Overflow Horizontal, Cero Contenido Cortado
+   ========================================================================== */
+
+/* Prevenir sub-pixel overflow horizontal en iOS WebKit y Android Blink */
+html, body {
+  overflow-x: clip;
+  max-width: 100vw;
+  width: 100%;
+}
 
 @media (max-width: 1300px) {
   .header-actions .btn-primary {
@@ -29,16 +39,22 @@
   }
 }
 
+/* ==========================================================================
+   BREAKPOINT: TABLETS & SMARTPHONES (<= 768px)
+   ========================================================================== */
 @media (max-width: 768px) {
   :root {
-    --header-height: 64px;
+    --header-height: 60px;
   }
 
   .container {
     padding: 0 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
-  /* Ocultar botón reservar y wishlist en header móvil para evitar desbordamiento */
+  /* Header Móvil Ultra Compacto */
   .header-actions .btn-primary,
   #header-wishlist-btn {
     display: none;
@@ -49,26 +65,26 @@
   }
 
   .header-brand {
-    gap: 0.6rem;
+    gap: 0.5rem;
     margin-right: 0;
   }
 
   .header-logo-img {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
   }
 
   .header-brand-text .brand-name {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
 
   .header-brand-text .brand-desc {
-    font-size: 0.48rem;
-    letter-spacing: 0.22em;
+    font-size: 0.45rem;
+    letter-spacing: 0.2em;
   }
 
   .header-actions {
-    gap: 0.4rem;
+    gap: 0.35rem;
   }
 
   .btn-icon {
@@ -80,42 +96,254 @@
     width: 36px;
     height: 36px;
     padding: 0;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
 
   .section {
-    padding: 4.5rem 0;
+    padding: 3.75rem 0;
   }
 
   .hero-section {
-    padding-top: calc(var(--header-height) + 1.5rem);
-    padding-bottom: 3.5rem;
+    padding-top: calc(var(--header-height) + 1.25rem);
+    padding-bottom: 3rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1.15;
+    word-break: break-word;
   }
 
   .hero-cta-group {
     flex-direction: column;
     width: 100%;
+    gap: 0.85rem;
   }
 
   .hero-cta-group .btn {
     width: 100%;
   }
 
+  /* Formulario de Numerología */
   .numerology-form-row {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
+  /* --- SECCIÓN 7: CUENCOS Y REPRODUCTOR DE SONIDO --- */
   .sound-ritual-wrapper {
-    padding: 2.25rem 1.25rem;
+    padding: 2rem 1.15rem;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: var(--radius-md);
   }
 
-  .ritual-detail-stage {
-    padding: 1.5rem;
+  .sound-player-card {
+    padding: 1.25rem 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .sound-player-header {
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .sound-player-title {
+    font-size: 1.05rem;
+    word-break: break-word;
+  }
+
+  .sound-player-desc {
+    font-size: 0.72rem;
+    word-break: break-word;
+  }
+
+  .sound-player-play-btn {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  .sound-wave-visualizer {
+    height: 42px;
+    gap: 4px;
+    margin: 1.25rem auto;
+  }
+
+  /* --- SECCIÓN 7B: MEDITACIÓN GUIADA & SINTONÍAS SAGRADAS --- */
+  .meditacion-grid-wrapper {
+    grid-template-columns: 100%;
+    gap: 1.75rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .meditacion-grid-wrapper > * {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .med-main-player {
+    padding: 1.5rem 1.2rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-radius: var(--radius-md);
+  }
+
+  .med-player-badge {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .med-player-title {
+    font-size: clamp(1.35rem, 5.5vw, 1.75rem);
+    line-height: 1.2;
+    margin-bottom: 0.35rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .med-player-frequency {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+    word-break: break-word;
+  }
+
+  .med-player-desc {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+    word-break: break-word;
+  }
+
+  .med-visualizer-container {
+    height: 40px;
+    gap: 5px;
+    margin-bottom: 1.25rem;
+  }
+
+  .med-controls-row {
+    gap: 1rem;
+    margin-top: 0.75rem;
+  }
+
+  .med-btn-circle {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+  }
+
+  .med-btn-nav {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+  }
+
+  /* Lista de Canciones en Móvil */
+  .med-tracks-container {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+    gap: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .med-track-card {
+    padding: 0.85rem 0.95rem;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+  }
+
+  .track-play-indicator {
+    width: 34px;
+    height: 34px;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  .track-header-row {
+    gap: 0.4rem;
+    margin-bottom: 0.2rem;
+    flex-wrap: wrap;
+  }
+
+  .track-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+
+  .track-frequency-badge {
+    font-size: 0.62rem;
+  }
+
+  .track-title {
+    font-size: 0.98rem;
+    margin: 0 0 0.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .track-intention {
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .track-duration {
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  /* Grids Adaptativos */
+  .experiences-grid {
+    grid-template-columns: 1fr;
     gap: 1.75rem;
   }
 
-  .ritual-meta-grid {
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: 1.5rem;
+  }
+
+  .journal-grid {
     grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .concept-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .ritual-detail-stage {
+    padding: 1.35rem;
+    gap: 1.5rem;
+    border-radius: var(--radius-md);
+  }
+
+  .ritual-situation-box {
+    padding: 1rem 1.15rem;
+  }
+
+  .ritual-meta-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
   }
 
   .footer-top-grid {
@@ -131,34 +359,221 @@
 
   .cart-drawer {
     max-width: 100%;
+    width: 100%;
   }
 
   .modal-content-wrap {
-    max-height: 95vh;
+    max-height: 92vh;
     padding: 1.25rem;
+    width: 95%;
   }
 }
 
-/* Menú Móvil Fullscreen Drawer */
+/* ==========================================================================
+   BREAKPOINT: SMARTPHONES PEQUEÑOS (Android < 480px, iPhone SE/12/13/14/15/16)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.85rem;
+  }
+
+  .sound-ritual-wrapper {
+    padding: 1.5rem 0.85rem;
+  }
+
+  .sound-player-card {
+    padding: 1rem 0.75rem;
+    border-radius: 10px;
+  }
+
+  .sound-player-header {
+    gap: 0.5rem;
+  }
+
+  .sound-player-badge {
+    font-size: 0.62rem;
+  }
+
+  .sound-player-title {
+    font-size: 0.98rem;
+  }
+
+  .sound-player-desc {
+    font-size: 0.68rem;
+  }
+
+  .sound-player-play-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Meditación Guiada */
+  .med-main-player {
+    padding: 1.25rem 0.85rem;
+    border-radius: 12px;
+  }
+
+  .med-player-badge {
+    font-size: 0.6rem;
+    padding: 0.25rem 0.65rem;
+  }
+
+  .med-player-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .med-player-frequency {
+    font-size: 0.72rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .med-player-desc {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    margin-bottom: 1rem;
+  }
+
+  .med-visualizer-container {
+    height: 34px;
+    gap: 3px;
+    margin-bottom: 1rem;
+  }
+
+  .med-controls-row {
+    gap: 0.75rem;
+  }
+
+  .med-btn-circle {
+    width: 44px;
+    height: 44px;
+  }
+
+  .med-btn-circle svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .med-btn-nav {
+    width: 34px;
+    height: 34px;
+  }
+
+  .med-btn-nav svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Tarjetas de Pistas */
+  .med-track-card {
+    padding: 0.7rem 0.75rem;
+    gap: 0.55rem;
+  }
+
+  .track-play-indicator {
+    width: 30px;
+    height: 30px;
+    font-size: 0.72rem;
+  }
+
+  .track-title {
+    font-size: 0.88rem;
+  }
+
+  .track-intention {
+    font-size: 0.7rem;
+  }
+
+  .track-duration {
+    font-size: 0.7rem;
+  }
+
+  .ritual-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Ajuste de Launchers Flotantes para evitar colisiones en pantallas de 360px */
+  .numa-floating-player {
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    left: 10px;
+    max-width: calc(100vw - 76px);
+    padding: 4px 10px 4px 6px;
+    border-radius: 30px;
+  }
+
+  .floating-play-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .floating-player-title {
+    font-size: 0.72rem;
+    max-width: 90px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .floating-player-sub {
+    font-size: 0.58rem;
+    max-width: 90px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .floating-equalizer {
+    display: none; /* Ahorra espacio horizontal crítico en teléfonos angostos */
+  }
+
+  .numa-bot-launcher {
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    right: 10px;
+    padding: 5px;
+    border-radius: 50%;
+  }
+
+  .numa-bot-launcher-text {
+    display: none !important;
+  }
+
+  .numa-bot-launcher-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .toltec-mascot-img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* ==========================================================================
+   MENÚ MÓVIL FULLSCREEN DRAWER (iOS & Android)
+   ========================================================================== */
 .mobile-nav-drawer {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height para iOS Safari */
   background: rgba(10, 10, 10, 0.98);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   z-index: 2000;
-  padding: 2.5rem 2rem;
+  padding: calc(2rem + env(safe-area-inset-top, 0px)) 1.75rem calc(2rem + env(safe-area-inset-bottom, 0px));
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   transform: translateY(-100%);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: transform var(--transition-normal), opacity var(--transition-normal), visibility var(--transition-normal);
+  box-sizing: border-box;
 }
 
 .mobile-nav-drawer.open {
@@ -171,19 +586,20 @@
 .mobile-nav-links {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  margin-top: 2rem;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
 }
 
 .mobile-nav-link {
   font-family: var(--font-serif-display);
-  font-size: 1.35rem;
-  letter-spacing: 0.12em;
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
   color: var(--color-beige);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding-bottom: 0.75rem;
+  padding-bottom: 0.65rem;
 }
 
-.mobile-nav-link:hover {
+.mobile-nav-link:hover,
+.mobile-nav-link:active {
   color: var(--color-gold);
 }
