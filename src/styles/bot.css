@@ -55,24 +55,31 @@
 }
 
 .numa-bot-launcher:hover .numa-bot-launcher-icon {
-  transform: scale(1.08);
+  transform: scale(1.05);
   border-color: var(--color-gold);
   box-shadow: 0 0 24px rgba(255, 215, 0, 0.65), inset 0 0 12px rgba(255, 183, 3, 0.5);
 }
 
 .toltec-mascot-img {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
   filter: drop-shadow(0 0 4px rgba(255, 183, 3, 0.7));
   animation: toltecMascotBounce 3s ease-in-out infinite;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease;
+  transform-origin: bottom center;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
   pointer-events: none;
+  position: relative;
+  z-index: 2;
 }
 
+/* Efecto Pop-Out: El Nahual sale un poco del círculo hacia arriba en hover sin desproporcionarse */
 .numa-bot-launcher:hover .toltec-mascot-img {
-  transform: scale(1.15) translateY(-3px);
-  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.95));
+  animation: none;
+  transform: scale(1.24) translateY(-8px);
+  transform-origin: bottom center;
+  filter: drop-shadow(0 6px 16px rgba(255, 183, 3, 0.95)) drop-shadow(0 0 22px rgba(255, 215, 0, 0.65));
+  z-index: 10;
 }
 
 @keyframes toltecMascotBounce {
@@ -80,7 +87,7 @@
     transform: translateY(0) scale(1);
   }
   50% {
-    transform: translateY(-4px) scale(1.04);
+    transform: translateY(-3px) scale(1.03);
   }
 }
 
@@ -576,10 +583,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: visible;
   }
 
   .numa-bot-launcher:active {
-    transform: scale(0.92);
+    transform: scale(0.94);
   }
 
   .numa-bot-launcher-icon {
@@ -591,13 +599,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: visible;
+    position: relative;
   }
 
   .toltec-mascot-img {
     width: 44px;
     height: 44px;
     object-fit: contain;
+    transform-origin: bottom center;
     filter: drop-shadow(0 0 6px rgba(255, 183, 3, 0.8));
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .numa-bot-launcher:hover .toltec-mascot-img,
+  .numa-bot-launcher:active .toltec-mascot-img {
+    animation: none;
+    transform: scale(1.22) translateY(-7px);
+    transform-origin: bottom center;
+    filter: drop-shadow(0 6px 14px rgba(255, 183, 3, 0.95));
+    z-index: 10;
   }
 
   .numa-bot-launcher-text {
