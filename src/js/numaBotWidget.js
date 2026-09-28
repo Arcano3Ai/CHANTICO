@@ -148,6 +148,54 @@ export class NumaBotWidget {
   }
 
   /**
+   * Cicla dinámicamente las diferentes posiciones del Nahual cuando el usuario pasa el mouse por encima (Hover interactivo)
+   */
+  startHoverMascotCycle() {
+    if (this.isOpen) return;
+    this.stopHoverMascotCycle();
+
+    const hoverPoses = [
+      'greeting',
+      'explaining',
+      'confirmation',
+      'thinking',
+      'goodbye',
+      'neutral'
+    ];
+    let hoverIdx = 0;
+
+    const launcherImg = document.getElementById('toltec-mascot-launcher');
+    const badgeEl = document.getElementById('numa-bot-badge');
+
+    const advanceFrame = () => {
+      if (this.isOpen) {
+        this.stopHoverMascotCycle();
+        return;
+      }
+      hoverIdx = (hoverIdx + 1) % hoverPoses.length;
+      const stateKey = hoverPoses[hoverIdx];
+      const state = TOLTEC_MASCOT_STATES[stateKey];
+
+      if (launcherImg && state) {
+        launcherImg.src = state.src;
+      }
+      if (badgeEl && state) {
+        badgeEl.textContent = state.badge;
+      }
+    };
+
+    advanceFrame();
+    this.hoverCycleTimer = setInterval(advanceFrame, 240);
+  }
+
+  stopHoverMascotCycle() {
+    if (this.hoverCycleTimer) {
+      clearInterval(this.hoverCycleTimer);
+      this.hoverCycleTimer = null;
+    }
+  }
+
+  /**
    * Construye el DOM del launcher y la ventana flotante
    */
   initDOM() {
@@ -256,13 +304,30 @@ export class NumaBotWidget {
   bindEvents() {
     this.launcherEl.addEventListener('click', () => this.toggle());
 
-    // Al pasar el mouse en el launcher, saludar alegremente
+    // Al pasar el mouse en el launcher, cicla dinamicamente entre todas sus posiciones/poses
     this.launcherEl.addEventListener('mouseenter', () => {
+      if (!this.isOpen) {
+        this.startHoverMascotCycle();
+      }
+    });
+
+    // Al retirar el mouse, detiene la animacion y vuelve a pose neutral
+    this.launcherEl.addEventListener('mouseleave', () => {
+      this.stopHoverMascotCycle();
+      if (!this.isOpen) {
+        const launcherImg = document.getElementById('toltec-mascot-launcher');
+        if (launcherImg) launcherImg.src = TOLTEC_MASCOT_STATES.neutral.src;
+        const badgeEl = document.getElementById('numa-bot-badge');
+        if (badgeEl) badgeEl.textContent = TOLTEC_MASCOT_STATES.neutral.badge;
+      }
+    });
+
+    this.launcherEl.addEventListener('touchstart', () => {
       if (!this.isOpen) {
         const launcherImg = document.getElementById('toltec-mascot-launcher');
         if (launcherImg) launcherImg.src = TOLTEC_MASCOT_STATES.greeting.src;
       }
-    });
+    }, { passive: true });
 
     document.getElementById('numa-bot-close-btn')?.addEventListener('click', () => {
       this.close();
@@ -292,6 +357,7 @@ export class NumaBotWidget {
 
   open() {
     this.isOpen = true;
+    this.stopHoverMascotCycle();
     document.body.classList.add('numa-bot-active');
     this.windowEl.classList.add('is-open');
     this.windowEl.setAttribute('aria-hidden', 'false');
