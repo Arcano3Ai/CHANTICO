@@ -971,3 +971,205 @@
     height: 40px;
   }
 }
+
+/* --- ANIMACIÓN FLOTANTE DE LA BURBUJA DEL NAHUAL --- */
+@keyframes numaCalloutFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.01);
+  }
+}
+
+.numa-bot-callout.is-visible {
+  animation: numaCalloutFloat 4.5s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   ALTO CONTRASTE Y LEGIBILIDAD EN MODO CLARO [data-theme="light"] PARA EL BOT
+   Garantiza contraste WCAG AAA > 7:1 y lectura cristalina en cualquier fondo
+   ========================================================================== */
+
+[data-theme="light"] .numa-bot-launcher {
+  background: #FFFFFF !important;
+  border-color: #B45309 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 0 16px rgba(180, 83, 9, 0.25) !important;
+  color: #1C1917 !important;
+}
+
+[data-theme="light"] .numa-bot-launcher:hover {
+  background: #FFFDF9 !important;
+  border-color: #92400E !important;
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18), 0 0 22px rgba(180, 83, 9, 0.35) !important;
+}
+
+[data-theme="light"] .numa-bot-launcher-title {
+  color: #1C1917 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="light"] .numa-bot-launcher-sub {
+  color: #9A3412 !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="light"] .numa-bot-badge {
+  background: #B45309 !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(180, 83, 9, 0.4) !important;
+}
+
+/* Burbuja de llamada en modo claro */
+[data-theme="light"] .numa-bot-callout {
+  background: #FFFFFF !important;
+  border: 1.5px solid #B45309 !important;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18), 0 0 20px rgba(180, 83, 9, 0.2) !important;
+}
+
+[data-theme="light"] .numa-bot-callout::after {
+  border-top-color: #B45309 !important;
+}
+
+[data-theme="light"] .numa-bot-callout-toltec {
+  color: #78350F !important;
+  font-weight: 800 !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .numa-bot-callout-trans {
+  color: #1C1917 !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="light"] .numa-bot-callout-close {
+  color: #78350F !important;
+}
+
+[data-theme="light"] .numa-bot-callout-close:hover {
+  color: #000000 !important;
+  background: rgba(180, 83, 9, 0.15) !important;
+}
+
+/* Ventana de chat en modo claro */
+[data-theme="light"] .numa-bot-window {
+  background: #FAF7F2 !important;
+  border-color: #B45309 !important;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.22), 0 0 30px rgba(180, 83, 9, 0.15) !important;
+}
+
+[data-theme="light"] .numa-bot-header {
+  background: #F3EBDD !important;
+  border-bottom-color: rgba(180, 83, 9, 0.25) !important;
+}
+
+[data-theme="light"] .numa-bot-title {
+  color: #1C1917 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="light"] .numa-bot-status {
+  color: #9A3412 !important;
+  font-weight: 500 !important;
+}
+
+[data-theme="light"] .numa-bot-btn-icon {
+  color: #78350F !important;
+}
+
+[data-theme="light"] .numa-bot-btn-icon:hover {
+  color: #1C1917 !important;
+  background: rgba(180, 83, 9, 0.15) !important;
+}
+
+/* Mensajes en modo claro */
+[data-theme="light"] .numa-bot-msg-bot .numa-bot-bubble {
+  background: #FFFFFF !important;
+  color: #1C1917 !important;
+  border: 1px solid rgba(180, 83, 9, 0.22) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .numa-bot-msg-bot .numa-bot-bubble strong {
+  color: #78350F !important;
+}
+
+[data-theme="light"] .numa-bot-msg-user .numa-bot-bubble {
+  background: #B45309 !important;
+  color: #FFFFFF !important;
+  font-weight: 500 !important;
+}
+
+/* Tarjetas de productos dentro del chat en modo claro */
+[data-theme="light"] .numa-bot-card {
+  background: #FFFFFF !important;
+  border-color: rgba(180, 83, 9, 0.3) !important;
+}
+
+[data-theme="light"] .numa-bot-card-title {
+  color: #1C1917 !important;
+}
+
+[data-theme="light"] .numa-bot-card-price {
+  color: #9A3412 !important;
+}
+
+[data-theme="light"] .numa-bot-card-btn {
+  background: #B45309 !important;
+  color: #FFFFFF !important;
+}
+
+/* Chips rápidos en modo claro */
+[data-theme="light"] .numa-bot-chip {
+  background: #FFFFFF !important;
+  border-color: #B45309 !important;
+  color: #78350F !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="light"] .numa-bot-chip:hover {
+  background: #B45309 !important;
+  color: #FFFFFF !important;
+}
+
+/* Footer e input en modo claro */
+[data-theme="light"] .numa-bot-footer {
+  background: #F3EBDD !important;
+  border-top-color: rgba(180, 83, 9, 0.2) !important;
+}
+
+[data-theme="light"] .numa-bot-input {
+  background: #FFFFFF !important;
+  border-color: rgba(180, 83, 9, 0.4) !important;
+  color: #1C1917 !important;
+}
+
+[data-theme="light"] .numa-bot-input::placeholder {
+  color: #78716C !important;
+}
+
+[data-theme="light"] .numa-bot-send-btn {
+  background: #B45309 !important;
+  color: #FFFFFF !important;
+}
+
+/* Selector de Nahuales desplegable en modo claro */
+[data-theme="light"] .numa-nahual-picker {
+  background: #FAF7F2 !important;
+  border-color: #B45309 !important;
+}
+
+[data-theme="light"] .numa-nahual-picker-title {
+  color: #1C1917 !important;
+}
+
+[data-theme="light"] .nahual-picker-option {
+  background: #FFFFFF !important;
+  border-color: rgba(180, 83, 9, 0.25) !important;
+}
+
+[data-theme="light"] .nahual-picker-name {
+  color: #1C1917 !important;
+}
+

@@ -341,11 +341,29 @@ export class NumaBotWidget {
    * Cambia la voz y frase sagrada en lengua Tolteca que expresa el Nahual
    */
   setToltecVoice(index = 0) {
-    this.currentVoiceIdx = index % TOLTEC_VOICES.length;
-    const voice = TOLTEC_VOICES[this.currentVoiceIdx];
     const toltecEl = document.getElementById('numa-bot-callout-toltec');
     const transEl = document.getElementById('numa-bot-callout-trans');
     const badgeEl = document.getElementById('numa-bot-badge');
+
+    // Si hay un nahual personalizado activo, ofrecer saludos específicos de su linaje
+    const NAHUAL_CUSTOM_VOICES = {
+      tolteca: { toltec: '«¡Niltze! Tlamatiliztli»', trans: 'Sabiduría tolteca & oráculo 🎭', badge: '🎭 Tolteca' },
+      ocelotl: { toltec: '«¡Niltze! Tletl Moyolotl»', trans: '¡El fuego sagrado te llama! 🔥', badge: '🔥 Ocelotl' },
+      xiuhcoatl: { toltec: '«¡Xiuhcoatl Tlamatiliztli!»', trans: 'Alquimia y visión profunda 🐉', badge: '🐉 Xiuhcóatl' },
+      miztli: { toltec: '«¡Yolotl Tlazotli!»', trans: 'Amor sagrado para tu corazón 🐱', badge: '🐱 Miztli' },
+      cuauhtli: { toltec: '«¡Ilhuicatl Patlani!»', trans: 'Eleva tu vuelo cósmico 🪶', badge: '🪶 Cuauhtli' }
+    };
+
+    if (this.activeNahualId && NAHUAL_CUSTOM_VOICES[this.activeNahualId] && index === 0) {
+      const custom = NAHUAL_CUSTOM_VOICES[this.activeNahualId];
+      if (toltecEl) toltecEl.textContent = custom.toltec;
+      if (transEl) transEl.textContent = custom.trans;
+      if (badgeEl && !this.isOpen) badgeEl.textContent = custom.badge;
+      return;
+    }
+
+    this.currentVoiceIdx = index % TOLTEC_VOICES.length;
+    const voice = TOLTEC_VOICES[this.currentVoiceIdx];
 
     if (toltecEl) toltecEl.textContent = voice.toltec;
     if (transEl) transEl.textContent = voice.trans;
@@ -360,11 +378,11 @@ export class NumaBotWidget {
       if (this.isOpen) return;
       this.currentVoiceIdx = (this.currentVoiceIdx + 1) % TOLTEC_VOICES.length;
       this.setToltecVoice(this.currentVoiceIdx);
-    }, 7000);
+    }, 8000);
   }
 
   /**
-   * Saludo proactivo animado: El Nahual saluda con su patita y habla en lengua Tolteca
+   * Saludo y conversación breve visible arriba del Nahual invitando a interactuar
    */
   showProactiveGreeting() {
     if (this.isOpen) return;
@@ -373,32 +391,15 @@ export class NumaBotWidget {
 
     this.setToltecVoice(0);
 
-    if (launcherImg) {
-      launcherImg.src = TOLTEC_MASCOT_STATES.greeting.src;
-      launcherImg.classList.add('toltec-mascot-waving');
-    }
     if (callout) {
       callout.classList.add('is-visible');
     }
-
-    // Ocultar suavemente después de 9 segundos si no se interactúa
-    this.calloutDismissTimer = setTimeout(() => {
-      this.hideCallout();
-    }, 9000);
   }
 
-  hideCallout() {
+  hideCallout(temporary = true) {
     const callout = document.getElementById('numa-bot-callout');
-    const launcherImg = document.getElementById('toltec-mascot-launcher');
     if (callout) {
       callout.classList.remove('is-visible');
-    }
-    if (launcherImg) {
-      launcherImg.classList.remove('toltec-mascot-waving');
-    }
-    if (this.calloutDismissTimer) {
-      clearTimeout(this.calloutDismissTimer);
-      this.calloutDismissTimer = null;
     }
   }
 
@@ -685,7 +686,6 @@ export class NumaBotWidget {
 
     // Al pasar el mouse en el launcher, cicla dinamicamente entre todas sus posiciones/poses
     this.launcherEl.addEventListener('mouseenter', () => {
-      this.hideCallout();
       if (!this.isOpen) {
         this.startHoverMascotCycle();
       }
@@ -709,7 +709,6 @@ export class NumaBotWidget {
     });
 
     this.launcherEl.addEventListener('touchstart', () => {
-      this.hideCallout();
       if (!this.isOpen) {
         const launcherImg = document.getElementById('toltec-mascot-launcher');
         if (this.activeNahualId && this.activeNahualId !== 'tolteca') {
@@ -771,8 +770,11 @@ export class NumaBotWidget {
     this.windowEl.setAttribute('aria-hidden', 'true');
     if (this.launcherEl) this.launcherEl.classList.remove('is-hidden');
     setTimeout(() => {
-      if (!this.isOpen) this.setMascotState('resting');
-    }, 2200);
+      if (!this.isOpen) {
+        this.setMascotState('resting');
+        this.showProactiveGreeting();
+      }
+    }, 1800);
   }
 
   sendInitialGreeting() {
