@@ -10,9 +10,18 @@ export function initObsidianMirror() {
   const soundIcon = document.getElementById('obsidianSoundIcon');
   const soundLabel = document.getElementById('obsidianSoundLabel');
   const specularGleam = document.getElementById('obsidianGleam');
-  const oracleForm = document.getElementById('obsidianOracleForm');
   const questionInput = document.getElementById('obsidianQuestionInput');
   const quickPrompts = document.querySelectorAll('.obsidian-quick-prompt');
+  const consultBtn = document.getElementById('obsidianConsultBtn');
+
+  // Tarjeta de revelación oracular viva
+  const revealCard = document.getElementById('obsidianOracleReveal');
+  const revealBadge = revealCard?.querySelector('.obsidian-reveal-badge');
+  const revealKeyword = document.getElementById('obsidianRevealKeyword');
+  const revealMeaning = document.getElementById('obsidianRevealMeaning');
+  const revealGuide = document.getElementById('obsidianRevealGuide');
+  const revealElement = document.getElementById('obsidianRevealElement');
+  const resetConsultBtn = document.getElementById('obsidianResetConsultBtn');
 
   if (!canvas || !rasterCanvas) return;
 
@@ -292,23 +301,69 @@ export function initObsidianMirror() {
   }
 
   /* =========================================================================
-     3. RASTERIZADOR DE RESPUESTAS SAGRADAS TOLTECAS
+     3. RASTERIZADOR Y CATÁLOGO DE REVELACIONES TOLTECAS
      ========================================================================= */
-  const toltecAnswers = [
-    "MIRA HACIA ADENTRO",
-    "EL GUERRERO ACECHA",
-    "TRANSFORMA LA SOMBRA",
-    "DESPIERTA EL NAHUAL",
-    "FLORECE EN EL CAOS",
-    "SILENCIA EL EGO",
-    "AVANZA SIN MIEDO",
-    "CONFÍA EN EL VACÍO",
-    "HONRA TU PALABRA",
-    "EL TIEMPO ES AHORA",
-    "ERES LUZ Y SOMBRA",
-    "FUEGO TRANSMUTADOR",
-    "ABRAZA TU DESTINO",
-    "RETORNA A TU CENTRO"
+  const TOLTEC_REVELATIONS = [
+    {
+      keyword: "MIRA HACIA ADENTRO",
+      meaning: "La respuesta que buscas en el mundo exterior ya habita en el silencio de tu propio corazón. Detén el ruido del pensamiento y escucha tu intuición más profunda.",
+      element: "Fuego Interior",
+      guide: "Tezcatlipoca · El Espejo Humeante"
+    },
+    {
+      keyword: "TRANSFORMA LA SOMBRA",
+      meaning: "Aquello que rechazas o temes en ti mismo es tu mayor reserva de fuerza espiritual. No huyas de tu sombra; abrázala para convertirla en medicina y sabiduría.",
+      element: "Obsidiana & Humo",
+      guide: "Ocelotl · Jaguar Sagrado"
+    },
+    {
+      keyword: "DESPIERTA EL NAHUAL",
+      meaning: "Es momento de trascender la visión ordinaria de tu realidad. Tu guardián espiritual te impulsa a dar un salto de valentía, lucidez y transmutación.",
+      element: "Viento & Serpiente",
+      guide: "Quetzalcóatl · Aliento de Sabiduría"
+    },
+    {
+      keyword: "SILENCIA EL EGO",
+      meaning: "La necesidad constante de control y validación es solo un reflejo distorsionado. Cuando aquietas la mente, el camino del guerrero se revela con nitidez.",
+      element: "Agua Mística",
+      guide: "Chantico · Fuego del Hogar"
+    },
+    {
+      keyword: "AVANZA SIN MIEDO",
+      meaning: "La indecisión paraliza el poder del espíritu. Todo el linaje de tus ancestros camina a tu lado: da el paso que has postergado con plena determinación.",
+      element: "Llama Solar",
+      guide: "Tonatiuh · Fuerza Guerrera"
+    },
+    {
+      keyword: "CONFÍA EN EL VACÍO",
+      meaning: "Lo que parece pérdida es espacio sagrado para lo que renace. No temas soltar lo que ya cumplió su ciclo; el universo llena el vacío con gracia.",
+      element: "Éter Tolteca",
+      guide: "Tloque Nahuaque · El Que Todo lo Abarca"
+    },
+    {
+      keyword: "HONRA TU PALABRA",
+      meaning: "Tu palabra es un decreto cósmico que moldea tu destino. Habla con absoluta impecabilidad, sin juzgarte y cumpliendo tus acuerdos íntimos.",
+      element: "Palabra Florida",
+      guide: "In Xochitl In Cuicatl · Flor y Canto"
+    },
+    {
+      keyword: "FUEGO SAGRADO",
+      meaning: "El fuego sagrado de Chantico purifica las memorias de dolor. Permite que la alquimia interior consuma tus apegos para que renazcas en libertad.",
+      element: "Llama de Transmutación",
+      guide: "Chantico · Guardiana del Fuego"
+    },
+    {
+      keyword: "RETORNA A TU CENTRO",
+      meaning: "Has estado dispersando tu atención en exigencias ajenas. Vuelve a tu eje vital, respira el instante presente y recupera tu calma fundamental.",
+      element: "Tierra Madre",
+      guide: "Coatlicue · Matriz de Sanación"
+    },
+    {
+      keyword: "FLORECE EN EL CAOS",
+      meaning: "Las mayores transmutaciones del alma ocurren en medio del movimiento inesperado. No intentes detener el torbellino; aprende a volar con él.",
+      element: "Viento Sagrado",
+      guide: "Ehécatl · Viento Cósmico"
+    }
   ];
 
   function renderCurrentWordToTargets(word) {
@@ -333,7 +388,7 @@ export function initObsidianMirror() {
       lines.push(words.slice(mid).join(' '));
     }
 
-    const fontSize = Math.floor(w * (lines.length > 1 ? 0.082 : 0.095));
+    const fontSize = Math.floor(w * (lines.length > 1 ? 0.088 : 0.098));
     rasterCtx.font = `900 ${fontSize}px 'Cinzel', serif`;
 
     const lineHeight = fontSize * 1.35;
@@ -345,13 +400,13 @@ export function initObsidianMirror() {
 
     const imgData = rasterCtx.getImageData(0, 0, w, h).data;
     const targetCoords = [];
-    const step = 6;
+    const step = 4; // Mayor densidad de partículas para definición ultranítida
 
     for (let y = 0; y < h; y += step) {
       for (let x = 0; x < w; x += step) {
         const index = (y * w + x) * 4;
         const alpha = imgData[index + 3];
-        if (alpha > 120) {
+        if (alpha > 90) {
           targetCoords.push({ x: x, y: y });
         }
       }
@@ -377,14 +432,34 @@ export function initObsidianMirror() {
     }
   }
 
-  function askOracle(customAnswer) {
+  function askOracle(customQuestion) {
     if (!audioCtx) initAudio();
     if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 
-    const answer = customAnswer || toltecAnswers[Math.floor(Math.random() * toltecAnswers.length)];
+    // Seleccionar revelación oracular sabia
+    const revelation = TOLTEC_REVELATIONS[Math.floor(Math.random() * TOLTEC_REVELATIONS.length)];
 
     triggerShockwave(orbCenter, orbCenter);
     if (isAudioActive) playTibetanBowl(432, 5.0);
+
+    // Feedback visual en el botón y en la tarjeta de revelación
+    if (consultBtn) {
+      consultBtn.disabled = true;
+      consultBtn.innerHTML = '<span>INVOCANDO...</span><span style="animation: spin 1s infinite linear;">✦</span>';
+    }
+
+    if (revealCard) {
+      revealCard.style.display = 'block';
+      if (revealBadge) revealBadge.textContent = 'INVOCANDO ORÁCULO...';
+      if (revealKeyword) revealKeyword.textContent = '«SINTONIZANDO EL ESPEJO...»';
+      if (revealMeaning) {
+        revealMeaning.textContent = customQuestion 
+          ? `El fuego sagrado está recibiendo tu intención: "${customQuestion}". Las partículas de obsidiana se alinean con tu tonal...`
+          : 'El oráculo tolteca de Tezcatlipoca abre el vórtice de visión. Las partículas de obsidiana transmutan tu intención...';
+      }
+      if (revealGuide) revealGuide.textContent = 'Canalizando sabiduría ancestral...';
+      if (revealElement) revealElement.textContent = 'Frecuencia: 432 Hz';
+    }
 
     oracleState = 'trance';
     particles.forEach(p => {
@@ -392,20 +467,32 @@ export function initObsidianMirror() {
       p.vy = (Math.random() - 0.5) * 14;
     });
 
-    // Feedback sonoro háptico si está disponible
     if (window.navigator && window.navigator.vibrate) {
       window.navigator.vibrate([40, 60, 80]);
     }
 
     setTimeout(() => {
-      renderCurrentWordToTargets(answer);
+      renderCurrentWordToTargets(revelation.keyword);
       oracleState = 'gathering';
       if (isAudioActive) playTibetanBowl(540, 3.5);
+
+      if (revealCard) {
+        if (revealBadge) revealBadge.textContent = 'RESPUESTA REVELADA';
+        if (revealKeyword) revealKeyword.textContent = `«${revelation.keyword}»`;
+        if (revealMeaning) revealMeaning.textContent = revelation.meaning;
+        if (revealGuide) revealGuide.textContent = `${revelation.guide}`;
+        if (revealElement) revealElement.textContent = `Elemento: ${revelation.element}`;
+      }
+
+      if (consultBtn) {
+        consultBtn.disabled = false;
+        consultBtn.innerHTML = '<span>CONSULTAR</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+      }
 
       clearTimeout(gatherTimer);
       gatherTimer = setTimeout(() => {
         disperseWord();
-      }, 7500);
+      }, 9500);
     }, 700);
   }
 
@@ -486,22 +573,36 @@ export function initObsidianMirror() {
   });
 
   // Formulario y preguntas sugeridas
-  if (oracleForm) {
-    oracleForm.addEventListener('submit', (e) => {
+  const oracleFormElem = document.getElementById('obsidianOracleForm');
+  if (oracleFormElem) {
+    oracleFormElem.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (questionInput) {
-        questionInput.value = '';
-        questionInput.blur();
-      }
-      askOracle();
+      const question = questionInput?.value.trim() || '';
+      askOracle(question);
     });
   }
 
   quickPrompts.forEach(btn => {
-    btn.addEventListener('click', () => {
-      askOracle();
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const q = btn.getAttribute('data-question') || btn.textContent.trim();
+      if (questionInput) {
+        questionInput.value = q;
+      }
+      askOracle(q);
     });
   });
+
+  if (resetConsultBtn) {
+    resetConsultBtn.addEventListener('click', () => {
+      disperseWord();
+      if (revealCard) revealCard.style.display = 'none';
+      if (questionInput) {
+        questionInput.value = '';
+        questionInput.focus();
+      }
+    });
+  }
 
   /* =========================================================================
      5. BUCLE DE RENDERIZADO A 60 FPS

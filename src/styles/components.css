@@ -1948,6 +1948,99 @@
   text-transform: uppercase;
 }
 
+/* Tarjeta de Revelación Oracular Viva */
+.obsidian-reveal-card {
+  position: relative;
+  background: radial-gradient(circle at 50% 20%, rgba(230, 38, 36, 0.18) 0%, rgba(14, 12, 18, 0.96) 80%);
+  border: 1.5px solid var(--color-flame);
+  border-radius: var(--radius-md, 12px);
+  padding: 1.5rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 0 25px rgba(255, 183, 3, 0.25), inset 0 0 15px rgba(230, 38, 36, 0.1);
+  animation: revealFadeIn 0.5s ease-out;
+  overflow: hidden;
+}
+
+@keyframes revealFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.obsidian-reveal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.obsidian-reveal-badge {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  color: var(--color-flame, #FFB703);
+  text-transform: uppercase;
+}
+
+.obsidian-reveal-guide {
+  font-size: 0.74rem;
+  color: var(--color-gold-light, #F5D77F);
+  font-style: italic;
+}
+
+.obsidian-reveal-title {
+  font-family: var(--font-serif-display);
+  font-size: 1.5rem;
+  color: #FFFFFF;
+  text-shadow: 0 0 15px rgba(255, 183, 3, 0.6);
+  margin-bottom: 0.6rem;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+}
+
+.obsidian-reveal-text {
+  font-size: 0.92rem;
+  color: var(--color-beige-light, #E7E5E4);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.obsidian-reveal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.obsidian-reveal-element {
+  font-size: 0.75rem;
+  color: var(--color-gold, #D4AF37);
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.obsidian-reset-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 183, 3, 0.4);
+  color: var(--color-flame, #FFB703);
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.obsidian-reset-btn:hover {
+  background: rgba(255, 183, 3, 0.2);
+  color: #FFF;
+}
+
 /* =========================================================================
    SOPORTE MODO CLARO [data-theme="light"]
    ========================================================================= */
@@ -1996,5 +2089,20 @@
 
 [data-theme="light"] .obsidian-wisdom-quote {
   color: #9E5800 !important;
+}
+
+[data-theme="light"] .obsidian-reveal-card {
+  background: #FFFDF9 !important;
+  border-color: #9E5800 !important;
+  box-shadow: 0 0 25px rgba(158, 88, 0, 0.12) !important;
+}
+
+[data-theme="light"] .obsidian-reveal-title {
+  color: #9E5800 !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .obsidian-reveal-text {
+  color: #44403C !important;
 }
 
