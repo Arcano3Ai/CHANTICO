@@ -157,19 +157,19 @@ export class NumaBotWidget {
     launcher.id = 'numa-bot-launcher';
     launcher.className = 'numa-bot-launcher';
     launcher.setAttribute('role', 'button');
-    launcher.setAttribute('aria-label', 'Abrir Guía Tolteca CHANTICO');
-    launcher.setAttribute('title', 'Guía Tolteca CHANTICO · Tarot y Fuego Sagrado');
+    launcher.setAttribute('aria-label', 'Abrir Nahual Guía CHANTICO');
+    launcher.setAttribute('title', 'Nahual Guía CHANTICO · Tarot Tolteca & Fuego Sagrado');
     launcher.innerHTML = `
       <div class="numa-bot-launcher-icon">
         <img
           id="toltec-mascot-launcher"
           src="./assets/images/bot/toltec_bot_greeting.png"
-          alt="Mascota Guía Tolteca"
+          alt="Nahual Guía CHANTICO"
           class="toltec-mascot-img toltec-mascot-pop"
         />
       </div>
       <div class="numa-bot-launcher-text">
-        <span class="numa-bot-launcher-title">Guía Tolteca CHANTICO</span>
+        <span class="numa-bot-launcher-title">Nahual Guía CHANTICO</span>
         <span class="numa-bot-launcher-sub">Sabiduría Ancestral & Fuego</span>
       </div>
       <span class="numa-bot-badge" id="numa-bot-badge">✨ Saludo Sagrado</span>
@@ -183,16 +183,16 @@ export class NumaBotWidget {
     chatWindow.innerHTML = `
       <header class="numa-bot-header">
         <div class="numa-bot-header-info">
-          <div class="numa-bot-avatar" title="Mascota Nahual CHANTICO">
+          <div class="numa-bot-avatar" title="Nahual Guía CHANTICO">
             <img
               id="toltec-avatar-header"
               src="./assets/images/bot/toltec_bot_greeting.png"
-              alt="Avatar Guía Tolteca"
+              alt="Nahual Guía CHANTICO"
               class="toltec-avatar-mascot toltec-mascot-pop"
             />
           </div>
           <div class="numa-bot-header-titles">
-            <h4 class="numa-bot-title">Guía Tolteca CHANTICO</h4>
+            <h4 class="numa-bot-title">Nahual Guía CHANTICO</h4>
             <div class="numa-bot-status">
               <span class="numa-bot-status-dot"></span>
               <span id="toltec-status-text">¡Bienvenida a CHANTICO!</span>
@@ -291,8 +291,10 @@ export class NumaBotWidget {
 
   open() {
     this.isOpen = true;
+    document.body.classList.add('numa-bot-active');
     this.windowEl.classList.add('is-open');
     this.windowEl.setAttribute('aria-hidden', 'false');
+    if (this.launcherEl) this.launcherEl.classList.add('is-hidden');
     this.setMascotState('greeting');
     this.inputEl.focus();
     this.scrollToBottom();
@@ -300,9 +302,11 @@ export class NumaBotWidget {
 
   close() {
     this.isOpen = false;
+    document.body.classList.remove('numa-bot-active');
     this.setMascotState('goodbye');
     this.windowEl.classList.remove('is-open');
     this.windowEl.setAttribute('aria-hidden', 'true');
+    if (this.launcherEl) this.launcherEl.classList.remove('is-hidden');
     setTimeout(() => {
       if (!this.isOpen) this.setMascotState('resting');
     }, 2200);

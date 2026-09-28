@@ -525,27 +525,6 @@ html, body {
   .floating-equalizer {
     display: none; /* Ahorra espacio horizontal crítico en teléfonos angostos */
   }
-
-  .numa-bot-launcher {
-    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-    right: 10px;
-    padding: 5px;
-    border-radius: 50%;
-  }
-
-  .numa-bot-launcher-text {
-    display: none !important;
-  }
-
-  .numa-bot-launcher-icon {
-    width: 36px;
-    height: 36px;
-  }
-
-  .toltec-mascot-img {
-    width: 30px;
-    height: 30px;
-  }
 }
 
 /* ==========================================================================

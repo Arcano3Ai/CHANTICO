@@ -25,6 +25,12 @@
   user-select: none;
 }
 
+.numa-bot-launcher.is-hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: scale(0.6) translateY(20px) !important;
+}
+
 .numa-bot-launcher:hover {
   border-color: var(--color-flame, #FFB703);
   transform: translateY(-3px) scale(1.02);
@@ -548,26 +554,199 @@
   margin-left: 2px;
 }
 
-/* --- ADAPTACIÓN RESPONSIVE --- */
+/* --- ADAPTACIÓN RESPONSIVE AVANZADA PARA MÓVIL (Android & iOS) --- */
 @media (max-width: 640px) {
+  body.numa-bot-active .numa-floating-player {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(20px) !important;
+  }
+
+  /* Botón Flotante Circular del Nahual (56px) */
   .numa-bot-launcher {
-    bottom: 16px;
-    right: 16px;
-    padding: 6px 14px 6px 8px;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    right: 14px;
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #3a0d10 0%, #1a0507 65%, #0A0A0A 100%);
+    border: 2px solid var(--color-flame);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8), 0 0 16px rgba(255, 183, 3, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .numa-bot-launcher-text {
-    display: none; /* Icon-only en pantallas muy pequeñas */
+
+  .numa-bot-launcher:active {
+    transform: scale(0.92);
   }
+
   .numa-bot-launcher-icon {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .toltec-mascot-img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px rgba(255, 183, 3, 0.8));
+  }
+
+  .numa-bot-launcher-text {
+    display: none !important;
+  }
+
+  .numa-bot-badge {
+    top: -2px;
+    right: -2px;
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    font-size: 0;
+    line-height: 0;
+    border-radius: 50%;
+    background: #FFB703;
+    border: 2px solid #0A0A0A;
+    box-shadow: 0 0 8px #FFB703, 0 0 14px rgba(255, 183, 3, 0.7);
+    animation: numaPulseGlow 2s infinite ease-in-out;
+  }
+
+  /* Ventana de Chat Flotante en Móvil (Bottom Sheet nativo con Dynamic Viewport) */
+  .numa-bot-window {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 88vh;
+    height: 88dvh;
+    max-height: 92dvh;
+    border-radius: 22px 22px 0 0;
+    border: 1px solid rgba(255, 183, 3, 0.35);
+    border-bottom: none;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.95), 0 0 30px rgba(255, 183, 3, 0.15);
+    z-index: 2200;
+    transform: translateY(100%);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease;
+  }
+
+  .numa-bot-window.is-open {
+    transform: translateY(0);
+  }
+
+  .numa-bot-header {
+    padding: 12px 16px;
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+  }
+
+  .numa-bot-avatar {
+    width: 44px;
+    height: 44px;
+  }
+
+  .toltec-avatar-mascot {
     width: 38px;
     height: 38px;
   }
-  .numa-bot-window {
-    bottom: 74px;
-    right: 12px;
-    left: 12px;
-    width: auto;
-    height: calc(100vh - 120px);
-    border-radius: 16px;
+
+  .numa-bot-title {
+    font-size: 1rem;
+  }
+
+  .numa-bot-status {
+    font-size: 0.72rem;
+  }
+
+  .numa-bot-btn-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+    color: var(--color-beige-light);
+  }
+
+  .numa-bot-messages {
+    padding: 14px 12px;
+    gap: 12px;
+  }
+
+  .numa-bot-msg {
+    max-width: 92%;
+  }
+
+  .numa-bot-bubble {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    padding: 10px 13px;
+  }
+
+  .numa-bot-product-card {
+    padding: 8px 10px;
+    gap: 10px;
+  }
+
+  .numa-bot-prod-thumb {
+    width: 46px;
+    height: 46px;
+  }
+
+  .numa-bot-prod-name {
+    font-size: 0.8rem;
+  }
+
+  .numa-bot-prod-price {
+    font-size: 0.78rem;
+  }
+
+  .numa-bot-prod-action {
+    font-size: 0.68rem;
+    padding: 4px 8px;
+  }
+
+  /* Carrusel horizontal táctil para chips de respuestas rápidas */
+  .numa-bot-quick-replies {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 8px 12px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .numa-bot-quick-replies::-webkit-scrollbar {
+    display: none;
+  }
+
+  .numa-bot-chip {
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: 0.76rem;
+    padding: 6px 12px;
+  }
+
+  .numa-bot-footer {
+    padding: 10px 12px calc(12px + env(safe-area-inset-bottom, 0px));
+    background: rgba(12, 12, 12, 0.96);
+  }
+
+  .numa-bot-input {
+    font-size: 16px !important;
+    padding: 10px 14px;
+  }
+
+  .numa-bot-send-btn {
+    width: 40px;
+    height: 40px;
   }
 }
