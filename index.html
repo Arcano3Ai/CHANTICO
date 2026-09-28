@@ -109,6 +109,7 @@
 
         <a href="#tienda" class="nav-link" data-i18n="nav_shop">TIENDA</a>
         <a href="#rituales" class="nav-link" data-i18n="nav_rituals">RITUALES</a>
+        <a href="#espejo-obsidiana" class="nav-link" style="color: var(--color-flame); font-weight: 700; text-shadow: 0 0 10px rgba(255, 183, 3, 0.45);">🔮 ESPEJO</a>
         <a href="#journal" class="nav-link" data-i18n="nav_journal">JOURNAL</a>
         <a href="#sobre-chantico" class="nav-link" data-i18n="nav_contact">NOSOTROS</a>
       </nav>
@@ -291,6 +292,9 @@
         <div class="hero-cta-group">
           <a href="#experiencias" class="btn btn-primary">
             INICIA TU VIAJE
+          </a>
+          <a href="#espejo-obsidiana" class="btn btn-gold-glow" style="border-color: var(--color-flame); color: var(--color-flame); box-shadow: 0 0 15px rgba(255, 183, 3, 0.35);">
+            🔮 ESPEJO DE OBSIDIANA
           </a>
           <a href="#tienda" class="btn btn-secondary">
             EL SEXTO SOL (TIENDA)
@@ -517,6 +521,25 @@
               </button>
             </div>
           </div>
+        </div>
+
+        <!-- Banner Destacado: Herramienta Sagrada Espejo de Obsidiana -->
+        <div style="margin-top: 3.5rem; background: radial-gradient(circle at 50% 50%, rgba(230, 38, 36, 0.2) 0%, rgba(14, 12, 18, 0.96) 80%); border: 1.5px solid var(--color-flame); border-radius: var(--radius-lg); padding: 2.25rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; box-shadow: 0 0 35px rgba(255, 183, 3, 0.2);">
+          <div style="max-width: 680px;">
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem;">
+              <span class="badge badge-gold">HERRAMIENTA SAGRADA INTERACTIVA</span>
+              <span style="font-size: 0.75rem; color: var(--color-flame); letter-spacing: 0.1em; text-transform: uppercase;">432 Hz · Vórtice Activo</span>
+            </div>
+            <h3 style="font-family: var(--font-serif-display); font-size: 1.65rem; color: #FFFFFF; margin-bottom: 0.5rem;">
+              El Espejo de Obsidiana de Tezcatlipoca
+            </h3>
+            <p style="font-size: 0.92rem; color: var(--color-text-secondary); line-height: 1.6; margin: 0;">
+              Consulta el oráculo tolteca incrustado en el altar ceremonial. Partículas vivas a 60 FPS, transmutación de sombras y sintonización de sonido sagrado continuo.
+            </p>
+          </div>
+          <a href="#espejo-obsidiana" class="btn btn-primary btn-gold-shimmer" style="padding: 1rem 2rem; font-size: 0.85rem;">
+            <span>CONSULTAR AL ESPEJO 🔮</span>
+          </a>
         </div>
 
         <!-- Promociones y Materiales CHANTICO -->
@@ -1073,7 +1096,8 @@
                   src="./assets/images/espejo_obsidiana_marco.jpg" 
                   alt="Altar Ceremonial Espejo de Obsidiana" 
                   class="obsidian-altar-frame" 
-                  loading="lazy"
+                  loading="eager"
+                  fetchpriority="high"
                 />
 
                 <!-- Orbe de Obsidiana Interactivo Incrustado en el Marco -->
