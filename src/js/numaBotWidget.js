@@ -65,11 +65,17 @@ export class NumaBotWidget {
     this.currentState = 'greeting';
     this.idleTimer = null;
     this.launcherCycleTimer = null;
+    this.calloutDismissTimer = null;
 
     this.initDOM();
     this.bindEvents();
     this.sendInitialGreeting();
     this.startLauncherCycle();
+
+    // Saludo proactivo del Nahual tras unos segundos de navegación: "¡Ey! Aquí estoy... ¿me ves?"
+    setTimeout(() => {
+      this.showProactiveGreeting();
+    }, 3800);
   }
 
   /**
@@ -196,6 +202,47 @@ export class NumaBotWidget {
   }
 
   /**
+   * Saludo proactivo animado: El Nahual saluda con su patita/mano y pregunta "¡Ey! Aquí estoy... ¿me ves?"
+   */
+  showProactiveGreeting() {
+    if (this.isOpen) return;
+    const callout = document.getElementById('numa-bot-callout');
+    const launcherImg = document.getElementById('toltec-mascot-launcher');
+    const badgeEl = document.getElementById('numa-bot-badge');
+
+    if (launcherImg) {
+      launcherImg.src = TOLTEC_MASCOT_STATES.greeting.src;
+      launcherImg.classList.add('toltec-mascot-waving');
+    }
+    if (badgeEl) {
+      badgeEl.textContent = '👋 ¡Ey! Aquí estoy';
+    }
+    if (callout) {
+      callout.classList.add('is-visible');
+    }
+
+    // Ocultar suavemente después de 8.5 segundos si no se interactúa
+    this.calloutDismissTimer = setTimeout(() => {
+      this.hideCallout();
+    }, 8500);
+  }
+
+  hideCallout() {
+    const callout = document.getElementById('numa-bot-callout');
+    const launcherImg = document.getElementById('toltec-mascot-launcher');
+    if (callout) {
+      callout.classList.remove('is-visible');
+    }
+    if (launcherImg) {
+      launcherImg.classList.remove('toltec-mascot-waving');
+    }
+    if (this.calloutDismissTimer) {
+      clearTimeout(this.calloutDismissTimer);
+      this.calloutDismissTimer = null;
+    }
+  }
+
+  /**
    * Construye el DOM del launcher y la ventana flotante
    */
   initDOM() {
@@ -209,6 +256,12 @@ export class NumaBotWidget {
     launcher.setAttribute('aria-label', 'Abrir Nahual Guía CHANTICO');
     launcher.setAttribute('title', 'Nahual Guía CHANTICO · Tarot Tolteca & Fuego Sagrado');
     launcher.innerHTML = `
+      <!-- Burbuja proactiva de saludo -->
+      <div class="numa-bot-callout" id="numa-bot-callout" role="tooltip" aria-label="Saludo del Nahual">
+        <span class="numa-bot-callout-text">¡Ey! Aquí estoy... ¿me ves? 👋✨</span>
+        <button type="button" class="numa-bot-callout-close" id="numa-bot-callout-close" aria-label="Cerrar saludo">&times;</button>
+      </div>
+
       <div class="numa-bot-launcher-icon">
         <img
           id="toltec-mascot-launcher"
@@ -304,8 +357,28 @@ export class NumaBotWidget {
   bindEvents() {
     this.launcherEl.addEventListener('click', () => this.toggle());
 
+    // Eventos para la burbuja proactiva de saludo
+    const calloutEl = document.getElementById('numa-bot-callout');
+    const calloutCloseBtn = document.getElementById('numa-bot-callout-close');
+
+    if (calloutCloseBtn) {
+      calloutCloseBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.hideCallout();
+      });
+    }
+
+    if (calloutEl) {
+      calloutEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.hideCallout();
+        this.open();
+      });
+    }
+
     // Al pasar el mouse en el launcher, cicla dinamicamente entre todas sus posiciones/poses
     this.launcherEl.addEventListener('mouseenter', () => {
+      this.hideCallout();
       if (!this.isOpen) {
         this.startHoverMascotCycle();
       }
@@ -323,6 +396,7 @@ export class NumaBotWidget {
     });
 
     this.launcherEl.addEventListener('touchstart', () => {
+      this.hideCallout();
       if (!this.isOpen) {
         const launcherImg = document.getElementById('toltec-mascot-launcher');
         if (launcherImg) launcherImg.src = TOLTEC_MASCOT_STATES.greeting.src;
@@ -357,6 +431,7 @@ export class NumaBotWidget {
 
   open() {
     this.isOpen = true;
+    this.hideCallout();
     this.stopHoverMascotCycle();
     document.body.classList.add('numa-bot-active');
     this.windowEl.classList.add('is-open');

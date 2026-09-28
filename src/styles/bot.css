@@ -142,6 +142,96 @@
   50% { transform: scale(1.12); opacity: 1; }
 }
 
+/* --- BURBUJA DE SALUDO PROACTIVO (¡Ey, aquí estoy! ¿Me ves?) --- */
+.numa-bot-callout {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  right: 0;
+  background: linear-gradient(135deg, rgba(28, 12, 14, 0.96) 0%, rgba(12, 12, 12, 0.98) 100%);
+  border: 1.5px solid var(--color-gold, #FFB703);
+  border-radius: 18px;
+  padding: 10px 16px 10px 14px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 183, 3, 0.45);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.92);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1001;
+  cursor: pointer;
+}
+
+.numa-bot-callout::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 28px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 8px solid var(--color-gold, #FFB703);
+}
+
+.numa-bot-callout.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.numa-bot-callout-text {
+  font-family: var(--font-serif-display, Georgia, serif);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #FFF3D6;
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.numa-bot-callout-close {
+  background: transparent;
+  border: none;
+  color: rgba(255, 215, 0, 0.7);
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0 0 0 4px;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.numa-bot-callout-close:hover {
+  color: #FFF;
+  transform: scale(1.2);
+}
+
+/* Animación de saludo alegre del Nahual cuando llama la atención */
+.toltec-mascot-waving {
+  animation: toltecWaveGreeting 1.4s ease-in-out infinite !important;
+}
+
+@keyframes toltecWaveGreeting {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  20% {
+    transform: translateY(-8px) rotate(-8deg) scale(1.15);
+  }
+  40% {
+    transform: translateY(-10px) rotate(8deg) scale(1.2);
+  }
+  60% {
+    transform: translateY(-8px) rotate(-6deg) scale(1.15);
+  }
+  80% {
+    transform: translateY(-3px) rotate(3deg) scale(1.05);
+  }
+}
+
 /* --- VENTANA / CONTENEDOR DEL CHAT --- */
 .numa-bot-window {
   position: fixed;
