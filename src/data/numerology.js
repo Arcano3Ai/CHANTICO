@@ -171,3 +171,60 @@ export const LIFE_PATH_ARCHETYPES = {
     element: 'Fuego Blanco Trascendental'
   }
 };
+
+import nahualJaguar from '../../assets/images/nahuales/nahual_ocelotl_jaguar.png';
+import nahualDragon from '../../assets/images/nahuales/nahual_xiuhcoatl_dragon.png';
+import nahualGato from '../../assets/images/nahuales/nahual_miztli_gato.png';
+import nahualQuetzal from '../../assets/images/nahuales/nahual_cuauhtli_quetzal.png';
+
+export const NAHUALES_INFO = {
+  ocelotl: {
+    id: 'ocelotl',
+    name: 'Ocelotl · Jaguar Sagrado de Fuego',
+    title: 'Guardián del Fuego & la Fuerza Primal',
+    element: 'Fuego Sagrado',
+    image: nahualJaguar,
+    numbers: [1, 4, 8],
+    phrase: '«In Ocelotl moyocoyani» — La fuerza que abre caminos con determinación sagrada.',
+    desc: 'Tu espíritu está resguardado por el Jaguar Ocelotl, emblema mexica de valentía, liderazgo y fuego transformador.'
+  },
+  xiuhcoatl: {
+    id: 'xiuhcoatl',
+    name: 'Xiuhcóatl · Dragón Cósmico Esmeralda',
+    title: 'Guardián de la Alquimia & Sabiduría Antigua',
+    element: 'Fuego Alquímico & Tierra',
+    image: nahualDragon,
+    numbers: [2, 7, 11],
+    phrase: '«Xiuhcoatl tlamatiliztli» — El fuego turquesa que transmuta la sombra en sabiduría.',
+    desc: 'Tu espíritu está custodiado por Xiuhcóatl, la serpiente y dragón de fuego esmeralda, regente de la intuición profunda y la visión trascendental.'
+  },
+  miztli: {
+    id: 'miztli',
+    name: 'Miztli · Felino Místico Rosa',
+    title: 'Guardián del Amor, la Armonía & el Tonal',
+    element: 'Agua Sagrada & Corazón',
+    image: nahualGato,
+    numbers: [3, 6],
+    phrase: '«Yolotl tlapaltic» — Corazón valiente que irradia belleza, amor y empatía cósmica.',
+    desc: 'Tu espíritu está guiado por Miztli, el felino sagrado del tonal y la alegría, maestro de la empatía, el arte y la dulzura sanadora.'
+  },
+  cuauhtli: {
+    id: 'cuauhtli',
+    name: 'Cuauhtli Quetzal · Espíritu Alado de las Alturas',
+    title: 'Guardián de la Visión Superior & la Libertad',
+    element: 'Viento & Éter Celestial',
+    image: nahualQuetzal,
+    numbers: [5, 9, 22, 33],
+    phrase: '«Cuauhtli ilhuicatl» — Quien vuela hacia el sol y observa el todo con ojos de eternidad.',
+    desc: 'Tu espíritu vuela junto a Cuauhtli Quetzal, el nahual con penacho de plumas sagradas, protector de los espíritus libres y la elevación cósmica.'
+  }
+};
+
+export function getNahualForLifePath(lifePath) {
+  const num = Number(lifePath);
+  if ([1, 4, 8].includes(num)) return NAHUALES_INFO.ocelotl;
+  if ([2, 7, 11].includes(num)) return NAHUALES_INFO.xiuhcoatl;
+  if ([3, 6].includes(num)) return NAHUALES_INFO.miztli;
+  if ([5, 9, 22, 33].includes(num)) return NAHUALES_INFO.cuauhtli;
+  return NAHUALES_INFO.ocelotl;
+}

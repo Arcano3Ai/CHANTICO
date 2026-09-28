@@ -1,4 +1,4 @@
-import { LIFE_PATH_ARCHETYPES } from '../data/numerology.js';
+import { LIFE_PATH_ARCHETYPES, getNahualForLifePath } from '../data/numerology.js';
 
 // Tabla pitagórica de reducción alfanumérica
 const PYTHAGOREAN_MAP = {
@@ -108,12 +108,14 @@ export function getFullNumerologyReading(dateStr, fullName = '') {
   const expressionNumber = fullName ? calculateExpressionNumber(fullName) : null;
 
   const archetype = LIFE_PATH_ARCHETYPES[lifePathNumber] || LIFE_PATH_ARCHETYPES[reduceToCoreNumber(lifePathNumber, false)];
+  const nahual = getNahualForLifePath(lifePathNumber);
 
   return {
     lifePathNumber,
     personalYear,
     soulNumber,
     expressionNumber,
-    archetype
+    archetype,
+    nahual
   };
 }

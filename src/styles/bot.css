@@ -367,6 +367,93 @@
   gap: 6px;
 }
 
+/* --- SELECTOR DE NAHUALES GUARDIANES EN EL BOT --- */
+.numa-nahual-picker {
+  background: rgba(18, 12, 14, 0.98);
+  border-bottom: 1.5px solid var(--color-gold);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: pickerSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+
+@keyframes pickerSlideDown {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.nahual-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-serif-display);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.nahual-picker-close {
+  background: transparent;
+  border: none;
+  color: var(--color-beige);
+  font-size: 1.2rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.nahual-picker-close:hover {
+  color: #FFF;
+}
+
+.nahual-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.nahual-picker-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 3px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 183, 3, 0.22);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.nahual-picker-option:hover,
+.nahual-picker-option.active {
+  background: rgba(230, 38, 36, 0.28);
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 183, 3, 0.35);
+}
+
+.nahual-picker-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+}
+
+.nahual-picker-name {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--color-beige-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
 .numa-bot-btn-icon {
   background: transparent;
   border: none;

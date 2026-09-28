@@ -9,6 +9,55 @@ import mascotConfirmation from '../../assets/images/bot/toltec_bot_confirmation.
 import mascotConfused from '../../assets/images/bot/toltec_bot_confused.png';
 import mascotGoodbye from '../../assets/images/bot/toltec_bot_goodbye.png';
 
+// Los 4 Nahuales Guardianes Sagrados de CHANTICO
+import nahualJaguar from '../../assets/images/nahuales/nahual_ocelotl_jaguar.png';
+import nahualDragon from '../../assets/images/nahuales/nahual_xiuhcoatl_dragon.png';
+import nahualGato from '../../assets/images/nahuales/nahual_miztli_gato.png';
+import nahualQuetzal from '../../assets/images/nahuales/nahual_cuauhtli_quetzal.png';
+
+export const AVAILABLE_NAHUAL_AVATARS = [
+  {
+    id: 'tolteca',
+    name: 'Guía Tolteca',
+    shortName: 'Tolteca',
+    icon: '🐾',
+    src: mascotGreeting,
+    greeting: '¡Niltze! Soy la Guía Tolteca de CHANTICO, guardián del fuego del hogar y el tarot de obsidiana. 🔥'
+  },
+  {
+    id: 'ocelotl',
+    name: 'Ocelotl · Jaguar',
+    shortName: 'Jaguar',
+    icon: '🐆',
+    src: nahualJaguar,
+    greeting: '¡Niltze! Soy Ocelotl, el Jaguar Sagrado de fuego. Te acompaño con fuerza, valentía y liderazgo. 🐆'
+  },
+  {
+    id: 'xiuhcoatl',
+    name: 'Xiuhcóatl · Dragón',
+    shortName: 'Dragón',
+    icon: '🐉',
+    src: nahualDragon,
+    greeting: '¡Niltze! Soy Xiuhcóatl, el Dragón Esmeralda. Despierto en ti la visión profunda y la alquimia interior. 🐉'
+  },
+  {
+    id: 'miztli',
+    name: 'Miztli · Tonal Rosa',
+    shortName: 'Gatito Rosa',
+    icon: '🐱',
+    src: nahualGato,
+    greeting: '¡Niltze! Soy Miztli, el felino místico del tonal. Traigo armonía, amor incondicional y dulzura a tu ser. 🐱'
+  },
+  {
+    id: 'cuauhtli',
+    name: 'Cuauhtli · Quetzal',
+    shortName: 'Quetzal',
+    icon: '🪶',
+    src: nahualQuetzal,
+    greeting: '¡Niltze! Soy Cuauhtli Quetzal, espíritu alado de las alturas. Elevo tu mente hacia la libertad y la luz cósmica. 🪶'
+  }
+];
+
 /**
  * Estados de la Mascota / Nahual Sagrado de CHANTICO (Edición Ultra HD 2026)
  * 8 poses sagradas extraídas en alta definición con transparencia alfa
@@ -81,11 +130,17 @@ export class NumaBotWidget {
     this.calloutDismissTimer = null;
     this.toltecVoiceTimer = null;
     this.currentVoiceIdx = 0;
+    this.activeNahualId = localStorage.getItem('chantico_active_nahual') || 'tolteca';
 
     this.initDOM();
     this.bindEvents();
     this.sendInitialGreeting();
     this.startLauncherCycle();
+
+    // Aplicar nahual guardado si existe
+    if (this.activeNahualId && this.activeNahualId !== 'tolteca') {
+      this.applyActiveNahualAvatar(this.activeNahualId, false);
+    }
 
     // Saludo proactivo del Nahual hablando en lengua Tolteca
     setTimeout(() => {
@@ -100,6 +155,18 @@ export class NumaBotWidget {
    * Cambia el estado visual de la mascota en el header y launcher
    */
   setMascotState(stateKey) {
+    // Si hay un nahual personalizado activo (Jaguar, Dragón, etc.), se preserva su avatar
+    if (this.activeNahualId && this.activeNahualId !== 'tolteca') {
+      const activeNahual = AVAILABLE_NAHUAL_AVATARS.find(n => n.id === this.activeNahualId);
+      if (activeNahual) {
+        const headerAvatar = document.getElementById('toltec-avatar-header');
+        if (headerAvatar) headerAvatar.src = activeNahual.src;
+        const launcherImg = document.getElementById('toltec-mascot-launcher');
+        if (launcherImg && !this.isOpen) launcherImg.src = activeNahual.src;
+        return;
+      }
+    }
+
     const state = TOLTEC_MASCOT_STATES[stateKey];
     if (!state) return;
 
@@ -153,6 +220,32 @@ export class NumaBotWidget {
     this.launcherCycleTimer = setInterval(() => {
       if (this.isOpen) return; // No ciclar launcher si el chat está abierto
 
+      // Si hay un nahual personalizado activo (Jaguar, Dragón, etc.), mantener su imagen y realizar micro-movimientos
+      if (this.activeNahualId && this.activeNahualId !== 'tolteca') {
+        const activeNahual = AVAILABLE_NAHUAL_AVATARS.find(n => n.id === this.activeNahualId);
+        const launcherImg = document.getElementById('toltec-mascot-launcher');
+        const badgeEl = document.getElementById('numa-bot-badge');
+
+        if (launcherImg && activeNahual) {
+          launcherImg.src = activeNahual.src;
+          launcherImg.classList.remove('toltec-mascot-pop');
+          void launcherImg.offsetWidth;
+          launcherImg.classList.add('toltec-mascot-pop');
+        }
+
+        if (badgeEl && activeNahual) {
+          const nahualBadges = [
+            `${activeNahual.icon} ${activeNahual.shortName}`,
+            '✨ En sintonía',
+            '🔥 Nahual Guía',
+            '🔮 Sabiduría Viva'
+          ];
+          idx = (idx + 1) % nahualBadges.length;
+          badgeEl.textContent = nahualBadges[idx];
+        }
+        return;
+      }
+
       idx = (idx + 1) % cycleStates.length;
       const nextState = cycleStates[idx];
       const launcherImg = document.getElementById('toltec-mascot-launcher');
@@ -172,11 +265,27 @@ export class NumaBotWidget {
   }
 
   /**
-   * Cicla dinámicamente las diferentes posiciones del Nahual cuando el usuario pasa el mouse por encima (Hover interactivo)
+   * Cicla dinámicamente las diferentes posiciones o movimientos del Nahual cuando el usuario pasa el mouse por encima (Hover interactivo)
    */
   startHoverMascotCycle() {
     if (this.isOpen) return;
     this.stopHoverMascotCycle();
+
+    // Si tiene un Nahual personalizado activo (Jaguar, Dragón, Gatito, Quetzal)
+    if (this.activeNahualId && this.activeNahualId !== 'tolteca') {
+      const activeNahual = AVAILABLE_NAHUAL_AVATARS.find(n => n.id === this.activeNahualId);
+      const launcherImg = document.getElementById('toltec-mascot-launcher');
+      const badgeEl = document.getElementById('numa-bot-badge');
+
+      if (launcherImg && activeNahual) {
+        launcherImg.src = activeNahual.src;
+        launcherImg.classList.add('toltec-mascot-waving');
+      }
+      if (badgeEl && activeNahual) {
+        badgeEl.textContent = `👋 ¡Hola! Soy ${activeNahual.shortName}`;
+      }
+      return;
+    }
 
     const hoverPoses = [
       'greeting',
@@ -216,6 +325,14 @@ export class NumaBotWidget {
     if (this.hoverCycleTimer) {
       clearInterval(this.hoverCycleTimer);
       this.hoverCycleTimer = null;
+    }
+    const launcherImg = document.getElementById('toltec-mascot-launcher');
+    if (launcherImg) {
+      launcherImg.classList.remove('toltec-mascot-waving');
+      if (this.activeNahualId && this.activeNahualId !== 'tolteca') {
+        const activeNahual = AVAILABLE_NAHUAL_AVATARS.find(n => n.id === this.activeNahualId);
+        if (activeNahual) launcherImg.src = activeNahual.src;
+      }
     }
   }
 
@@ -349,6 +466,9 @@ export class NumaBotWidget {
           </div>
         </div>
         <div class="numa-bot-header-actions">
+          <button class="numa-bot-btn-icon" id="numa-bot-nahual-picker-btn" title="Cambiar Nahual Guía (Jaguar, Dragón, Gatito, Quetzal)" aria-label="Cambiar Nahual Guía">
+            <span id="numa-nahual-picker-icon" style="font-size: 1.15rem; line-height: 1;">🐾</span>
+          </button>
           <button class="numa-bot-btn-icon" id="numa-bot-restart-btn" title="Reiniciar consulta ancestral">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="1 4 1 10 7 10"></polyline>
@@ -363,6 +483,15 @@ export class NumaBotWidget {
           </button>
         </div>
       </header>
+
+      <!-- Selector Desplegable de Nahuales Guardianes -->
+      <div class="numa-nahual-picker" id="numa-nahual-picker" style="display: none;">
+        <div class="nahual-picker-header">
+          <span>Elige tu Nahual Guía:</span>
+          <button type="button" class="nahual-picker-close" id="numa-nahual-picker-close">&times;</button>
+        </div>
+        <div class="nahual-picker-grid" id="numa-nahual-picker-grid"></div>
+      </div>
 
       <div class="numa-bot-messages" id="numa-bot-messages-list"></div>
 
@@ -396,6 +525,108 @@ export class NumaBotWidget {
     this.quickRepliesEl = document.getElementById('numa-bot-quick-replies');
     this.formEl = document.getElementById('numa-bot-form');
     this.inputEl = document.getElementById('numa-bot-input');
+
+    this.renderNahualPicker();
+  }
+
+  /**
+   * Renderiza el selector de los 5 Nahuales disponibles
+   */
+  renderNahualPicker() {
+    const grid = document.getElementById('numa-nahual-picker-grid');
+    if (!grid) return;
+
+    grid.innerHTML = AVAILABLE_NAHUAL_AVATARS.map(n => `
+      <div class="nahual-picker-option ${n.id === this.activeNahualId ? 'active' : ''}" data-nahual-id="${n.id}" title="${n.name}">
+        <img src="${n.src}" alt="${n.name}" class="nahual-picker-img" />
+        <span class="nahual-picker-name">${n.shortName}</span>
+      </div>
+    `).join('');
+
+    grid.querySelectorAll('.nahual-picker-option').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.getAttribute('data-nahual-id');
+        this.selectNahualGuide(id);
+      });
+    });
+  }
+
+  /**
+   * Cambia el Nahual Guía activo
+   */
+  selectNahualGuide(id) {
+    const nahual = AVAILABLE_NAHUAL_AVATARS.find(n => n.id === id) || AVAILABLE_NAHUAL_AVATARS[0];
+    this.activeNahualId = nahual.id;
+    localStorage.setItem('chantico_active_nahual', nahual.id);
+
+    this.applyActiveNahualAvatar(nahual.id, true);
+
+    // Ocultar picker
+    const picker = document.getElementById('numa-nahual-picker');
+    if (picker) picker.style.display = 'none';
+
+    this.renderNahualPicker();
+
+    // Mensaje de saludo en el chat con la voz del Nahual elegido
+    this.appendMessage('bot', `✨ **${nahual.name}** ha tomado la guía de tu consulta:\n\n${nahual.greeting}`);
+  }
+
+  applyActiveNahualAvatar(id, animate = true) {
+    const nahual = AVAILABLE_NAHUAL_AVATARS.find(n => n.id === id) || AVAILABLE_NAHUAL_AVATARS[0];
+    this.activeNahualId = nahual.id;
+
+    const pickerIcon = document.getElementById('numa-nahual-picker-icon');
+    if (pickerIcon) pickerIcon.textContent = nahual.icon;
+
+    const headerAvatar = document.getElementById('toltec-avatar-header');
+    if (headerAvatar) {
+      headerAvatar.src = nahual.src;
+      if (animate) {
+        headerAvatar.classList.remove('toltec-mascot-pop');
+        void headerAvatar.offsetWidth;
+        headerAvatar.classList.add('toltec-mascot-pop');
+      }
+    }
+
+    const launcherImg = document.getElementById('toltec-mascot-launcher');
+    if (launcherImg) {
+      launcherImg.src = nahual.src;
+      if (animate) {
+        launcherImg.classList.remove('toltec-mascot-pop');
+        void launcherImg.offsetWidth;
+        launcherImg.classList.add('toltec-mascot-pop');
+      }
+    }
+
+    const titleEl = document.querySelector('.numa-bot-title');
+    if (titleEl) titleEl.textContent = `Nahual ${nahual.shortName}`;
+
+    // Sincronizar botón del header de la página
+    const headerThumb = document.getElementById('header-nahual-thumb');
+    const headerTitle = document.getElementById('header-nahual-title');
+    if (headerThumb) headerThumb.src = nahual.src;
+    if (headerTitle) headerTitle.textContent = nahual.shortName;
+
+    // Resplandor y borde del launcher según el elemento del Nahual
+    const launcherIcon = document.querySelector('.numa-bot-launcher-icon');
+    if (launcherIcon) {
+      if (nahual.id === 'ocelotl') {
+        launcherIcon.style.borderColor = '#FF9E00';
+        launcherIcon.style.boxShadow = '0 0 20px rgba(255, 158, 0, 0.6), inset 0 0 10px rgba(255, 158, 0, 0.3)';
+      } else if (nahual.id === 'xiuhcoatl') {
+        launcherIcon.style.borderColor = '#00E676';
+        launcherIcon.style.boxShadow = '0 0 20px rgba(0, 230, 118, 0.55), inset 0 0 10px rgba(0, 230, 118, 0.3)';
+      } else if (nahual.id === 'miztli') {
+        launcherIcon.style.borderColor = '#FF4081';
+        launcherIcon.style.boxShadow = '0 0 20px rgba(255, 64, 129, 0.6), inset 0 0 10px rgba(255, 64, 129, 0.3)';
+      } else if (nahual.id === 'cuauhtli') {
+        launcherIcon.style.borderColor = '#7C4DFF';
+        launcherIcon.style.boxShadow = '0 0 20px rgba(124, 77, 255, 0.6), inset 0 0 10px rgba(124, 77, 255, 0.3)';
+      } else {
+        launcherIcon.style.borderColor = 'var(--color-flame)';
+        launcherIcon.style.boxShadow = '0 0 16px rgba(255, 183, 3, 0.4), inset 0 0 8px rgba(230, 38, 36, 0.35)';
+      }
+    }
   }
 
   /**
@@ -403,6 +634,33 @@ export class NumaBotWidget {
    */
   bindEvents() {
     this.launcherEl.addEventListener('click', () => this.toggle());
+
+    // Escuchar cambios de Nahual emitidos desde el modal o la cabecera
+    window.addEventListener('chantico:nahualChanged', (e) => {
+      const newNahualId = e.detail?.nahualId;
+      if (newNahualId && newNahualId !== this.activeNahualId) {
+        this.selectNahualGuide(newNahualId);
+      }
+    });
+
+    // Botón para abrir / cerrar el selector de Nahuales
+    const nahualPickerBtn = document.getElementById('numa-bot-nahual-picker-btn');
+    const nahualPickerClose = document.getElementById('numa-nahual-picker-close');
+    const nahualPicker = document.getElementById('numa-nahual-picker');
+
+    if (nahualPickerBtn && nahualPicker) {
+      nahualPickerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        nahualPicker.style.display = (nahualPicker.style.display === 'none' || !nahualPicker.style.display) ? 'block' : 'none';
+      });
+    }
+
+    if (nahualPickerClose && nahualPicker) {
+      nahualPickerClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        nahualPicker.style.display = 'none';
+      });
+    }
 
     // Eventos para la burbuja proactiva de saludo
     const calloutEl = document.getElementById('numa-bot-callout');
@@ -431,14 +689,20 @@ export class NumaBotWidget {
       }
     });
 
-    // Al retirar el mouse, detiene la animacion y vuelve a pose neutral
+    // Al retirar el mouse, detiene la animacion y vuelve a pose neutral o nahual activo
     this.launcherEl.addEventListener('mouseleave', () => {
       this.stopHoverMascotCycle();
       if (!this.isOpen) {
         const launcherImg = document.getElementById('toltec-mascot-launcher');
-        if (launcherImg) launcherImg.src = TOLTEC_MASCOT_STATES.neutral.src;
         const badgeEl = document.getElementById('numa-bot-badge');
-        if (badgeEl) badgeEl.textContent = TOLTEC_MASCOT_STATES.neutral.badge;
+        if (this.activeNahualId && this.activeNahualId !== 'tolteca') {
+          const activeNahual = AVAILABLE_NAHUAL_AVATARS.find(n => n.id === this.activeNahualId);
+          if (launcherImg && activeNahual) launcherImg.src = activeNahual.src;
+          if (badgeEl && activeNahual) badgeEl.textContent = `${activeNahual.icon} ${activeNahual.shortName}`;
+        } else {
+          if (launcherImg) launcherImg.src = TOLTEC_MASCOT_STATES.neutral.src;
+          if (badgeEl) badgeEl.textContent = TOLTEC_MASCOT_STATES.neutral.badge;
+        }
       }
     });
 
@@ -446,7 +710,12 @@ export class NumaBotWidget {
       this.hideCallout();
       if (!this.isOpen) {
         const launcherImg = document.getElementById('toltec-mascot-launcher');
-        if (launcherImg) launcherImg.src = TOLTEC_MASCOT_STATES.greeting.src;
+        if (this.activeNahualId && this.activeNahualId !== 'tolteca') {
+          const activeNahual = AVAILABLE_NAHUAL_AVATARS.find(n => n.id === this.activeNahualId);
+          if (launcherImg && activeNahual) launcherImg.src = activeNahual.src;
+        } else {
+          if (launcherImg) launcherImg.src = TOLTEC_MASCOT_STATES.greeting.src;
+        }
       }
     }, { passive: true });
 

@@ -65,6 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
       cartDrawer.open();
     }
   });
+  window.numaBotWidget = numaBot;
+
+  // Inicializar Pop-up Modal y Selector de Nahual Guía en el Header
+  initNahualSelectionModal(numaBot);
 
   // Permitir abrir el bot desde cualquier botón con atributo data-open-bot
   document.querySelectorAll('[data-open-bot]').forEach(btn => {
@@ -296,6 +300,21 @@ document.addEventListener('DOMContentLoaded', () => {
         numSoulDisplay.style.display = 'inline-block';
       }
 
+      // Actualizar tarjeta del Nahual Guardián
+      if (reading.nahual) {
+        const nahualImg = document.getElementById('num-res-nahual-img');
+        const nahualName = document.getElementById('num-res-nahual-name');
+        const nahualPhrase = document.getElementById('num-res-nahual-phrase');
+        const nahualDesc = document.getElementById('num-res-nahual-desc');
+        const nahualElem = document.getElementById('num-res-nahual-element');
+
+        if (nahualImg) nahualImg.src = reading.nahual.image;
+        if (nahualName) nahualName.textContent = reading.nahual.name;
+        if (nahualPhrase) nahualPhrase.textContent = reading.nahual.phrase;
+        if (nahualDesc) nahualDesc.textContent = reading.nahual.desc;
+        if (nahualElem) nahualElem.textContent = `Elemento Regente: ${reading.nahual.element}`;
+      }
+
       if (numResultArea) {
         numResultArea.classList.add('active');
         numResultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -392,3 +411,115 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
   }, { passive: false });
 });
+
+/**
+ * Controlador del Pop-up Modal de Inicio y Selector de Nahual Guía en el Header
+ */
+function initNahualSelectionModal(numaBot) {
+  const modal = document.getElementById('nahual-select-modal');
+  const openBtn = document.getElementById('header-nahual-btn');
+  const closeBtn = document.getElementById('nahual-modal-close-btn');
+  const confirmBtn = document.getElementById('nahual-modal-confirm-btn');
+  const gotoCalcBtn = document.getElementById('nahual-goto-calc-btn');
+  const cards = document.querySelectorAll('.nahual-card-item');
+
+  let selectedNahualId = localStorage.getItem('chantico_active_nahual') || 'ocelotl';
+
+  const updateCardVisuals = (id) => {
+    selectedNahualId = id;
+    cards.forEach(card => {
+      const cardId = card.getAttribute('data-nahual');
+      if (cardId === id) {
+        card.classList.add('is-selected');
+      } else {
+        card.classList.remove('is-selected');
+      }
+    });
+  };
+
+  const applySelectedNahual = (id, closeAfter = false) => {
+    selectedNahualId = id;
+    localStorage.setItem('chantico_active_nahual', id);
+    localStorage.setItem('chantico_nahual_modal_seen', 'true');
+    updateCardVisuals(id);
+
+    // Actualizar bot y header
+    if (numaBot) {
+      numaBot.selectNahualGuide(id);
+    } else {
+      window.dispatchEvent(new CustomEvent('chantico:nahualChanged', { detail: { nahualId: id } }));
+    }
+
+    if (closeAfter && modal) {
+      modal.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+  };
+
+  // Interacción al hacer click en cualquier tarjeta de Nahual
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      const id = card.getAttribute('data-nahual');
+      if (id) {
+        applySelectedNahual(id, false);
+      }
+    });
+  });
+
+  // Abrir modal desde el botón del Header
+  openBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (modal) {
+      updateCardVisuals(localStorage.getItem('chantico_active_nahual') || 'ocelotl');
+      modal.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+  });
+
+  // Cerrar modal
+  const closeModal = () => {
+    if (modal) {
+      modal.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+  };
+
+  closeBtn?.addEventListener('click', closeModal);
+  confirmBtn?.addEventListener('click', () => {
+    applySelectedNahual(selectedNahualId, true);
+  });
+
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('is-active')) {
+      closeModal();
+    }
+  });
+
+  gotoCalcBtn?.addEventListener('click', () => {
+    closeModal();
+  });
+
+  // Sincronizar estado visual inicial con lo guardado
+  updateCardVisuals(selectedNahualId);
+  if (numaBot) {
+    numaBot.applyActiveNahualAvatar(selectedNahualId, false);
+  }
+
+  // Pop-up automático al ingresar a la página si es primera visita
+  const hasSeenModal = localStorage.getItem('chantico_nahual_modal_seen');
+  if (!hasSeenModal && modal) {
+    setTimeout(() => {
+      if (modal && !modal.classList.contains('is-active') && !numaBot?.isOpen) {
+        modal.classList.add('is-active');
+        document.body.style.overflow = 'hidden';
+      }
+    }, 1300);
+  }
+}
+
