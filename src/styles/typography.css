@@ -144,53 +144,95 @@ body, p, input, select, textarea, button, .font-sans {
 }
 
 /* --- REGLAS DE CONTRASTE ALTO PARA MODO CLARO (WCAG AAA) --- */
-[data-theme="light"] h1,
-[data-theme="light"] h2,
-[data-theme="light"] h3,
-[data-theme="light"] h4,
-[data-theme="light"] h5,
-[data-theme="light"] h6,
-[data-theme="light"] .font-serif {
-  color: #111111;
+[data-theme="light"] h1:not(.hero-section *),
+[data-theme="light"] h2:not(.hero-section *):not(.site-footer *),
+[data-theme="light"] h3:not(.hero-section *):not(.site-footer *),
+[data-theme="light"] h4:not(.hero-section *):not(.site-footer *),
+[data-theme="light"] h5:not(.hero-section *):not(.site-footer *),
+[data-theme="light"] h6:not(.hero-section *):not(.site-footer *),
+[data-theme="light"] .font-serif:not(.hero-section *):not(.site-footer *) {
+  color: #0A0A0A !important;
 }
 
-[data-theme="light"] p,
-[data-theme="light"] span,
-[data-theme="light"] label,
-[data-theme="light"] li {
-  color: inherit;
+[data-theme="light"] p:not(.hero-section *):not(.site-footer *) {
+  color: #292524 !important;
+}
+
+[data-theme="light"] strong:not(.hero-section *):not(.site-footer *),
+[data-theme="light"] b:not(.hero-section *):not(.site-footer *) {
+  color: #0A0A0A !important;
 }
 
 [data-theme="light"] .section-title {
-  color: #111111;
+  color: #0A0A0A !important;
 }
 
 [data-theme="light"] .section-subtitle,
 [data-theme="light"] .section-desc {
-  color: #292524;
+  color: #38332E !important;
 }
 
-[data-theme="light"] .eyebrow {
-  color: #B91C1C;
-  font-weight: 700;
+[data-theme="light"] .eyebrow:not(.hero-section *) {
+  color: #B91C1C !important;
+  font-weight: 700 !important;
   letter-spacing: 0.22em;
 }
 
 [data-theme="light"] .text-gold {
-  color: #9E5800;
+  color: #9E5800 !important;
   font-weight: 600;
 }
 
 [data-theme="light"] .text-flame,
 [data-theme="light"] .text-fire {
-  color: #B91C1C;
+  color: #B91C1C !important;
   font-weight: 600;
 }
 
 [data-theme="light"] .text-beige {
-  color: #1C1917;
+  color: #1C1917 !important;
 }
 
-[data-theme="light"] .text-muted {
-  color: #57534E;
+[data-theme="light"] .text-muted:not(.hero-section *):not(.site-footer *) {
+  color: #57534E !important;
 }
+
+/* Preservar legibilidad en zonas fijas oscuras (Hero y Footer) */
+[data-theme="light"] .hero-section .hero-quote,
+[data-theme="light"] .hero-section .hero-title,
+[data-theme="light"] .hero-section h1 {
+  color: #FFFFFF !important;
+  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.95), 0 0 35px rgba(0, 0, 0, 0.9) !important;
+}
+
+[data-theme="light"] .hero-section .hero-lead,
+[data-theme="light"] .hero-section p {
+  color: #FDFDFD !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95) !important;
+}
+
+[data-theme="light"] .hero-section .eyebrow {
+  color: #FFD700 !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85) !important;
+}
+
+[data-theme="light"] .site-footer .footer-col-title {
+  color: #FFFFFF !important;
+}
+
+[data-theme="light"] .site-footer .footer-links-list a {
+  color: #E8E1D5 !important;
+}
+
+[data-theme="light"] .site-footer .footer-links-list a:hover {
+  color: #FFB703 !important;
+}
+
+[data-theme="light"] .site-footer p {
+  color: #D1C7B7 !important;
+}
+
+[data-theme="light"] .site-footer .footer-bottom {
+  color: #A89F91 !important;
+}
+

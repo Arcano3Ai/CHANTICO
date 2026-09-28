@@ -1331,4 +1331,290 @@
   margin-left: auto;
 }
 
+/* ==========================================================================
+   COMPONENTES EN MODO CLARO (PERGAMINO LUMINOSO & CONTRASTE WCAG AAA)
+   ========================================================================== */
+[data-theme="light"] .modal-backdrop {
+  background: rgba(30, 25, 20, 0.65) !important;
+  backdrop-filter: blur(8px) !important;
+}
 
+[data-theme="light"] .modal-content-wrap {
+  background: #FFFFFF !important;
+  color: #111111 !important;
+  border: 1.5px solid rgba(158, 88, 0, 0.35) !important;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.18), 0 0 30px rgba(158, 88, 0, 0.08) !important;
+}
+
+[data-theme="light"] .modal-close-btn {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid rgba(158, 88, 0, 0.25) !important;
+  color: #111111 !important;
+}
+
+[data-theme="light"] .modal-close-btn:hover {
+  background: rgba(185, 28, 28, 0.12) !important;
+  color: #B91C1C !important;
+  border-color: #B91C1C !important;
+}
+
+/* Carrito Drawer en Modo Claro */
+[data-theme="light"] .cart-drawer {
+  background: #FFFFFF !important;
+  border-left: 1.5px solid rgba(158, 88, 0, 0.3) !important;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-theme="light"] .cart-drawer-header {
+  border-bottom: 1px solid rgba(158, 88, 0, 0.2) !important;
+}
+
+[data-theme="light"] .cart-drawer-title {
+  color: #0A0A0A !important;
+}
+
+[data-theme="light"] .cart-shipping-bar-box {
+  background: #FAF6F0 !important;
+  border-bottom: 1px solid rgba(158, 88, 0, 0.2) !important;
+}
+
+[data-theme="light"] .shipping-bar-text {
+  color: #292524 !important;
+}
+
+[data-theme="light"] .shipping-progress-track {
+  background: #E8E0D2 !important;
+}
+
+[data-theme="light"] .cart-item-row {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .cart-item-title {
+  color: #0A0A0A !important;
+}
+
+[data-theme="light"] .cart-item-variant {
+  color: #57534E !important;
+}
+
+[data-theme="light"] .cart-qty-control {
+  border-color: rgba(158, 88, 0, 0.3) !important;
+  background: #FAF6F0 !important;
+}
+
+[data-theme="light"] .cart-qty-btn {
+  color: #0A0A0A !important;
+}
+
+[data-theme="light"] .cart-qty-btn:hover {
+  color: #9E5800 !important;
+}
+
+[data-theme="light"] .cart-qty-val {
+  color: #0A0A0A !important;
+}
+
+[data-theme="light"] .cart-drawer-footer {
+  background: #FAF6F0 !important;
+  border-top: 1px solid rgba(158, 88, 0, 0.2) !important;
+}
+
+[data-theme="light"] .cart-totals-row {
+  color: #292524 !important;
+}
+
+[data-theme="light"] .cart-total-final {
+  color: #9A3412 !important;
+  border-top: 1px solid rgba(158, 88, 0, 0.25) !important;
+}
+
+/* Formularios en Modo Claro */
+[data-theme="light"] .form-control {
+  background: #FAF6F0 !important;
+  border: 1px solid rgba(158, 88, 0, 0.35) !important;
+  color: #0A0A0A !important;
+}
+
+[data-theme="light"] .form-control:focus {
+  background: #FFFFFF !important;
+  border-color: #9E5800 !important;
+  box-shadow: 0 0 15px rgba(158, 88, 0, 0.2) !important;
+  color: #000000 !important;
+}
+
+[data-theme="light"] .form-control::placeholder {
+  color: #78716C !important;
+}
+
+[data-theme="light"] .form-label {
+  color: #0A0A0A !important;
+  font-weight: 600;
+}
+
+/* Botones en Modo Claro */
+[data-theme="light"] .btn-secondary {
+  background: #FAF6F0 !important;
+  color: #9A3412 !important;
+  border: 1.5px solid #9E5800 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background: #9E5800 !important;
+  color: #FFFFFF !important;
+  border-color: #9E5800 !important;
+  box-shadow: 0 0 12px rgba(158, 88, 0, 0.35);
+}
+
+[data-theme="light"] .btn-outline {
+  background: transparent !important;
+  border: 1.5px solid #9E5800 !important;
+  color: #78350F !important;
+}
+
+[data-theme="light"] .btn-outline:hover {
+  background: #FAF4E8 !important;
+  color: #9A3412 !important;
+  border-color: #9A3412 !important;
+}
+
+[data-theme="light"] .btn-gold-glow {
+  background: #FAF6F0 !important;
+  color: #9E5800 !important;
+  border-color: #9E5800 !important;
+}
+
+[data-theme="light"] .btn-gold-glow:hover {
+  background: var(--color-brand-fire, #E62624) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="light"] .btn-icon {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(158, 88, 0, 0.25) !important;
+  color: #111111 !important;
+}
+
+[data-theme="light"] .btn-icon:hover {
+  background: rgba(158, 88, 0, 0.12) !important;
+  border-color: #9E5800 !important;
+  color: #9E5800 !important;
+}
+
+[data-theme="light"] .badge-dark {
+  background: #EAE3D5 !important;
+  color: #1C1917 !important;
+  border: 1px solid rgba(158, 88, 0, 0.25) !important;
+}
+
+/* Reproductor de Sonido Sagrado (Cuencos) en Modo Claro */
+[data-theme="light"] .sound-player-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(158, 88, 0, 0.35) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="light"] .sound-player-title {
+  color: #0A0A0A !important;
+}
+
+[data-theme="light"] .sound-player-desc {
+  color: #57534E !important;
+}
+
+[data-theme="light"] #sound-progress-bar {
+  background: #E5DDCF !important;
+}
+
+/* Meditación Guiada en Modo Claro */
+[data-theme="light"] .med-main-player {
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(158, 88, 0, 0.35) !important;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="light"] .med-player-badge {
+  background: rgba(180, 83, 9, 0.12) !important;
+  border-color: #B45309 !important;
+  color: #78350F !important;
+}
+
+[data-theme="light"] .med-player-title {
+  color: #0A0A0A !important;
+}
+
+[data-theme="light"] .med-player-frequency {
+  color: #9E5800 !important;
+}
+
+[data-theme="light"] .med-player-desc {
+  color: #292524 !important;
+}
+
+[data-theme="light"] #med-progress-bar {
+  background: #E5DDCF !important;
+}
+
+[data-theme="light"] .med-btn-nav {
+  background: #FAF6F0 !important;
+  border-color: rgba(158, 88, 0, 0.35) !important;
+  color: #0A0A0A !important;
+}
+
+[data-theme="light"] .med-btn-nav:hover {
+  background: #FAF4E8 !important;
+  border-color: #9E5800 !important;
+  color: #9E5800 !important;
+}
+
+[data-theme="light"] .med-track-card {
+  background: #FFFFFF !important;
+  border-color: rgba(158, 88, 0, 0.25) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .med-track-card:hover {
+  background: #FAF4E8 !important;
+  border-color: #9E5800 !important;
+}
+
+[data-theme="light"] .med-track-card.active {
+  background: #F5EFEB !important;
+  border-color: #9E5800 !important;
+  box-shadow: 0 0 15px rgba(158, 88, 0, 0.15) !important;
+}
+
+[data-theme="light"] .track-title {
+  color: #0A0A0A !important;
+}
+
+[data-theme="light"] .track-intention {
+  color: #57534E !important;
+}
+
+[data-theme="light"] .track-tag {
+  color: #9E5800 !important;
+}
+
+[data-theme="light"] .track-frequency-badge {
+  color: #78716C !important;
+}
+
+[data-theme="light"] .track-duration {
+  color: #78716C !important;
+}
+
+/* Filtros de Categoría de la Tienda en Modo Claro */
+[data-theme="light"] .category-filter-btn {
+  background: #FFFFFF !important;
+  border-color: rgba(158, 88, 0, 0.28) !important;
+  color: #44403C !important;
+}
+
+[data-theme="light"] .category-filter-btn.active,
+[data-theme="light"] .category-filter-btn:hover {
+  background: #9E5800 !important;
+  color: #FFFFFF !important;
+  border-color: #9E5800 !important;
+}
