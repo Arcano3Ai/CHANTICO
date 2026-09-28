@@ -1,55 +1,56 @@
 import { processBotQuery } from './numaBotEngine.js';
 
+import mascotNeutral from '../../assets/images/bot/toltec_bot_neutral.png';
+import mascotThinking from '../../assets/images/bot/toltec_bot_thinking.png';
+import mascotExplaining from '../../assets/images/bot/toltec_bot_explaining.png';
+import mascotGreeting from '../../assets/images/bot/toltec_bot_greeting.png';
+import mascotResting from '../../assets/images/bot/toltec_bot_resting.png';
+import mascotConfirmation from '../../assets/images/bot/toltec_bot_confirmation.png';
+import mascotConfused from '../../assets/images/bot/toltec_bot_confused.png';
+import mascotGoodbye from '../../assets/images/bot/toltec_bot_goodbye.png';
+
 /**
- * Estados de la Mascota / Nahual Sagrado de CHANTICO
- * 8 poses sagradas que cambian según la interacción del usuario:
- * - neutral: Escuchando / Neutral
- * - thinking: Pensando / Procesando consulta
- * - explaining: Explicando rituales, tarot o productos
- * - greeting: Saludo alegre / Bienvenida
- * - resting: En reposo / Esperando input
- * - confirmation: Confirmación / Aprobación
- * - confused: Duda / Fallback
- * - goodbye: Despedida cordial
+ * Estados de la Mascota / Nahual Sagrado de CHANTICO (Edición Ultra HD 2026)
+ * 8 poses sagradas extraídas en alta definición con transparencia alfa
  */
 export const TOLTEC_MASCOT_STATES = {
   neutral: {
-    src: './assets/images/bot/toltec_bot_neutral.png',
+    src: mascotNeutral,
     badge: '🐾 Nahual Atento',
     status: 'Sintonizado en vivo'
   },
   thinking: {
-    src: './assets/images/bot/toltec_bot_thinking.png',
+    src: mascotThinking,
     badge: '🔮 Consultando Fuego...',
     status: 'Canalizando sabiduría ancestral...'
   },
   explaining: {
-    src: './assets/images/bot/toltec_bot_explaining.png',
+    src: mascotExplaining,
     badge: '📜 Revelación Tolteca',
     status: 'Compartiendo mensaje sagrado'
   },
   greeting: {
-    src: './assets/images/bot/toltec_bot_greeting.png',
+    src: mascotGreeting,
     badge: '✨ Saludo Sagrado',
     status: '¡Bienvenida a CHANTICO!'
   },
   resting: {
-    src: './assets/images/bot/toltec_bot_resting.png',
+    src: mascotResting,
     badge: '🕊️ En Calma',
     status: 'Esperando tu consulta'
   },
   confirmation: {
-    src: './assets/images/bot/toltec_bot_confirmation.png',
+    src: mascotConfirmation,
     badge: '👍 En Perfecta Sintonía',
     status: 'Resonancia confirmada'
   },
   confused: {
-    src: './assets/images/bot/toltec_bot_confused.png',
+    src: mascotConfused,
     badge: '❓ Buscando Vibración',
     status: 'Sintiendo tu energía...'
   },
   goodbye: {
-    src: './assets/images/bot/toltec_bot_goodbye.png',
+    src: mascotGoodbye,
     badge: '👋 Hasta Pronto',
     status: 'Que el fuego sagrado te acompañe'
   }
@@ -163,7 +164,7 @@ export class NumaBotWidget {
       <div class="numa-bot-launcher-icon">
         <img
           id="toltec-mascot-launcher"
-          src="./assets/images/bot/toltec_bot_greeting.png"
+          src="${mascotGreeting}"
           alt="Nahual Guía CHANTICO"
           class="toltec-mascot-img toltec-mascot-pop"
         />
@@ -186,7 +187,7 @@ export class NumaBotWidget {
           <div class="numa-bot-avatar" title="Nahual Guía CHANTICO">
             <img
               id="toltec-avatar-header"
-              src="./assets/images/bot/toltec_bot_greeting.png"
+              src="${mascotGreeting}"
               alt="Nahual Guía CHANTICO"
               class="toltec-avatar-mascot toltec-mascot-pop"
             />
@@ -359,8 +360,8 @@ export class NumaBotWidget {
     typing.innerHTML = `
       <div class="numa-bot-typing">
         <img
-          src="./assets/images/bot/toltec_bot_thinking.png"
-          alt="Pensando..."
+          src="${mascotThinking}"
+          alt="Nahual pensando..."
           class="numa-bot-typing-mascot"
         />
         <div class="numa-bot-typing-dots">
