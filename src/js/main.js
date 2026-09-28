@@ -18,6 +18,7 @@ import { i18n } from '../i18n/i18nEngine.js';
 import { NumaBotWidget } from './numaBotWidget.js';
 import { initNumerologyCursor } from './numerologyCursor.js';
 import { initMeditacionGuiada } from './meditacionGuiada.js';
+import { triggerSacredFeedback, triggerHaptic, playHarmonicTone } from './sensoryEngine.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // 0. Inicializar Motor de Tema (Claro/Oscuro) y Sistema i18n
@@ -318,6 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (numResultArea) {
         numResultArea.classList.add('active');
         numResultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        triggerSacredFeedback('sacred');
       }
     });
   }
@@ -461,6 +463,7 @@ function initNahualSelectionModal(numaBot) {
     card.addEventListener('click', (e) => {
       const id = card.getAttribute('data-nahual');
       if (id) {
+        triggerSacredFeedback('resonance');
         applySelectedNahual(id, false);
       }
     });
@@ -469,6 +472,7 @@ function initNahualSelectionModal(numaBot) {
   // Abrir modal desde el botón del Header
   openBtn?.addEventListener('click', (e) => {
     e.preventDefault();
+    triggerHaptic('soft');
     if (modal) {
       updateCardVisuals(localStorage.getItem('chantico_active_nahual') || 'ocelotl');
       modal.classList.add('is-active');
@@ -486,6 +490,7 @@ function initNahualSelectionModal(numaBot) {
 
   closeBtn?.addEventListener('click', closeModal);
   confirmBtn?.addEventListener('click', () => {
+    triggerSacredFeedback('resonance');
     applySelectedNahual(selectedNahualId, true);
   });
 

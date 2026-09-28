@@ -1,4 +1,5 @@
 import { processBotQuery } from './numaBotEngine.js';
+import { triggerSacredFeedback, triggerHaptic } from './sensoryEngine.js';
 
 import mascotNeutral from '../../assets/images/bot/toltec_bot_neutral.png';
 import mascotThinking from '../../assets/images/bot/toltec_bot_thinking.png';
@@ -559,6 +560,7 @@ export class NumaBotWidget {
     this.activeNahualId = nahual.id;
     localStorage.setItem('chantico_active_nahual', nahual.id);
 
+    triggerSacredFeedback('resonance');
     this.applyActiveNahualAvatar(nahual.id, true);
 
     // Ocultar picker
@@ -732,6 +734,7 @@ export class NumaBotWidget {
       e.preventDefault();
       const text = this.inputEl.value.trim();
       if (!text) return;
+      triggerHaptic('medium');
       this.inputEl.value = '';
       this.handleUserMessage(text);
     });
@@ -747,6 +750,7 @@ export class NumaBotWidget {
 
   open() {
     this.isOpen = true;
+    triggerSacredFeedback('bell');
     this.hideCallout();
     this.stopHoverMascotCycle();
     document.body.classList.add('numa-bot-active');
@@ -760,6 +764,7 @@ export class NumaBotWidget {
 
   close() {
     this.isOpen = false;
+    triggerHaptic('soft');
     document.body.classList.remove('numa-bot-active');
     this.setMascotState('goodbye');
     this.windowEl.classList.remove('is-open');
