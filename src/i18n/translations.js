@@ -233,6 +233,13 @@ export const TRANSLATIONS = {
     footer_dedication_sub: 'Que el fuego sagrado de Chantico continúe iluminando su camino con sabiduría y amor.',
     footer_rights: '© 2026 CHANTICO — Tarot, Misticismo Tolteca & Fuego Sagrado. Todos los derechos reservados.',
 
+    // Espejo de Obsidiana
+    nav_obsidian_mirror: 'Espejo de Obsidiana',
+    nav_obsidian_sub: 'Oráculo Tezcatlipoca, resonancia 432 Hz y visión',
+    obsidian_eyebrow: 'Herramienta Sagrada Ancestral',
+    obsidian_title: 'El Espejo de Obsidiana',
+    obsidian_subtitle: 'El oráculo tolteca de Tezcatlipoca: un portal de transmutación y autoconocimiento. Contempla el vórtice negro, formula una pregunta desde el corazón y deja que las partículas revelen la respuesta sagrada.',
+
     // Cart Drawer
     cart_title: 'Tus Rituales',
     cart_free_shipping_notice: 'Envío gratis a partir de $1,200 MXN',
@@ -253,6 +260,11 @@ export const TRANSLATIONS = {
     nav_med_sub: '432 Hz frequencies & deep peace',
     nav_num_sub: 'Soul map, archetypes & natal gifts',
     nav_sound_sub: 'Bioenergetic balance through resonance',
+    nav_obsidian_mirror: 'Obsidian Mirror',
+    nav_obsidian_sub: 'Tezcatlipoca Oracle, 432 Hz resonance & vision',
+    obsidian_eyebrow: 'Ancestral Sacred Tool',
+    obsidian_title: 'The Obsidian Mirror',
+    obsidian_subtitle: 'The Toltec oracle of Tezcatlipoca: a portal of transmutation and self-knowledge. Gaze into the black vortex, ask a question from the heart and let the sacred particles unveil the answer.',
     nav_shop: 'SHOP',
     nav_rituals: 'RITUALS',
     nav_numerology: 'NUMEROLOGY',

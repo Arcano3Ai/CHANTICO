@@ -1618,3 +1618,380 @@
   color: #FFFFFF !important;
   border-color: #9E5800 !important;
 }
+
+/* =========================================================================
+   HERRAMIENTA SAGRADA: EL ESPEJO DE OBSIDIANA (ORÁCULO TOLTECA)
+   ========================================================================= */
+.obsidian-mirror-section {
+  position: relative;
+  background: radial-gradient(circle at 50% 30%, rgba(30, 20, 10, 0.35) 0%, rgba(5, 5, 8, 0.98) 75%);
+  border-top: 1px solid rgba(255, 183, 3, 0.12);
+  border-bottom: 1px solid rgba(255, 183, 3, 0.12);
+  overflow: hidden;
+}
+
+.obsidian-experience-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.5rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+@media (max-width: 992px) {
+  .obsidian-experience-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Altar Ceremonial & Marco de Obsidiana */
+.obsidian-altar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.obsidian-altar-container {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  border-radius: var(--radius-lg, 16px);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 183, 3, 0.1);
+  border: 1px solid rgba(255, 183, 3, 0.2);
+  background: #000000;
+}
+
+.obsidian-altar-frame {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Vórtice del Espejo incrustado exactamente en el marco */
+.obsidian-mirror-vortex {
+  position: absolute;
+  left: 50%;
+  top: 59.8%;
+  transform: translate(-50%, -50%);
+  width: 40.3%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(circle, #020205 30%, rgba(10, 8, 16, 0.92) 75%, transparent 100%);
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.95), 0 0 20px rgba(255, 183, 3, 0.2);
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.obsidian-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 50%;
+}
+
+.obsidian-gleam {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+  transition: background 0.15s ease-out;
+}
+
+/* Barra de sonido ceremonial y estado */
+.obsidian-sound-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 620px;
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  background: rgba(18, 18, 22, 0.7);
+  border: 1px solid rgba(255, 183, 3, 0.15);
+  border-radius: var(--radius-md, 10px);
+  backdrop-filter: blur(8px);
+}
+
+.obsidian-sound-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 183, 3, 0.08);
+  border: 1px solid rgba(255, 183, 3, 0.3);
+  color: var(--color-flame, #FFB703);
+  padding: 0.45rem 0.9rem;
+  border-radius: 20px;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.obsidian-sound-btn:hover {
+  background: rgba(255, 183, 3, 0.2);
+  border-color: var(--color-flame, #FFB703);
+  box-shadow: 0 0 10px rgba(255, 183, 3, 0.3);
+}
+
+.obsidian-sound-btn.active {
+  background: rgba(230, 38, 36, 0.2);
+  border-color: var(--color-brand-fire, #E62624);
+  color: #FFF;
+}
+
+.obsidian-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #A8A29E);
+}
+
+.obsidian-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px #10B981;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* Panel de Consultas y Oráculo */
+.obsidian-card {
+  background: var(--gradient-card-dark, linear-gradient(145deg, #18181C 0%, #0E0E12 100%));
+  border: 1px solid rgba(255, 183, 3, 0.22);
+  border-radius: var(--radius-lg, 16px);
+  padding: 2.25rem 2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.obsidian-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 183, 3, 0.4) 0%, transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.obsidian-card-header {
+  margin-bottom: 1.5rem;
+}
+
+.obsidian-card-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: var(--color-flame, #FFB703);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.obsidian-card-title {
+  font-family: var(--font-serif-display);
+  font-size: 1.6rem;
+  color: var(--color-beige-light, #FFF);
+  margin-bottom: 0.5rem;
+}
+
+.obsidian-card-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary, #A8A29E);
+  line-height: 1.6;
+}
+
+.obsidian-oracle-form {
+  margin-bottom: 1.5rem;
+}
+
+.obsidian-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.obsidian-input-label {
+  font-size: 0.78rem;
+  color: var(--color-text-muted, #78716C);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.obsidian-input-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .obsidian-input-wrapper {
+    flex-direction: column;
+  }
+}
+
+.obsidian-input {
+  flex: 1;
+  background: rgba(10, 10, 14, 0.8);
+  border: 1px solid rgba(255, 183, 3, 0.28);
+  color: #FFF;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-sm, 6px);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  transition: all 0.2s ease;
+}
+
+.obsidian-input:focus {
+  outline: none;
+  border-color: var(--color-flame, #FFB703);
+  box-shadow: 0 0 12px rgba(255, 183, 3, 0.25);
+}
+
+.obsidian-submit-btn {
+  padding: 0.8rem 1.4rem;
+  white-space: nowrap;
+}
+
+/* Consultas Rápidas */
+.obsidian-quick-section {
+  margin-bottom: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.obsidian-quick-label {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--color-gold, #D4AF37);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.obsidian-prompts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+}
+
+@media (max-width: 480px) {
+  .obsidian-prompts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.obsidian-quick-prompt {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 183, 3, 0.18);
+  color: var(--color-beige-light, #E7E5E4);
+  padding: 0.55rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1.35;
+}
+
+.obsidian-quick-prompt:hover {
+  background: rgba(255, 183, 3, 0.12);
+  border-color: var(--color-flame, #FFB703);
+  color: #FFF;
+  transform: translateY(-1px);
+}
+
+/* Guía de Sabiduría Footer */
+.obsidian-wisdom-footer {
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.obsidian-wisdom-quote {
+  font-family: var(--font-serif-display);
+  font-size: 0.95rem;
+  color: var(--color-gold-light, #F5D77F);
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.obsidian-wisdom-attribution {
+  font-size: 0.72rem;
+  color: var(--color-text-muted, #78716C);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* =========================================================================
+   SOPORTE MODO CLARO [data-theme="light"]
+   ========================================================================= */
+[data-theme="light"] .obsidian-mirror-section {
+  background: radial-gradient(circle at 50% 30%, #FBF7F2 0%, #EDE4DA 100%) !important;
+  border-top-color: rgba(158, 88, 0, 0.15) !important;
+  border-bottom-color: rgba(158, 88, 0, 0.15) !important;
+}
+
+[data-theme="light"] .obsidian-card {
+  background: #FFFFFF !important;
+  border-color: rgba(158, 88, 0, 0.2) !important;
+  box-shadow: 0 15px 35px rgba(158, 88, 0, 0.08) !important;
+}
+
+[data-theme="light"] .obsidian-card-title {
+  color: #0A0A0A !important;
+}
+
+[data-theme="light"] .obsidian-card-desc {
+  color: #57534E !important;
+}
+
+[data-theme="light"] .obsidian-sound-bar {
+  background: #FDFBF7 !important;
+  border-color: rgba(158, 88, 0, 0.2) !important;
+}
+
+[data-theme="light"] .obsidian-input {
+  background: #FFFFFF !important;
+  border-color: rgba(158, 88, 0, 0.3) !important;
+  color: #0A0A0A !important;
+}
+
+[data-theme="light"] .obsidian-quick-prompt {
+  background: #F7F3EE !important;
+  border-color: rgba(158, 88, 0, 0.18) !important;
+  color: #292524 !important;
+}
+
+[data-theme="light"] .obsidian-quick-prompt:hover {
+  background: rgba(158, 88, 0, 0.1) !important;
+  border-color: #9E5800 !important;
+  color: #0A0A0A !important;
+}
+
+[data-theme="light"] .obsidian-wisdom-quote {
+  color: #9E5800 !important;
+}
+

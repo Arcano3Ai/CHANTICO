@@ -18,6 +18,7 @@ import { i18n } from '../i18n/i18nEngine.js';
 import { NumaBotWidget } from './numaBotWidget.js';
 import { initNumerologyCursor } from './numerologyCursor.js';
 import { initMeditacionGuiada } from './meditacionGuiada.js';
+import { initObsidianMirror } from './obsidianMirrorEngine.js';
 import { triggerSacredFeedback, triggerHaptic, playHarmonicTone } from './sensoryEngine.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -40,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Inicializar Audio de Cuencos, Canción Frecuencia del Ser & Meditaciones Guiadas
   initSoundPlayer();
   initMeditacionGuiada();
+
+  // 2B. Inicializar Herramienta Sagrada del Espejo de Obsidiana (Oráculo Tezcatlipoca)
+  initObsidianMirror();
 
 
   // 3. Inicializar Modales

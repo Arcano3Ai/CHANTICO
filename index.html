@@ -93,6 +93,13 @@
               </span>
               <span class="dropdown-item-sub" data-i18n="nav_sound_sub">Alineación bioenergética por resonancia</span>
             </a>
+            <a href="#espejo-obsidiana" class="dropdown-item">
+              <span class="dropdown-item-title">
+                <span class="dropdown-item-icon">🔮</span>
+                <span data-i18n="nav_obsidian_mirror">Espejo de Obsidiana</span>
+              </span>
+              <span class="dropdown-item-sub" data-i18n="nav_obsidian_sub">Oráculo Tezcatlipoca, resonancia 432 Hz y visión</span>
+            </a>
             <div class="dropdown-divider"></div>
             <a href="#experiencias" class="dropdown-item dropdown-item-all" data-i18n="nav_all_experiences">
               Ver todas las experiencias →
@@ -226,6 +233,7 @@
       <a href="#guia-tolteca-bot" class="mobile-nav-link" data-open-bot style="color: var(--color-gold);">🔥 GUÍA TOLTECA (BOT)</a>
       <a href="#cuencos" class="mobile-nav-link" data-i18n="nav_sound">CUENCOS & SONIDO</a>
       <a href="#meditacion" class="mobile-nav-link" data-i18n="nav_meditation">MEDITACIÓN GUIADA</a>
+      <a href="#espejo-obsidiana" class="mobile-nav-link" style="color: var(--color-gold-light);">🔮 ESPEJO DE OBSIDIANA</a>
       <a href="#journal" class="mobile-nav-link" data-i18n="nav_journal">JOURNAL CHANTICO</a>
       <a href="#sobre-chantico" class="mobile-nav-link" data-i18n="nav_contact">SOBRE NOSOTROS</a>
     </nav>
@@ -1039,6 +1047,118 @@
             </div>
             <div class="med-tracks-container" id="med-tracks-list">
               <!-- Renderizado dinámicamente desde src/data/meditaciones.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7C. ESPEJO DE OBSIDIANA (ORÁCULO TOLTECA & VÓRTICE DE VISIÓN) -->
+    <section class="section obsidian-mirror-section" id="espejo-obsidiana">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow" data-i18n="obsidian_eyebrow">Herramienta Sagrada Ancestral</span>
+          <h2 class="section-title" data-i18n="obsidian_title">El Espejo de Obsidiana</h2>
+          <p class="section-subtitle" data-i18n="obsidian_subtitle">
+            El oráculo tolteca de Tezcatlipoca: un portal de transmutación y autoconocimiento. Contempla el vórtice negro, formula una pregunta desde el corazón y deja que las partículas revelen la respuesta sagrada.
+          </p>
+        </div>
+
+        <div class="obsidian-experience-grid">
+          <!-- Altar Ceremonial con el Marco Incrustado -->
+          <div class="obsidian-altar-col">
+            <div class="obsidian-altar-wrapper">
+              <div class="obsidian-altar-container" id="obsidianAltarContainer">
+                <img 
+                  src="./assets/images/espejo_obsidiana_marco.jpg" 
+                  alt="Altar Ceremonial Espejo de Obsidiana" 
+                  class="obsidian-altar-frame" 
+                  loading="lazy"
+                />
+
+                <!-- Orbe de Obsidiana Interactivo Incrustado en el Marco -->
+                <div class="obsidian-mirror-vortex" id="obsidianMirrorVortex">
+                  <canvas id="obsidianCanvas" width="480" height="480" class="obsidian-canvas"></canvas>
+                  <div class="obsidian-gleam" id="obsidianGleam"></div>
+                  <!-- Canvas oculto para rasterizar el texto a partículas -->
+                  <canvas id="obsidianRasterCanvas" width="480" height="480" style="display: none;"></canvas>
+                </div>
+              </div>
+
+              <!-- Controles de Resonancia e Indicadores -->
+              <div class="obsidian-sound-bar">
+                <button type="button" class="obsidian-sound-btn" id="obsidianSoundToggleBtn" aria-label="Activar o desactivar resonancia armónica 432 Hz">
+                  <span id="obsidianSoundIcon" class="obsidian-sound-icon">🔇</span>
+                  <span id="obsidianSoundLabel" class="obsidian-sound-label">Activar Resonancia (432 Hz)</span>
+                </button>
+                <div class="obsidian-status-pill">
+                  <span class="obsidian-status-dot"></span>
+                  <span class="obsidian-status-text">Vórtice Activo · Interactúa con el Cursor</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel del Consultante & Oráculo -->
+          <div class="obsidian-controls-col">
+            <div class="obsidian-card">
+              <div class="obsidian-card-header">
+                <span class="obsidian-card-badge">CONSULTA ORACULAR</span>
+                <h3 class="obsidian-card-title">Interroga al Espejo</h3>
+                <p class="obsidian-card-desc">
+                  La obsidiana no muestra lo que deseas ver, sino lo que tu espíritu necesita transformar. Formula tu duda en silencio o elígela abajo.
+                </p>
+              </div>
+
+              <!-- Formulario de Consulta -->
+              <form id="obsidianOracleForm" class="obsidian-oracle-form" onsubmit="return false;">
+                <div class="obsidian-input-group">
+                  <label for="obsidianQuestionInput" class="obsidian-input-label">Escribe tu intención o pregunta:</label>
+                  <div class="obsidian-input-wrapper">
+                    <input 
+                      type="text" 
+                      id="obsidianQuestionInput" 
+                      class="obsidian-input" 
+                      placeholder="Ej: ¿Qué camino debo tomar ahora?..." 
+                      maxlength="120"
+                      autocomplete="off"
+                    />
+                    <button type="submit" class="btn btn-primary obsidian-submit-btn" id="obsidianConsultBtn">
+                      <span>CONSULTAR</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <!-- Consultas Sugeridas Rápidas -->
+              <div class="obsidian-quick-section">
+                <span class="obsidian-quick-label">O pulsa una intención sagrada:</span>
+                <div class="obsidian-prompts-grid">
+                  <button type="button" class="obsidian-quick-prompt" data-question="¿Cuál es mi mayor fortaleza en este ciclo?">
+                    ⚡ Mayor fortaleza
+                  </button>
+                  <button type="button" class="obsidian-quick-prompt" data-question="¿Qué sombra debo integrar y soltar hoy?">
+                    🌑 Integrar sombra
+                  </button>
+                  <button type="button" class="obsidian-quick-prompt" data-question="¿Qué mensaje tiene el Fuego Sagrado para mí?">
+                    🔥 Mensaje del Fuego
+                  </button>
+                  <button type="button" class="obsidian-quick-prompt" data-question="¿Hacia dónde fluye mi verdadera vocación?">
+                    🌿 Propósito y Rumbo
+                  </button>
+                </div>
+              </div>
+
+              <!-- Guía de Sabiduría Tolteca -->
+              <div class="obsidian-wisdom-footer">
+                <div class="obsidian-wisdom-quote">
+                  <em>«En el espejo negro de Tezcatlipoca, la ilusión del ego se disuelve para que nazca la verdad del guerrero.»</em>
+                </div>
+                <div class="obsidian-wisdom-attribution">
+                  <span>Tradición Tolteca CHANTICO · Frecuencias 432 Hz</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
