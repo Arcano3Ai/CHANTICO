@@ -267,7 +267,7 @@
     <!-- 1. HERO SECTION -->
     <section class="hero-section" id="inicio">
       <!-- Video de Fondo Hero Oficial CHANTICO -->
-      <video class="hero-video-bg" autoplay loop muted playsinline preload="auto">
+      <video class="hero-video-bg" autoplay loop muted playsinline preload="auto" poster="./assets/images/hero_video_poster.jpg" disablePictureInPicture controlslist="nodownload nofullscreen noremoteplayback">
         <source src="./assets/video/hero_bg_video.mp4" type="video/mp4">
       </video>
       <div class="hero-video-overlay"></div>
@@ -1092,21 +1092,22 @@
           <div class="obsidian-altar-col">
             <div class="obsidian-altar-wrapper">
               <div class="obsidian-altar-container" id="obsidianAltarContainer">
-                <img 
-                  src="./assets/images/espejo_obsidiana_marco.jpg" 
-                  alt="Altar Ceremonial Espejo de Obsidiana" 
-                  class="obsidian-altar-frame" 
-                  loading="eager"
-                  fetchpriority="high"
-                />
-
-                <!-- Orbe de Obsidiana Interactivo Incrustado en el Marco -->
+                <!-- Orbe de Obsidiana Interactivo Incrustado en el Marco (Capa Inferior) -->
                 <div class="obsidian-mirror-vortex" id="obsidianMirrorVortex">
                   <canvas id="obsidianCanvas" width="480" height="480" class="obsidian-canvas"></canvas>
                   <div class="obsidian-gleam" id="obsidianGleam"></div>
                   <!-- Canvas oculto para rasterizar el texto a partículas -->
                   <canvas id="obsidianRasterCanvas" width="480" height="480" style="display: none;"></canvas>
                 </div>
+
+                <!-- Marco Ceremonial PNG con Centro Transparente & Piquitos Sobre el Orbe (Capa Superior) -->
+                <img 
+                  src="./assets/images/espejo_obsidiana_marco.png" 
+                  alt="Altar Ceremonial Espejo de Obsidiana" 
+                  class="obsidian-altar-frame" 
+                  loading="eager"
+                  fetchpriority="high"
+                />
               </div>
 
               <!-- Controles de Resonancia e Indicadores -->
@@ -1156,7 +1157,7 @@
               </form>
 
               <!-- Tarjeta de Revelación Oracular Viva -->
-              <div id="obsidianOracleReveal" class="obsidian-reveal-card" style="display: none;">
+              <div id="obsidianOracleReveal" class="obsidian-reveal-card" role="region" aria-live="polite" style="display: none;">
                 <div class="obsidian-reveal-header">
                   <span class="obsidian-reveal-badge">REVELACIÓN TOLTECA</span>
                   <span class="obsidian-reveal-guide" id="obsidianRevealGuide">Tezcatlipoca · Guardián</span>

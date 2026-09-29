@@ -1668,15 +1668,19 @@
 }
 
 .obsidian-altar-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   user-select: none;
   pointer-events: none;
+  z-index: 3;
 }
 
-/* Vórtice del Espejo incrustado exactamente en el marco */
+/* Vórtice del Espejo incrustado exactamente en el marco (Capa por detrás del marco PNG) */
 .obsidian-mirror-vortex {
   position: absolute;
   left: 50%;
@@ -1690,6 +1694,7 @@
   box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.95), 0 0 20px rgba(255, 183, 3, 0.2);
   cursor: crosshair;
   touch-action: none;
+  z-index: 1;
 }
 
 .obsidian-canvas {
@@ -1726,6 +1731,15 @@
   border-radius: var(--radius-md, 10px);
   backdrop-filter: blur(8px);
 }
+
+@media (max-width: 600px) {
+  .obsidian-sound-bar {
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: stretch;
+  }
+}
+
 
 .obsidian-sound-btn {
   display: inline-flex;
@@ -2017,6 +2031,19 @@
   gap: 0.5rem;
 }
 
+@media (max-width: 480px) {
+  .obsidian-reveal-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+    text-align: center;
+  }
+  .obsidian-reset-btn {
+    width: 100%;
+    padding: 0.5rem 1rem;
+  }
+}
+
 .obsidian-reveal-element {
   font-size: 0.75rem;
   color: var(--color-gold, #D4AF37);
@@ -2069,6 +2096,20 @@
   border-color: rgba(158, 88, 0, 0.2) !important;
 }
 
+[data-theme="light"] .obsidian-sound-btn {
+  background: rgba(158, 88, 0, 0.08) !important;
+  border-color: rgba(158, 88, 0, 0.3) !important;
+  color: #9E5800 !important;
+}
+
+[data-theme="light"] .obsidian-sound-btn:hover {
+  background: rgba(158, 88, 0, 0.16) !important;
+}
+
+[data-theme="light"] .obsidian-status-pill {
+  color: #57534E !important;
+}
+
 [data-theme="light"] .obsidian-input {
   background: #FFFFFF !important;
   border-color: rgba(158, 88, 0, 0.3) !important;
@@ -2105,4 +2146,18 @@
 [data-theme="light"] .obsidian-reveal-text {
   color: #44403C !important;
 }
+
+[data-theme="light"] .obsidian-reveal-element {
+  color: #9E5800 !important;
+}
+
+[data-theme="light"] .obsidian-reset-btn {
+  border-color: rgba(158, 88, 0, 0.4) !important;
+  color: #9E5800 !important;
+}
+
+[data-theme="light"] .obsidian-reset-btn:hover {
+  background: rgba(158, 88, 0, 0.12) !important;
+}
+
 

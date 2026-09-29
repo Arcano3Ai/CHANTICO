@@ -397,6 +397,18 @@ main, header, footer {
   filter: none !important;
 }
 
+/* Ocultar cualquier botón nativo de play / controles multimedia en navegadores móviles */
+.hero-video-bg::-webkit-media-controls,
+.hero-video-bg::-webkit-media-controls-panel,
+.hero-video-bg::-webkit-media-controls-play-button,
+.hero-video-bg::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+
 .hero-video-overlay {
   display: block !important;
   position: absolute;

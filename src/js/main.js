@@ -416,7 +416,25 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('gestureend', (e) => {
     e.preventDefault();
   }, { passive: false });
+
+  // 14. Manejo Inteligente de Deep Links por Hash (#espejo-obsidiana, etc.)
+  const handleDeepLinkHash = () => {
+    if (window.location.hash) {
+      const targetId = window.location.hash.substring(1);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        setTimeout(() => {
+          const headerOffset = document.querySelector('.site-header')?.offsetHeight || 70;
+          const targetPos = targetEl.getBoundingClientRect().top + window.scrollY - headerOffset;
+          window.scrollTo({ top: Math.max(0, targetPos), behavior: 'smooth' });
+        }, 250);
+      }
+    }
+  };
+  handleDeepLinkHash();
+  window.addEventListener('hashchange', handleDeepLinkHash);
 });
+
 
 /**
  * Controlador del Pop-up Modal de Inicio y Selector de Nahual Guía en el Header
@@ -462,13 +480,13 @@ function initNahualSelectionModal(numaBot) {
     }
   };
 
-  // Interacción al hacer click en cualquier tarjeta de Nahual
+  // Interacción al hacer click en cualquier tarjeta de Nahual (Selección Directa e Instantánea)
   cards.forEach(card => {
     card.addEventListener('click', (e) => {
       const id = card.getAttribute('data-nahual');
       if (id) {
         triggerSacredFeedback('resonance');
-        applySelectedNahual(id, false);
+        applySelectedNahual(id, true);
       }
     });
   });
@@ -520,18 +538,28 @@ function initNahualSelectionModal(numaBot) {
     numaBot.applyActiveNahualAvatar(selectedNahualId, false);
   }
 
-  // Enlaces directos al Espejo de Obsidiana: cerrar modales y navegar con precisión
+  // Enlaces directos al Espejo de Obsidiana: cerrar modales, drawer móvil y navegar con precisión
   document.querySelectorAll('a[href="#espejo-obsidiana"]').forEach(link => {
     link.addEventListener('click', (e) => {
       closeModal();
+      
+      const mobileDrawer = document.getElementById('mobile-nav-drawer');
+      if (mobileDrawer) {
+        mobileDrawer.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
       const target = document.getElementById('espejo-obsidiana');
       if (target) {
         e.preventDefault();
         history.pushState(null, null, '#espejo-obsidiana');
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const headerOffset = document.querySelector('.site-header')?.offsetHeight || 70;
+        const targetPos = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top: Math.max(0, targetPos), behavior: 'smooth' });
       }
     });
   });
+
 
   // El selector de Nahual se activa a voluntad del usuario desde el Header (#header-nahual-btn)
 }

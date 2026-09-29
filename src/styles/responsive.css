@@ -54,50 +54,79 @@ html, body {
     box-sizing: border-box;
   }
 
-  /* Header Móvil Ultra Compacto */
+  .site-header {
+    background: #0B090E !important;
+    background: linear-gradient(180deg, rgba(14, 11, 16, 0.99) 0%, rgba(7, 6, 9, 0.99) 100%) !important;
+    border-bottom: 1px solid rgba(255, 183, 3, 0.28) !important;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.95) !important;
+  }
+
+  /* Header Móvil Ultra Compacto: Ocultar elementos secundarios del header (ya disponibles en drawer) */
   .header-actions .btn-primary,
-  #header-wishlist-btn {
-    display: none;
+  #header-wishlist-btn,
+  .header-actions .lang-switch-wrap,
+  .header-actions #theme-toggle-btn {
+    display: none !important;
   }
 
   .header-inner {
     gap: 0.5rem;
+    padding: 0 0.85rem;
+    overflow: hidden;
   }
 
   .header-brand {
     gap: 0.5rem;
     margin-right: 0;
+    min-width: 0;
+    flex-shrink: 1;
   }
 
   .header-logo-img {
     width: 32px;
     height: 32px;
+    flex-shrink: 0;
   }
 
   .header-brand-text .brand-name {
     font-size: 1.05rem;
+    white-space: nowrap;
   }
 
   .header-brand-text .brand-desc {
-    font-size: 0.45rem;
-    letter-spacing: 0.2em;
+    display: none;
   }
 
   .header-actions {
+    display: flex;
+    align-items: center;
     gap: 0.35rem;
+    flex-shrink: 0;
+    margin-left: auto;
   }
 
   .btn-icon {
     width: 36px;
     height: 36px;
+    flex-shrink: 0;
   }
 
   .mobile-menu-toggle {
-    width: 36px;
-    height: 36px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
     padding: 0;
-    font-size: 1.2rem;
+    font-size: 1.35rem;
+    background: rgba(255, 183, 3, 0.12);
+    border: 1px solid rgba(255, 183, 3, 0.3);
+    border-radius: var(--radius-sm, 6px);
+    color: var(--color-flame, #FFB703);
+    flex-shrink: 0;
+    cursor: pointer;
   }
+
 
   .section {
     padding: 3.75rem 0;
@@ -537,9 +566,10 @@ html, body {
   width: 100%;
   height: 100vh;
   height: 100dvh; /* Dynamic viewport height para iOS Safari */
-  background: rgba(10, 10, 10, 0.98);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
+  background: #0C0A0E !important;
+  background: linear-gradient(180deg, #130E18 0%, #07060A 100%) !important;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.98);
+  border-bottom: 2px solid var(--color-flame);
   z-index: 2000;
   padding: calc(2rem + env(safe-area-inset-top, 0px)) 1.75rem calc(2rem + env(safe-area-inset-bottom, 0px));
   display: flex;
@@ -573,10 +603,12 @@ html, body {
   font-family: var(--font-serif-display);
   font-size: 1.25rem;
   letter-spacing: 0.1em;
-  color: var(--color-beige);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #FFFFFF !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid rgba(255, 183, 3, 0.15);
   padding-bottom: 0.65rem;
 }
+
 
 .mobile-nav-link:hover,
 .mobile-nav-link:active {

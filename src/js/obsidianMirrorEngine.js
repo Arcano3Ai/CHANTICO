@@ -234,6 +234,11 @@ export function initObsidianMirror() {
             this.vy += mdx * 0.035 * (mouse.vy * 0.05);
           }
         }
+
+        if (gyro.active) {
+          this.vx += gyro.gx * 0.18;
+          this.vy += gyro.gy * 0.18;
+        }
       }
 
       this.x += this.vx;
@@ -433,6 +438,8 @@ export function initObsidianMirror() {
   }
 
   function askOracle(customQuestion) {
+    if (oracleState === 'trance') return;
+
     if (!audioCtx) initAudio();
     if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 
@@ -497,6 +504,7 @@ export function initObsidianMirror() {
   }
 
   function disperseWord() {
+    clearTimeout(gatherTimer);
     if (oracleState !== 'gathering') return;
     oracleState = 'orbiting';
     particles.forEach(p => {
@@ -554,11 +562,37 @@ export function initObsidianMirror() {
     mouse.isInside = false;
   });
 
+  // Soporte de Giroscopio Sagrado Exclusivo para Móviles
+  const gyro = { gx: 0, gy: 0, active: false };
+  if (window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientation', (e) => {
+      if (e.gamma !== null && e.beta !== null) {
+        gyro.active = true;
+        // gamma: inclinación eje X, beta: inclinación eje Y
+        gyro.gx = Math.max(-1.5, Math.min(1.5, e.gamma / 25));
+        gyro.gy = Math.max(-1.5, Math.min(1.5, (e.beta - 40) / 25));
+      }
+    }, { passive: true });
+  }
+
+  let hapticPulseTimer = null;
+
   canvas.addEventListener('touchstart', (e) => {
     if (e.touches.length > 0) {
       updatePointerPosition(e.touches[0].clientX, e.touches[0].clientY);
       mouse.isInside = true;
       triggerShockwave(mouse.x, mouse.y);
+
+      // Feedback háptico rítmico móvil (Pulso Tolteca)
+      if (window.navigator && window.navigator.vibrate) {
+        window.navigator.vibrate([35, 40, 20]);
+        clearInterval(hapticPulseTimer);
+        hapticPulseTimer = setInterval(() => {
+          if (mouse.isInside && window.navigator.vibrate) {
+            window.navigator.vibrate([15, 60, 25]);
+          }
+        }, 360);
+      }
     }
   }, { passive: true });
 
@@ -570,7 +604,9 @@ export function initObsidianMirror() {
 
   canvas.addEventListener('touchend', () => {
     mouse.isInside = false;
+    clearInterval(hapticPulseTimer);
   });
+
 
   // Formulario y preguntas sugeridas
   const oracleFormElem = document.getElementById('obsidianOracleForm');
