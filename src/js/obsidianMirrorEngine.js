@@ -32,13 +32,18 @@ export function initObsidianMirror() {
   let orbCenter = orbSize / 2;
   let orbRadius = orbSize / 2;
 
-  const PARTICLE_COUNT = 1100;
+  const PARTICLE_COUNT = 2400;
   const particles = [];
   const shockwaves = [];
 
   let oracleState = 'orbiting'; // 'orbiting' | 'trance' | 'gathering'
   let gatherTimer = null;
   let currentWord = '';
+  let activeTextLines = [];
+  let activeFontSize = 28;
+  let activeLineHeight = 36;
+  let activeStartY = 0;
+  let textRevealAlpha = 0;
 
   // Pointer dynamics
   const mouse = {
@@ -207,10 +212,34 @@ export function initObsidianMirror() {
       if (oracleState === 'gathering' && this.hasTarget) {
         const dx = this.textTargetX - this.x;
         const dy = this.textTargetY - this.y;
-        this.vx = (this.vx + dx * 0.045) * 0.82;
-        this.vy = (this.vy + dy * 0.045) * 0.82;
-        this.alpha = Math.min(1.0, this.alpha + 0.04);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < 2.5) {
+          // Bloqueo estable en el trazo con micro-brillo viviente
+          this.x = this.textTargetX + (Math.random() - 0.5) * 0.45;
+          this.y = this.textTargetY + (Math.random() - 0.5) * 0.45;
+          this.vx = 0;
+          this.vy = 0;
+        } else {
+          this.vx = (this.vx + dx * 0.08) * 0.75;
+          this.vy = (this.vy + dy * 0.08) * 0.75;
+        }
+        this.alpha = Math.min(1.0, this.alpha + 0.06);
       } else {
+        // Si estamos en gathering pero esta partícula no forma parte del texto:
+        if (oracleState === 'gathering') {
+          // Atenuar y empujar suavemente hacia la corona exterior para dar máximo contraste al centro
+          this.alpha = Math.max(0.12, this.alpha * 0.94);
+          const fromCenterX = this.x - orbCenter;
+          const fromCenterY = this.y - orbCenter;
+          const distCenter = Math.sqrt(fromCenterX * fromCenterX + fromCenterY * fromCenterY);
+          if (distCenter < orbRadius * 0.65 && distCenter > 1) {
+            const push = (1 - distCenter / (orbRadius * 0.65)) * 1.6;
+            this.vx += (fromCenterX / distCenter) * push;
+            this.vy += (fromCenterY / distCenter) * push;
+          }
+        }
+
         this.angle += this.speed;
         this.calcOrbitPos();
 
@@ -383,21 +412,40 @@ export function initObsidianMirror() {
     rasterCtx.textAlign = 'center';
     rasterCtx.textBaseline = 'middle';
 
-    const words = word.split(' ');
+    const words = word.trim().split(/\s+/);
     let lines = [];
     if (words.length <= 2) {
       lines.push(word);
+    } else if (words.length === 3) {
+      lines.push(words.slice(0, 2).join(' '));
+      lines.push(words[2]);
     } else {
       const mid = Math.ceil(words.length / 2);
       lines.push(words.slice(0, mid).join(' '));
       lines.push(words.slice(mid).join(' '));
     }
 
-    const fontSize = Math.floor(w * (lines.length > 1 ? 0.088 : 0.098));
-    rasterCtx.font = `900 ${fontSize}px 'Cinzel', serif`;
+    // Auto-ajuste de tamaño proporcional al diámetro seguro del orbe
+    const maxSafeWidth = w * 0.70;
+    let fontSize = Math.floor(w * (lines.length > 2 ? 0.082 : lines.length > 1 ? 0.096 : 0.118));
+    const spacingPx = Math.max(3, Math.floor(fontSize * 0.1));
+    rasterCtx.font = `900 ${fontSize}px 'Outfit', 'Cinzel', system-ui, sans-serif`;
+    if ('letterSpacing' in rasterCtx) rasterCtx.letterSpacing = `${spacingPx}px`;
 
-    const lineHeight = fontSize * 1.35;
+    while (lines.some(l => rasterCtx.measureText(l).width > maxSafeWidth) && fontSize > 16) {
+      fontSize -= 1.5;
+      rasterCtx.font = `900 ${fontSize}px 'Outfit', 'Cinzel', system-ui, sans-serif`;
+      if ('letterSpacing' in rasterCtx) rasterCtx.letterSpacing = `${Math.max(3, Math.floor(fontSize * 0.1))}px`;
+    }
+
+    const lineHeight = fontSize * 1.34;
     const startY = (h / 2) - ((lines.length - 1) * lineHeight) / 2;
+
+    activeTextLines = lines;
+    activeFontSize = fontSize;
+    activeLineHeight = lineHeight;
+    activeStartY = startY;
+    textRevealAlpha = 0;
 
     lines.forEach((line, index) => {
       rasterCtx.fillText(line, w / 2, startY + (index * lineHeight));
@@ -405,13 +453,13 @@ export function initObsidianMirror() {
 
     const imgData = rasterCtx.getImageData(0, 0, w, h).data;
     const targetCoords = [];
-    const step = 4; // Mayor densidad de partículas para definición ultranítida
+    const step = 3; // Muestreo denso de 3px para trazos continuos y definidos
 
     for (let y = 0; y < h; y += step) {
       for (let x = 0; x < w; x += step) {
         const index = (y * w + x) * 4;
         const alpha = imgData[index + 3];
-        if (alpha > 90) {
+        if (alpha > 70) {
           targetCoords.push({ x: x, y: y });
         }
       }
@@ -429,7 +477,8 @@ export function initObsidianMirror() {
         p.hasTarget = true;
         p.textTargetX = targetCoords[i].x;
         p.textTargetY = targetCoords[i].y;
-        p.baseColor = '#FFFFFF';
+        p.size = Math.random() * 0.7 + 2.0;
+        p.baseColor = Math.random() > 0.65 ? '#FFFFFF' : Math.random() > 0.3 ? '#FFF6D6' : '#FFD166';
       } else {
         p.hasTarget = false;
         p.baseColor = Math.random() > 0.5 ? '#FFB703' : '#F5A623';
@@ -507,11 +556,14 @@ export function initObsidianMirror() {
     clearTimeout(gatherTimer);
     if (oracleState !== 'gathering') return;
     oracleState = 'orbiting';
+    textRevealAlpha = 0;
+    activeTextLines = [];
     particles.forEach(p => {
       p.hasTarget = false;
       p.baseColor = Math.random() > 0.4 ? '#FFD166' : '#FFB703';
-      p.vx += (Math.random() - 0.5) * 5;
-      p.vy += (Math.random() - 0.5) * 5;
+      p.size = Math.random() * 1.9 + 0.8;
+      p.vx += (Math.random() - 0.5) * 6;
+      p.vy += (Math.random() - 0.5) * 6;
     });
     if (isAudioActive) playTibetanBowl(360, 2.5);
   }
@@ -677,6 +729,48 @@ export function initObsidianMirror() {
       if (sw.alpha <= 0.02 || sw.radius >= sw.maxRadius) {
         shockwaves.splice(i, 1);
       }
+    }
+
+    // Renderizado del cuerpo tipográfico sagrado de alta definición
+    if (oracleState === 'gathering') {
+      textRevealAlpha = Math.min(1.0, textRevealAlpha + 0.05);
+    } else {
+      textRevealAlpha = Math.max(0, textRevealAlpha - 0.08);
+    }
+
+    if (activeTextLines.length > 0 && textRevealAlpha > 0.01) {
+      ctx.save();
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = `900 ${activeFontSize}px 'Outfit', 'Cinzel', system-ui, sans-serif`;
+      const spacingPx = Math.max(3, Math.floor(activeFontSize * 0.1));
+      if ('letterSpacing' in ctx) ctx.letterSpacing = `${spacingPx}px`;
+
+      // Capa A: Resplandor cálido exterior de fuego sagrado
+      ctx.shadowColor = 'rgba(255, 183, 3, 0.85)';
+      ctx.shadowBlur = 8;
+      ctx.fillStyle = `rgba(255, 183, 3, ${textRevealAlpha * 0.65})`;
+      activeTextLines.forEach((line, index) => {
+        ctx.fillText(line, orbCenter, activeStartY + (index * activeLineHeight));
+      });
+
+      // Capa B: Delineado oscuro de contraste profundo (define el filo de cada letra)
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = `rgba(15, 8, 8, ${textRevealAlpha * 0.85})`;
+      ctx.lineWidth = Math.max(2.5, activeFontSize * 0.09);
+      activeTextLines.forEach((line, index) => {
+        ctx.strokeText(line, orbCenter, activeStartY + (index * activeLineHeight));
+      });
+
+      // Capa C: Núcleo blanco marfil resplandeciente (máxima nitidez y legibilidad instantánea)
+      ctx.shadowBlur = 3;
+      ctx.shadowColor = 'rgba(255, 215, 0, 0.8)';
+      ctx.fillStyle = `rgba(255, 255, 255, ${textRevealAlpha * 0.98})`;
+      activeTextLines.forEach((line, index) => {
+        ctx.fillText(line, orbCenter, activeStartY + (index * activeLineHeight));
+      });
+
+      ctx.restore();
     }
 
     // Actualizar partículas
