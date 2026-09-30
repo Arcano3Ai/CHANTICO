@@ -38,12 +38,21 @@
   <meta name="twitter:image:alt" content="Logotipo Oficial CHANTICO">
 
   <!-- Favicon e Icono de Acceso Rápido -->
-  <link rel="icon" type="image/jpeg" href="./chantico-logo-whatsapp.jpg">
-  <link rel="apple-touch-icon" href="./chantico-logo-whatsapp.jpg">
+  <link rel="icon" type="image/png" href="./pwa-192x192.png">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+
+  <!-- Progressive Web App (PWA) Manifest & Configuración Móvil -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#E62624">
+  <meta name="application-name" content="CHANTICO">
+  <meta name="apple-mobile-web-app-title" content="CHANTICO">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 
   <!-- Estilos -->
-  <script type="module" crossorigin src="./assets/index-Bv_WAeFV.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-Cs0zb7Xp.css">
+  <script type="module" crossorigin src="./assets/index-DpDqMzMe.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Dj2lyvON.css">
 </head>
 <body>
 
@@ -94,6 +103,13 @@
               </span>
               <span class="dropdown-item-sub" data-i18n="nav_sound_sub">Alineación bioenergética por resonancia</span>
             </a>
+            <a href="#espejo-obsidiana" class="dropdown-item">
+              <span class="dropdown-item-title">
+                <span class="dropdown-item-icon">🔮</span>
+                <span data-i18n="nav_obsidian_mirror">Espejo de Obsidiana</span>
+              </span>
+              <span class="dropdown-item-sub" data-i18n="nav_obsidian_sub">Oráculo Tezcatlipoca, resonancia 432 Hz y visión</span>
+            </a>
             <div class="dropdown-divider"></div>
             <a href="#experiencias" class="dropdown-item dropdown-item-all" data-i18n="nav_all_experiences">
               Ver todas las experiencias →
@@ -103,6 +119,7 @@
 
         <a href="#tienda" class="nav-link" data-i18n="nav_shop">TIENDA</a>
         <a href="#rituales" class="nav-link" data-i18n="nav_rituals">RITUALES</a>
+        <a href="#espejo-obsidiana" class="nav-link" style="color: var(--color-flame); font-weight: 700; text-shadow: 0 0 10px rgba(255, 183, 3, 0.45);">🔮 ESPEJO</a>
         <a href="#journal" class="nav-link" data-i18n="nav_journal">JOURNAL</a>
         <a href="#sobre-chantico" class="nav-link" data-i18n="nav_contact">NOSOTROS</a>
       </nav>
@@ -227,11 +244,17 @@
       <a href="#guia-tolteca-bot" class="mobile-nav-link" data-open-bot style="color: var(--color-gold);">🔥 GUÍA TOLTECA (BOT)</a>
       <a href="#cuencos" class="mobile-nav-link" data-i18n="nav_sound">CUENCOS & SONIDO</a>
       <a href="#meditacion" class="mobile-nav-link" data-i18n="nav_meditation">MEDITACIÓN GUIADA</a>
+      <a href="#espejo-obsidiana" class="mobile-nav-link" style="color: var(--color-gold-light);">🔮 ESPEJO DE OBSIDIANA</a>
       <a href="#journal" class="mobile-nav-link" data-i18n="nav_journal">JOURNAL CHANTICO</a>
       <a href="#sobre-chantico" class="mobile-nav-link" data-i18n="nav_contact">SOBRE NOSOTROS</a>
     </nav>
 
     <div>
+      <!-- Botón de Instalación Directa PWA (Android / PC) -->
+      <button class="btn" id="pwa-install-btn" style="width: 100%; margin-bottom: 0.85rem; background: linear-gradient(135deg, #FFB703 0%, #E62624 100%); color: #050508; font-weight: 700; display: none; box-shadow: 0 0 20px rgba(255, 183, 3, 0.4);" aria-label="Instalar aplicación CHANTICO en tu teléfono o computadora">
+        <span>📲 INSTALAR APP CHANTICO</span>
+      </button>
+
       <button class="btn btn-primary" style="width: 100%; margin-bottom: 1.25rem;" data-book-service="sesion-tarot-mexicano" onclick="document.getElementById('mobile-nav-close').click();" data-i18n="btn_book_session">
         RESERVAR SESIÓN
       </button>
@@ -259,7 +282,7 @@
     <!-- 1. HERO SECTION -->
     <section class="hero-section" id="inicio">
       <!-- Video de Fondo Hero Oficial CHANTICO -->
-      <video class="hero-video-bg" autoplay loop muted playsinline preload="auto">
+      <video class="hero-video-bg" autoplay loop muted playsinline preload="auto" poster="./assets/hero_video_poster-C6-OXe5x.jpg" disablePictureInPicture controlslist="nodownload nofullscreen noremoteplayback">
         <source src="./assets/hero_bg_video-DszQVyO1.mp4" type="video/mp4">
       </video>
       <div class="hero-video-overlay"></div>
@@ -284,6 +307,9 @@
         <div class="hero-cta-group">
           <a href="#experiencias" class="btn btn-primary">
             INICIA TU VIAJE
+          </a>
+          <a href="#espejo-obsidiana" class="btn btn-gold-glow" style="border-color: var(--color-flame); color: var(--color-flame); box-shadow: 0 0 15px rgba(255, 183, 3, 0.35);">
+            🔮 ESPEJO DE OBSIDIANA
           </a>
           <a href="#tienda" class="btn btn-secondary">
             EL SEXTO SOL (TIENDA)
@@ -510,6 +536,25 @@
               </button>
             </div>
           </div>
+        </div>
+
+        <!-- Banner Destacado: Herramienta Sagrada Espejo de Obsidiana -->
+        <div style="margin-top: 3.5rem; background: radial-gradient(circle at 50% 50%, rgba(230, 38, 36, 0.2) 0%, rgba(14, 12, 18, 0.96) 80%); border: 1.5px solid var(--color-flame); border-radius: var(--radius-lg); padding: 2.25rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; box-shadow: 0 0 35px rgba(255, 183, 3, 0.2);">
+          <div style="max-width: 680px;">
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem;">
+              <span class="badge badge-gold">HERRAMIENTA SAGRADA INTERACTIVA</span>
+              <span style="font-size: 0.75rem; color: var(--color-flame); letter-spacing: 0.1em; text-transform: uppercase;">432 Hz · Vórtice Activo</span>
+            </div>
+            <h3 style="font-family: var(--font-serif-display); font-size: 1.65rem; color: #FFFFFF; margin-bottom: 0.5rem;">
+              El Espejo de Obsidiana de Tezcatlipoca
+            </h3>
+            <p style="font-size: 0.92rem; color: var(--color-text-secondary); line-height: 1.6; margin: 0;">
+              Consulta el oráculo tolteca incrustado en el altar ceremonial. Partículas vivas a 60 FPS, transmutación de sombras y sintonización de sonido sagrado continuo.
+            </p>
+          </div>
+          <a href="#espejo-obsidiana" class="btn btn-primary btn-gold-shimmer" style="padding: 1rem 2rem; font-size: 0.85rem;">
+            <span>CONSULTAR AL ESPEJO 🔮</span>
+          </a>
         </div>
 
         <!-- Promociones y Materiales CHANTICO -->
@@ -1040,6 +1085,136 @@
             </div>
             <div class="med-tracks-container" id="med-tracks-list">
               <!-- Renderizado dinámicamente desde src/data/meditaciones.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7C. ESPEJO DE OBSIDIANA (ORÁCULO TOLTECA & VÓRTICE DE VISIÓN) -->
+    <section class="section obsidian-mirror-section" id="espejo-obsidiana">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow" data-i18n="obsidian_eyebrow">Herramienta Sagrada Ancestral</span>
+          <h2 class="section-title" data-i18n="obsidian_title">El Espejo de Obsidiana</h2>
+          <p class="section-subtitle" data-i18n="obsidian_subtitle">
+            El oráculo tolteca de Tezcatlipoca: un portal de transmutación y autoconocimiento. Contempla el vórtice negro, formula una pregunta desde el corazón y deja que las partículas revelen la respuesta sagrada.
+          </p>
+        </div>
+
+        <div class="obsidian-experience-grid">
+          <!-- Altar Ceremonial con el Marco Incrustado -->
+          <div class="obsidian-altar-col">
+            <div class="obsidian-altar-wrapper">
+              <div class="obsidian-altar-container" id="obsidianAltarContainer">
+                <!-- Orbe de Obsidiana Interactivo Incrustado en el Marco (Capa Inferior) -->
+                <div class="obsidian-mirror-vortex" id="obsidianMirrorVortex">
+                  <canvas id="obsidianCanvas" width="480" height="480" class="obsidian-canvas"></canvas>
+                  <div class="obsidian-gleam" id="obsidianGleam"></div>
+                  <!-- Canvas oculto para rasterizar el texto a partículas -->
+                  <canvas id="obsidianRasterCanvas" width="480" height="480" style="display: none;"></canvas>
+                </div>
+
+                <!-- Marco Ceremonial PNG con Centro Transparente & Piquitos Sobre el Orbe (Capa Superior) -->
+                <img 
+                  src="./assets/espejo_obsidiana_marco-B9-Qhtfk.png" 
+                  alt="Altar Ceremonial Espejo de Obsidiana" 
+                  class="obsidian-altar-frame" 
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </div>
+
+              <!-- Controles de Resonancia e Indicadores -->
+              <div class="obsidian-sound-bar">
+                <button type="button" class="obsidian-sound-btn" id="obsidianSoundToggleBtn" aria-label="Activar o desactivar resonancia armónica 432 Hz">
+                  <span id="obsidianSoundIcon" class="obsidian-sound-icon">🔇</span>
+                  <span id="obsidianSoundLabel" class="obsidian-sound-label">Activar Resonancia (432 Hz)</span>
+                </button>
+                <div class="obsidian-status-pill">
+                  <span class="obsidian-status-dot"></span>
+                  <span class="obsidian-status-text">Vórtice Activo · Interactúa con el Cursor</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel del Consultante & Oráculo -->
+          <div class="obsidian-controls-col">
+            <div class="obsidian-card">
+              <div class="obsidian-card-header">
+                <span class="obsidian-card-badge">CONSULTA ORACULAR</span>
+                <h3 class="obsidian-card-title">Interroga al Espejo</h3>
+                <p class="obsidian-card-desc">
+                  La obsidiana no muestra lo que deseas ver, sino lo que tu espíritu necesita transformar. Formula tu duda en silencio o elígela abajo.
+                </p>
+              </div>
+
+              <!-- Formulario de Consulta -->
+              <form id="obsidianOracleForm" class="obsidian-oracle-form" onsubmit="return false;">
+                <div class="obsidian-input-group">
+                  <label for="obsidianQuestionInput" class="obsidian-input-label">Escribe tu intención o pregunta:</label>
+                  <div class="obsidian-input-wrapper">
+                    <input 
+                      type="text" 
+                      id="obsidianQuestionInput" 
+                      class="obsidian-input" 
+                      placeholder="Ej: ¿Qué camino debo tomar ahora?..." 
+                      maxlength="120"
+                      autocomplete="off"
+                    />
+                    <button type="submit" class="btn btn-primary obsidian-submit-btn" id="obsidianConsultBtn">
+                      <span>CONSULTAR</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <!-- Tarjeta de Revelación Oracular Viva -->
+              <div id="obsidianOracleReveal" class="obsidian-reveal-card" role="region" aria-live="polite" style="display: none;">
+                <div class="obsidian-reveal-header">
+                  <span class="obsidian-reveal-badge">REVELACIÓN TOLTECA</span>
+                  <span class="obsidian-reveal-guide" id="obsidianRevealGuide">Tezcatlipoca · Guardián</span>
+                </div>
+                <div class="obsidian-reveal-title" id="obsidianRevealKeyword">«MIRA HACIA ADENTRO»</div>
+                <p class="obsidian-reveal-text" id="obsidianRevealMeaning">
+                  La respuesta que buscas en el exterior ya habita en el silencio de tu propio corazón...
+                </p>
+                <div class="obsidian-reveal-footer">
+                  <span class="obsidian-reveal-element" id="obsidianRevealElement">Elemento: Fuego Interior</span>
+                  <button type="button" class="obsidian-reset-btn" id="obsidianResetConsultBtn">Nueva Consulta ✦</button>
+                </div>
+              </div>
+
+              <!-- Consultas Sugeridas Rápidas -->
+              <div class="obsidian-quick-section">
+                <span class="obsidian-quick-label">O pulsa una intención sagrada:</span>
+                <div class="obsidian-prompts-grid">
+                  <button type="button" class="obsidian-quick-prompt" data-question="¿Cuál es mi mayor fortaleza en este ciclo?">
+                    ⚡ Mayor fortaleza
+                  </button>
+                  <button type="button" class="obsidian-quick-prompt" data-question="¿Qué sombra debo integrar y soltar hoy?">
+                    🌑 Integrar sombra
+                  </button>
+                  <button type="button" class="obsidian-quick-prompt" data-question="¿Qué mensaje tiene el Fuego Sagrado para mí?">
+                    🔥 Mensaje del Fuego
+                  </button>
+                  <button type="button" class="obsidian-quick-prompt" data-question="¿Hacia dónde fluye mi verdadera vocación?">
+                    🌿 Propósito y Rumbo
+                  </button>
+                </div>
+              </div>
+
+              <!-- Guía de Sabiduría Tolteca -->
+              <div class="obsidian-wisdom-footer">
+                <div class="obsidian-wisdom-quote">
+                  <em>«En el espejo negro de Tezcatlipoca, la ilusión del ego se disuelve para que nazca la verdad del guerrero.»</em>
+                </div>
+                <div class="obsidian-wisdom-attribution">
+                  <span>Tradición Tolteca CHANTICO · Frecuencias 432 Hz</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
