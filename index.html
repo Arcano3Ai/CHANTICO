@@ -38,8 +38,17 @@
   <meta name="twitter:image:alt" content="Logotipo Oficial CHANTICO">
 
   <!-- Favicon e Icono de Acceso Rápido -->
-  <link rel="icon" type="image/jpeg" href="./chantico-logo-whatsapp.jpg">
-  <link rel="apple-touch-icon" href="./chantico-logo-whatsapp.jpg">
+  <link rel="icon" type="image/png" href="./pwa-192x192.png">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+
+  <!-- Progressive Web App (PWA) Manifest & Configuración Móvil -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#E62624">
+  <meta name="application-name" content="CHANTICO">
+  <meta name="apple-mobile-web-app-title" content="CHANTICO">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 
   <!-- Estilos -->
   <link rel="stylesheet" href="./src/styles/main.css">
@@ -240,6 +249,11 @@
     </nav>
 
     <div>
+      <!-- Botón de Instalación Directa PWA (Android / PC) -->
+      <button class="btn" id="pwa-install-btn" style="width: 100%; margin-bottom: 0.85rem; background: linear-gradient(135deg, #FFB703 0%, #E62624 100%); color: #050508; font-weight: 700; display: none; box-shadow: 0 0 20px rgba(255, 183, 3, 0.4);" aria-label="Instalar aplicación CHANTICO en tu teléfono o computadora">
+        <span>📲 INSTALAR APP CHANTICO</span>
+      </button>
+
       <button class="btn btn-primary" style="width: 100%; margin-bottom: 1.25rem;" data-book-service="sesion-tarot-mexicano" onclick="document.getElementById('mobile-nav-close').click();" data-i18n="btn_book_session">
         RESERVAR SESIÓN
       </button>
