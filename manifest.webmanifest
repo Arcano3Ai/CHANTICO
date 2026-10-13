@@ -1,13 +1,13 @@
 {
-  "name": "CHANTICO — Tarot, Fuego Sagrado & Sabiduría Ancestral",
-  "short_name": "CHANTICO",
-  "description": "Comunidad tolteca dedicada al despertar espiritual, oráculo de obsidiana, tarot ancestral y sanación con cuencos 432 Hz.",
+  "name": "PAKAL TUN — Artesanal Studio y Mercado · Joyería Prehispánica",
+  "short_name": "PAKAL TUN",
+  "description": "PAKAL TUN · Artesanal Studio y Mercado: Joyería sagrada tallada a mano en jadeíta auténtica, obsidiana y ámbar por el Maestro Yax Balam en la Zona Oculta Maya.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#0A090D",
-  "theme_color": "#E62624",
+  "background_color": "#090807",
+  "theme_color": "#FFB703",
   "lang": "es",
   "icons": [
     {
