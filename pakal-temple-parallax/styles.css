@@ -518,28 +518,156 @@ body {
   padding-right: clamp(2rem, 8vw, 10rem);
 }
 
-.story-card {
-  max-width: 520px;
-  width: 100%;
-  background: var(--color-dark-card);
-  border: 1px solid var(--color-dark-border);
-  border-radius: 18px;
-  padding: 2.25rem 2.5rem;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.75), 0 0 25px rgba(245, 158, 11, 0.1);
+/* --------------------------------------------------------------------------
+   Secciones Narrativas: Píldoras Notificación Colapsables (0 Obstrucción 3D)
+   -------------------------------------------------------------------------- */
+.story-pill-notification {
   pointer-events: auto;
   opacity: 0;
-  transform: translateY(40px) scale(0.97);
-  transition: opacity 0.8s var(--ease-cinematic), transform 0.8s var(--ease-cinematic);
+  transform: translateY(20px) scale(0.96);
+  transition: opacity 0.5s var(--ease-cinematic), transform 0.5s var(--ease-cinematic);
+  position: relative;
+  z-index: 60;
 }
 
-.story-card.visible {
+.story-pill-notification.visible {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
 
-/* Elementos dentro de la Story Card */
+/* Disparador de píldora compacta (estilo notificación micro-badge) */
+.story-pill-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 1.15rem 0.5rem 0.65rem;
+  background: rgba(14, 11, 9, 0.82);
+  border: 1px solid rgba(255, 183, 3, 0.35);
+  border-radius: 32px;
+  color: var(--color-text-title);
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.75), 0 0 15px rgba(255, 183, 3, 0.15);
+  transition: all 0.3s var(--ease-out-quad);
+  font-family: var(--font-sans);
+}
+
+.story-pill-trigger:hover,
+.story-pill-trigger:focus-visible {
+  background: rgba(26, 92, 58, 0.5);
+  border-color: var(--color-gold-sun);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 22px rgba(61, 170, 110, 0.4);
+}
+
+.pill-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(26, 92, 58, 0.6);
+  border: 1px solid rgba(61, 170, 110, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(61, 170, 110, 0.3);
+}
+
+.pill-text {
+  font-size: 0.82rem;
+  color: var(--color-text-body);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.pill-text strong {
+  color: var(--color-gold-sun);
+  font-weight: 700;
+}
+
+.pill-expand-indicator {
+  color: var(--color-gold-sun);
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+  line-height: 1;
+}
+
+.story-pill-trigger:hover .pill-expand-indicator {
+  transform: translateY(2px);
+}
+
+/* Contenido Expandido: Oculto por defecto para dejar el 95% de la vista libre */
+.story-pill-content {
+  display: none;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(14, 11, 9, 0.94);
+  border: 1px solid var(--color-gold-sun);
+  border-radius: 20px;
+  padding: 1.85rem 2.2rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.92), 0 0 35px rgba(255, 183, 3, 0.2);
+  animation: pillFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pillFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Estado Expandido activo */
+.story-pill-notification.is-expanded .story-pill-trigger {
+  display: none;
+}
+
+.story-pill-notification.is-expanded .story-pill-content {
+  display: block;
+}
+
+/* Header del panel expandido */
+.pill-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+  gap: 1rem;
+}
+
+.pill-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-gold-light);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  line-height: 1;
+  padding: 0;
+}
+
+.pill-close-btn:hover {
+  background: rgba(217, 119, 6, 0.3);
+  border-color: var(--color-gold-sun);
+  color: #FFFFFF;
+  transform: rotate(90deg);
+}
+
+/* Elementos dentro del contenido expandido */
 .story-chapter-badge {
   display: inline-flex;
   align-items: center;
@@ -553,16 +681,15 @@ body {
   letter-spacing: 0.18em;
   color: var(--color-jade-light);
   text-transform: uppercase;
-  margin-bottom: 1rem;
 }
 
 .story-title {
   font-family: var(--font-serif-display);
-  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
   font-weight: 700;
   color: var(--color-text-title);
   line-height: 1.25;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
   letter-spacing: 0.04em;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
@@ -572,20 +699,20 @@ body {
 }
 
 .story-desc {
-  font-size: 0.94rem;
-  line-height: 1.7;
+  font-size: 0.92rem;
+  line-height: 1.65;
   color: var(--color-text-body);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .story-quote {
   border-left: 2px solid var(--color-gold-sun);
-  padding-left: 1rem;
-  margin-bottom: 1.5rem;
+  padding-left: 0.9rem;
+  margin-bottom: 1.35rem;
   font-style: italic;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   color: var(--color-gold-light);
-  line-height: 1.6;
+  line-height: 1.55;
 }
 
 .story-action-row {
@@ -598,11 +725,11 @@ body {
   background: linear-gradient(135deg, var(--color-gold-sun) 0%, #D97706 100%);
   color: #000000;
   font-family: var(--font-sans);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 0.75rem 1.6rem;
+  padding: 0.65rem 1.4rem;
   border-radius: 30px;
   text-decoration: none;
   border: none;
@@ -617,15 +744,17 @@ body {
   filter: brightness(1.1);
 }
 
-/* --------------------------------------------------------------------------
-   Fase Final (Cúspide de Pakal Tun)
-   -------------------------------------------------------------------------- */
-.final-sanctuary-card {
-  text-align: center;
-  max-width: 620px;
-  border-color: rgba(61, 170, 110, 0.45);
-  background: radial-gradient(circle at 50% 20%, rgba(26, 92, 58, 0.35) 0%, rgba(14, 11, 9, 0.95) 80%);
-  box-shadow: 0 0 50px rgba(61, 170, 110, 0.25), 0 20px 60px rgba(0, 0, 0, 0.9);
+/* Cúspide de Pakal Tun */
+.final-sanctuary-pill .story-pill-trigger.final-trigger {
+  border-color: var(--color-gold-sun);
+  background: rgba(26, 92, 58, 0.65);
+  box-shadow: 0 0 25px rgba(255, 183, 3, 0.35);
+}
+
+.final-sanctuary-pill .story-pill-content {
+  border-color: rgba(61, 170, 110, 0.6);
+  background: radial-gradient(circle at 50% 20%, rgba(26, 92, 58, 0.45) 0%, rgba(14, 11, 9, 0.97) 85%);
+  box-shadow: 0 0 50px rgba(61, 170, 110, 0.25), 0 20px 60px rgba(0, 0, 0, 0.95);
 }
 
 .sanctuary-icon {
@@ -696,22 +825,23 @@ body {
 
   .altimeter-hud {
     left: auto;
-    right: 1rem;
-    top: auto;
-    bottom: 1.25rem;
+    right: 0.85rem;
+    top: 4.2rem;
+    bottom: auto;
     transform: none;
     background: rgba(14, 11, 9, 0.85);
     border: 1px solid var(--color-dark-border);
     border-radius: 25px;
-    padding: 0.35rem 0.75rem;
+    padding: 0.3rem 0.65rem;
     backdrop-filter: blur(10px);
     flex-direction: row;
-    gap: 0.5rem;
+    gap: 0.45rem;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+    z-index: 120;
   }
 
   .altimeter-track {
-    width: 48px;
+    width: 44px;
     height: 4px;
     border-radius: 2px;
   }
@@ -724,7 +854,7 @@ body {
 
   .altimeter-data {
     flex-direction: row;
-    gap: 0.3rem;
+    gap: 0.25rem;
   }
 
   .altimeter-label {
@@ -732,43 +862,81 @@ body {
   }
 
   .altimeter-value {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
   }
 
   .story-section {
-    min-height: 90vh;
-    padding: 2.5rem 1rem;
+    min-height: 95vh;
+    padding: 2rem 1rem 6rem 1rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
   }
 
   .story-section[data-align="left"],
-  .story-section[data-align="right"] {
+  .story-section[data-align="right"],
+  .story-section[data-align="center"] {
     padding-left: 1rem;
     padding-right: 1rem;
     justify-content: center;
   }
 
-  .story-card {
-    padding: 1.6rem 1.35rem;
-    border-radius: 14px;
+  /* En móvil, la píldora reposa en la parte inferior dejando la pirámide y el sol 100% libres */
+  .story-pill-notification {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 92%;
+  }
+
+  .story-pill-trigger {
+    padding: 0.45rem 1rem 0.45rem 0.55rem;
+    gap: 0.5rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.85);
+  }
+
+  .pill-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 0.9rem;
+  }
+
+  .pill-text {
+    font-size: 0.78rem;
+  }
+
+  /* Si el usuario decide expandir la notificación en móvil */
+  .story-pill-notification.is-expanded .story-pill-content {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 1rem;
+    right: 1rem;
+    max-width: calc(100vw - 2rem);
+    max-height: 72vh;
+    overflow-y: auto;
+    padding: 1.4rem 1.25rem;
+    border-radius: 18px;
+    z-index: 250;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.95), 0 0 30px rgba(255, 183, 3, 0.25);
   }
 
   .story-title {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
 
   .story-desc {
     font-size: 0.85rem;
-    line-height: 1.6;
+    line-height: 1.55;
   }
 
   .story-quote {
-    font-size: 0.8rem;
-    margin-bottom: 1.25rem;
+    font-size: 0.78rem;
+    margin-bottom: 1.15rem;
   }
 
   .btn-story-cta {
-    padding: 0.65rem 1.3rem;
-    font-size: 0.76rem;
+    padding: 0.65rem 1.2rem;
+    font-size: 0.75rem;
     width: 100%;
     text-align: center;
   }
@@ -795,7 +963,7 @@ body {
     animation: none !important;
     transition: none !important;
   }
-  .story-card {
+  .story-pill-notification {
     transition: opacity 0.3s ease !important;
     transform: none !important;
   }

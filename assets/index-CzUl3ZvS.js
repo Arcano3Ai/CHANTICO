@@ -233,7 +233,7 @@ Dirección: ${i}, ${s}, ${o}.`;this.confirmationWaBtn.href="https://www.facebook
       bottom: 24px;
       left: 24px;
       z-index: 999;
-      display: flex;
+      display: none !important; /* Oculto por defecto a petición del usuario para no estorbar */
       align-items: center;
       gap: 10px;
       padding: 8px 16px 8px 10px;
@@ -442,4 +442,4 @@ Puedes preguntarme por:
     `).join(""),b.querySelectorAll(".journal-card").forEach(n=>{n.addEventListener("click",()=>a.open(n.dataset.postId))})),(h=document.getElementById("header-wishlist-btn"))==null||h.addEventListener("click",n=>{n.preventDefault();const c=document.getElementById("tienda");c?c.scrollIntoView({behavior:"smooth"}):window.location.hash="#tienda"});const M=document.getElementById("contact-form");M&&M.addEventListener("submit",async n=>{var D,j,H;n.preventDefault();const c=(D=document.getElementById("contact-name"))==null?void 0:D.value.trim(),g=(j=document.getElementById("contact-email"))==null?void 0:j.value.trim(),w=(H=document.getElementById("contact-message"))==null?void 0:H.value.trim(),G=`Saludos Maestro Yax Balam, soy ${c} (${g}). Le escribo desde la Galería PAKAL TUN:
 
 ${w}`,F=await pe(G);M.reset(),alert(F?"Tu mensaje quedó copiado. Pégalo en el chat de la Galería PAKAL TUN del Maestro Yax Balam.":"Escríbale al Maestro Yax Balam en la página de la Galería PAKAL TUN.")}),document.querySelectorAll(".hero-video-bg, .footer-video-bg").forEach(n=>{n.muted=!0,n.defaultMuted=!0,n.setAttribute("playsinline","");const c=()=>{n.play().catch(()=>{})};c(),document.addEventListener("click",c,{once:!0}),document.addEventListener("touchstart",c,{once:!0}),document.addEventListener("visibilitychange",()=>{document.hidden||c()})}),["gesturestart","gesturechange","gestureend"].forEach(n=>{document.addEventListener(n,c=>c.preventDefault(),{passive:!1})});const I=()=>{if(!window.location.hash)return;const n=document.getElementById(window.location.hash.substring(1));n&&setTimeout(()=>{var w;const c=((w=document.querySelector(".site-header"))==null?void 0:w.offsetHeight)||70,g=n.getBoundingClientRect().top+window.scrollY-c;window.scrollTo({top:Math.max(0,g),behavior:"smooth"})},250)};I(),window.addEventListener("hashchange",I)});
-//# sourceMappingURL=index-DC33v1kq.js.map
+//# sourceMappingURL=index-CzUl3ZvS.js.map

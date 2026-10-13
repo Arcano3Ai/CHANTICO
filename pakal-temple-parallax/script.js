@@ -43,7 +43,7 @@
     altimeterGlyph: document.querySelector('.altimeter-glyph'),
     btnSoundToggle: document.getElementById('btn-sound-toggle'),
     scrollCue: document.querySelector('.scroll-indicator-cue'),
-    storyCards: document.querySelectorAll('.story-card'),
+    storyPills: document.querySelectorAll('.story-pill-notification'),
     storySections: document.querySelectorAll('.story-section')
   };
 
@@ -59,8 +59,9 @@
       // Iniciar el Canvas de Partículas Solares
       initSunParticles();
 
-      // Observador de visibilidad de historias (Fallback o scroll trigger)
-      initStoryCardsObserver();
+      // Observador de visibilidad y comportamiento interactivo de píldoras
+      initStoryPillsInteractivity();
+      initStoryPillsObserver();
 
       // Configurar controles interactivos de audio y navegación
       initAudioControls();
@@ -237,30 +238,82 @@
   }
 
   /**
-   * 6. INTERSECTION OBSERVER PARA STORY CARDS
+   * 6. INTERACTIVIDAD Y OBSERVADOR DE PÍLDORAS NARRATIVAS (0 OBSTRUCCIÓN)
    */
-  function initStoryCardsObserver() {
+  function initStoryPillsInteractivity() {
+    const pills = document.querySelectorAll('.story-pill-notification');
+    pills.forEach(pill => {
+      const trigger = pill.querySelector('.story-pill-trigger');
+      const closeBtn = pill.querySelector('.pill-close-btn');
+
+      if (trigger) {
+        trigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Cerrar otras píldoras abiertas para mantener vista limpia
+          pills.forEach(otherPill => {
+            if (otherPill !== pill && otherPill.classList.contains('is-expanded')) {
+              otherPill.classList.remove('is-expanded');
+              const otherTrigger = otherPill.querySelector('.story-pill-trigger');
+              if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          const isExp = pill.classList.toggle('is-expanded');
+          trigger.setAttribute('aria-expanded', isExp ? 'true' : 'false');
+        });
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          pill.classList.remove('is-expanded');
+          if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+
+    // Cerrar píldora expandida con tecla Escape
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        pills.forEach(p => {
+          if (p.classList.contains('is-expanded')) {
+            p.classList.remove('is-expanded');
+            const trig = p.querySelector('.story-pill-trigger');
+            if (trig) trig.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    });
+  }
+
+  function initStoryPillsObserver() {
+    const pills = document.querySelectorAll('.story-pill-notification');
     if (!('IntersectionObserver' in window)) {
-      // Fallback para navegadores antiguos: hacerlas visibles
-      DOM.storyCards.forEach(card => card.classList.add('visible'));
+      pills.forEach(p => p.classList.add('visible'));
       return;
     }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        const pill = entry.target.querySelector('.story-pill-notification');
         if (entry.isIntersecting) {
-          const card = entry.target.querySelector('.story-card');
-          if (card) card.classList.add('visible');
+          if (pill) pill.classList.add('visible');
         } else {
-          // Opcional: fade-out al salir para sensación etérea continua
-          const card = entry.target.querySelector('.story-card');
-          if (card && entry.boundingClientRect.top > window.innerHeight * 0.8) {
-            card.classList.remove('visible');
+          // Ocultar y colapsar al salir del campo visual
+          if (pill) {
+            pill.classList.remove('is-expanded');
+            const trigger = pill.querySelector('.story-pill-trigger');
+            if (trigger) trigger.setAttribute('aria-expanded', 'false');
+
+            if (entry.boundingClientRect.top > window.innerHeight * 0.75 ||
+                entry.boundingClientRect.bottom < 0) {
+              pill.classList.remove('visible');
+            }
           }
         }
       });
     }, {
-      threshold: 0.35
+      threshold: 0.25
     });
 
     DOM.storySections.forEach(section => observer.observe(section));
