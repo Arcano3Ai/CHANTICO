@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>PAKAL TUN — Ascenso al Templo Sagrado · Experiencia Parallax Inmersiva</title>
+  
+  <meta name="description" content="Landing page interactiva con efecto parallax multidimensional inspirada en el templo monumental de Pakal Tun, dividida en capas visuales de profundidad realista.">
+  <meta name="keywords" content="Pakal Tun, Templo Maya, Parallax 3D, Joyería Prehispánica, Maestro Yax Balam, Jadeíta, Palenque">
+  <meta name="author" content="Maestro Yax Balam · Galería PAKAL TUN">
+  <meta name="theme-color" content="#070504">
+
+  <!-- Open Graph / Redes Sociales -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PAKAL TUN — Ascenso al Templo Maya (Experiencia Parallax 3D)">
+  <meta property="og:description" content="Asciende por la escalinata monumental hacia el santuario de Pakal Tun entre niebla y rayos de sol del amanecer.">
+  <meta property="og:image" content="assets/temple_full.jpg">
+
+  <!-- Tipografías de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Hojas de estilo modulares -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. HUD SUPERIOR (Header de Navegación & Control de Audio)
+       ========================================================================= -->
+  <header class="hud-header" role="banner">
+    <a href="../index.html" class="hud-brand" title="Volver a la Galería PAKAL TUN">
+      <div class="hud-emblem" aria-hidden="true">📿</div>
+      <div class="hud-title-box">
+        <span class="hud-title">PAKAL TUN</span>
+        <span class="hud-subtitle">Templo Sagrado · Parallax 3D</span>
+      </div>
+    </a>
+
+    <div class="hud-controls">
+      <!-- Botón de Audio Místico Procedural (Web Audio API) -->
+      <button type="button" class="btn-sound-toggle sound-muted" id="btn-sound-toggle" aria-label="Activar o desactivar sonido ambiente">
+        <div class="sound-waves" aria-hidden="true">
+          <span class="sound-bar"></span>
+          <span class="sound-bar"></span>
+          <span class="sound-bar"></span>
+        </div>
+        <span class="sound-label">SONIDO</span>
+      </button>
+
+      <!-- Botón de vuelta a la Galería oficial -->
+      <a href="../index.html#tienda" class="btn-gallery-link">
+        <span>VER JOYERÍA</span> 💎
+      </a>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. ALTÍMETRO MAYA (Indicador Lateral de Elevación)
+       ========================================================================= -->
+  <aside class="altimeter-hud" aria-label="Indicador de altitud del templo">
+    <div class="altimeter-glyph" aria-hidden="true">🌱</div>
+    <div class="altimeter-track">
+      <div class="altimeter-fill" style="height: 0%;"></div>
+    </div>
+    <div class="altimeter-data">
+      <span class="altimeter-value">0m</span>
+      <span class="altimeter-label">ALTITUD</span>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       3. INDICADOR INICIAL DE SCROLL
+       ========================================================================= -->
+  <div class="scroll-indicator-cue" aria-hidden="true">
+    <span class="scroll-indicator-text">DESLIZA PARA ASCENDER</span>
+    <div class="scroll-indicator-arrow"></div>
+  </div>
+
+  <!-- =========================================================================
+       4. ESCENARIO PARALLAX FIJO (Viewport 3D Multicapa Acelerado por GPU)
+       ========================================================================= -->
+  <div class="parallax-stage" aria-hidden="true">
+    <div class="scene-frame">
+      <!-- Capa 0: Fondo (Cielo del amanecer y nubes de fuego) -->
+      <div class="parallax-layer layer-sky"></div>
+
+      <!-- Canvas de partículas solares (Polvo cósmico y chispas de jade) -->
+      <canvas id="sun-particles-canvas"></canvas>
+
+      <!-- Resplandor solar volumétrico (God Rays) -->
+      <div class="layer-sun-flare"></div>
+
+      <!-- Capa 1: Templo principal y selva circundante -->
+      <div class="parallax-layer layer-temple"></div>
+
+      <!-- Capa de niebla volumétrica entre terrazas piramidales -->
+      <div class="layer-mist"></div>
+
+      <!-- Capa 2: Explorador y escalinata de basalto -->
+      <div class="parallax-layer layer-explorer"></div>
+
+      <!-- Capa 2B: Santuario cúspide (Rostro sagrado de Pakal Tun) -->
+      <div class="parallax-layer layer-shrine"></div>
+
+      <!-- Capa 3: Primer plano (Hojas tropicales y mascarón maya de jade) -->
+      <div class="parallax-layer layer-foreground"></div>
+
+      <!-- Capa 4: Vignette cinematográfico perimetral -->
+      <div class="layer-vignette"></div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       5. CONTENIDO NARRATIVO Y RECORRIDO ESPACIAL (Story Cards Flotantes)
+       ========================================================================= -->
+  <main class="scroll-container">
+    <div class="story-wrapper">
+
+      <!-- CAPÍTULO I: EL UMBRAL DE LA SELVA -->
+      <section class="story-section" data-align="left" id="capitulo-1">
+        <article class="story-card visible">
+          <div class="story-chapter-badge">◈ CAPÍTULO I · 0M ◈</div>
+          <h1 class="story-title">El Despertar en la <span>Selva de Jade</span></h1>
+          <p class="story-desc">
+            Bajo el manto del amanecer, la selva exhala su vapor milenario ante el titán de piedra. El explorador contempla por primera vez los peldaños que conducen al inframundo y a los nueve cielos mayas.
+          </p>
+          <blockquote class="story-quote">
+            «Donde la roca abraza a la selva, el tiempo suspende su marcha y la memoria de los dioses cobra vida.»
+          </blockquote>
+          <div class="story-action-row">
+            <a href="#capitulo-2" class="btn-story-cta">COMENZAR EL ASCENSO ↓</a>
+          </div>
+        </article>
+      </section>
+
+      <!-- CAPÍTULO II: LA ESCALINATA INMORTAL -->
+      <section class="story-section" data-align="right" id="capitulo-2">
+        <article class="story-card">
+          <div class="story-chapter-badge">◈ CAPÍTULO II · 18M ◈</div>
+          <h2 class="story-title">La Vía de los <span>Nueve Cielos</span></h2>
+          <p class="story-desc">
+            Setenta y dos escalones monolíticos esculpidos en roca volcánica y basalto guían los pasos del buscador. En cada balaustrada, las cabezas de serpiente y los mascarones de jade custodian la pureza del peregrino.
+          </p>
+          <blockquote class="story-quote">
+            «Cada peldaño es un siglo grabado en piedra; sólo quien porta un corazón firme alcanzará el umbral del sol.»
+          </blockquote>
+          <div class="story-action-row">
+            <a href="#capitulo-3" class="btn-story-cta">SUBIR AL SIGUIENTE NIVEL ↓</a>
+          </div>
+        </article>
+      </section>
+
+      <!-- CAPÍTULO III: EL ASCENSO DEL BUSCADOR -->
+      <section class="story-section" data-align="left" id="capitulo-3">
+        <article class="story-card">
+          <div class="story-chapter-badge">◈ CAPÍTULO III · 34M ◈</div>
+          <h2 class="story-title">La Silueta Frente al <span>Resplandor Solar</span></h2>
+          <p class="story-desc">
+            A contraluz del sol naciente, la figura del viajero se funde con la arquitectura ceremonial. El viento de la altura disipa la niebla de las copas de los árboles, revelando el santuario superior cubierto de estuco sagrado.
+          </p>
+          <blockquote class="story-quote">
+            «El explorador no escala para dominar la cumbre, sino para entregarse a la sabiduría que guarda el mineral.»
+          </blockquote>
+          <div class="story-action-row">
+            <a href="#capitulo-4" class="btn-story-cta">ALCANZAR EL SANTUARIO ↑</a>
+          </div>
+        </article>
+      </section>
+
+      <!-- CAPÍTULO IV: EL SANTUARIO DE PAKAL TUN -->
+      <section class="story-section" data-align="center" id="capitulo-4">
+        <article class="story-card final-sanctuary-card">
+          <div class="sanctuary-icon" aria-hidden="true">👑</div>
+          <div class="story-chapter-badge" style="background: rgba(255, 183, 3, 0.2); border-color: var(--color-gold-sun); color: var(--color-gold-sun);">
+            ◈ CÚSPIDE SAGRADA · ZONA OCULTA MAYA · 54M ◈
+          </div>
+          <h2 class="story-title">El Rostro Inmortal de <span>K'inich Janaab' Pakal</span></h2>
+          <p class="story-desc">
+            Has alcanzado la cima sagrada. Aquí, en el umbral superior de la <strong>Zona Oculta Maya</strong>, reposa la efigie eterna del gobernante maya tallada en mosaico de jadeíta verde imperial y obsidiana. Cada pectoral y collar esculpido a mano por el <strong>Maestro Yax Balam</strong> en su taller sagrado encarna el espíritu imperecedero de este templo.
+          </p>
+          <blockquote class="story-quote" style="text-align: center; border-left: none; border-top: 1px solid var(--color-dark-border); border-bottom: 1px solid var(--color-dark-border); padding: 1rem 0;">
+            «La piedra guarda la memoria de quienes la tallaron antes. Llévala contigo como tu escudo eterno.»
+          </blockquote>
+          
+          <div class="final-action-group">
+            <a href="../index.html#tienda" class="btn-story-cta">
+              💎 EXPLORAR JOYAS EN JADE &amp; OBSIDIANA
+            </a>
+            <a href="../index.html#espejo-obsidiana" class="btn-secondary-link">
+              🪞 EL ESPEJO DE OBSIDIANA
+            </a>
+            <a href="../index.html#taller" class="btn-secondary-link">
+              🏛️ TALLER EN LA ZONA OCULTA MAYA
+            </a>
+          </div>
+        </article>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Script modular 60 FPS -->
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,802 @@
+/* ==========================================================================
+   PAKAL TUN — EXPERIENCIA PARALLAX TEMPLO MAYA (60 FPS PRODUCTION STYLES)
+   Arquitectura modular, GPU-Accelerated 3D Transforms, Responsive HUD
+   ========================================================================== */
+
+:root {
+  /* Paleta Solar & Maya */
+  --color-gold-sun: #FFB703;
+  --color-gold-light: #FFE28A;
+  --color-amber-dawn: #F59E0B;
+  --color-orange-glow: rgba(245, 158, 11, 0.45);
+  
+  /* Jade Imperial & Selva */
+  --color-jade-deep: #0D2619;
+  --color-jade-mid: #1A5C3A;
+  --color-jade-light: #3DAA6E;
+  --color-jade-glow: rgba(61, 170, 110, 0.35);
+
+  /* Basalto, Obsidiana y Sombras */
+  --color-dark-bg: #070504;
+  --color-dark-card: rgba(14, 11, 9, 0.82);
+  --color-dark-border: rgba(255, 183, 3, 0.28);
+  
+  /* Textos */
+  --color-text-title: #FFF9EE;
+  --color-text-body: #E5DEC9;
+  --color-text-muted: #A39B88;
+
+  /* Tipografías */
+  --font-serif-display: 'Cinzel', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Transiciones & Suavizado */
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Reset & Base
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  background-color: var(--color-dark-bg);
+  color: var(--color-text-body);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  scroll-behavior: auto; /* Controlado programáticamente por Lerp para máxima fluidez */
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-dark-bg);
+  overflow-x: hidden;
+  position: relative;
+  touch-action: pan-y;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll Track (Espacio virtual que determina la longitud del viaje)
+   -------------------------------------------------------------------------- */
+.scroll-container {
+  position: relative;
+  width: 100%;
+  height: 420vh; /* Permite una narrativa pausada de 4 fases completas */
+}
+
+/* --------------------------------------------------------------------------
+   Stage Fijo de Parallax (Viewport 100vh acelerado por hardware)
+   -------------------------------------------------------------------------- */
+.parallax-stage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Contenedor centralizado para mantener el ratio de aspecto de la escena */
+.scene-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Capas de Profundidad (Layers)
+   -------------------------------------------------------------------------- */
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Capa 0: Fondo cielo, nubes y sol naciente */
+.layer-sky {
+  z-index: 10;
+  background-image: url('assets/layer_0_sky.webp');
+  background-position: center top;
+  filter: brightness(1.05) contrast(1.02);
+}
+
+/* Canvas de partículas celestiales (polvo dorado y rayos de luz) */
+#sun-particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* Capa de destello solar volumétrico (God Rays) */
+.layer-sun-flare {
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 75vw;
+  height: 75vh;
+  max-width: 900px;
+  max-height: 900px;
+  background: radial-gradient(circle at 75% 30%, 
+    rgba(255, 226, 138, 0.8) 0%, 
+    rgba(245, 158, 11, 0.45) 30%, 
+    rgba(245, 158, 11, 0.15) 55%, 
+    transparent 75%
+  );
+  filter: blur(35px);
+  mix-blend-mode: screen;
+  z-index: 16;
+  opacity: 0.9;
+  will-change: transform, opacity;
+}
+
+/* Capa 1: Templo principal, terrazas y selva circundante */
+.layer-temple {
+  z-index: 20;
+  background-image: url('assets/layer_1_temple.webp');
+  background-position: center center;
+}
+
+/* Capa de niebla volumétrica entre terrazas */
+.layer-mist {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg, 
+    transparent 40%, 
+    rgba(245, 230, 200, 0.12) 58%, 
+    rgba(220, 200, 170, 0.18) 68%, 
+    transparent 85%
+  );
+  mix-blend-mode: screen;
+  filter: blur(12px);
+  animation: mistPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes mistPulse {
+  0% { transform: translateY(0) scaleX(1); opacity: 0.55; }
+  100% { transform: translateY(-15px) scaleX(1.04); opacity: 0.85; }
+}
+
+/* Capa 2: Explorador y escalinata */
+.layer-explorer {
+  z-index: 30;
+  background-image: url('assets/layer_2_explorer.webp');
+  background-position: center center;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.6));
+}
+
+/* Capa 2B: Santuario cúspide (el rostro sagrado de Pakal en la cima) */
+.layer-shrine {
+  z-index: 32;
+  background-image: url('assets/layer_shrine.webp');
+  background-position: center top;
+  opacity: 0.85;
+}
+
+/* Capa 3: Primer plano (follaje tropical de palmeras y mascarón maya) */
+.layer-foreground {
+  z-index: 40;
+  background-image: url('assets/layer_3_foreground.webp');
+  background-position: center bottom;
+  filter: drop-shadow(0 -10px 30px rgba(0, 0, 0, 0.85));
+}
+
+/* Capa 4: Vignette cinematográfico y velo de luz cálida */
+.layer-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, 
+    transparent 45%, 
+    rgba(7, 5, 4, 0.45) 80%, 
+    rgba(7, 5, 4, 0.85) 100%
+  );
+}
+
+/* --------------------------------------------------------------------------
+   HUD & Interfaz Superior (Header, Audio, Logo)
+   -------------------------------------------------------------------------- */
+.hud-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.25rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  pointer-events: auto;
+  background: linear-gradient(180deg, rgba(7, 5, 4, 0.85) 0%, transparent 100%);
+  backdrop-filter: blur(6px);
+}
+
+.hud-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+}
+
+.hud-emblem {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-gold-sun);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, var(--color-jade-deep) 0%, #060404 100%);
+  box-shadow: 0 0 16px var(--color-orange-glow);
+  font-size: 1.25rem;
+}
+
+.hud-title-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.hud-title {
+  font-family: var(--font-serif-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--color-gold-light);
+  text-transform: uppercase;
+}
+
+.hud-subtitle {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  color: var(--color-jade-light);
+  text-transform: uppercase;
+}
+
+.hud-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Botón de Audio Místico */
+.btn-sound-toggle {
+  background: rgba(14, 11, 9, 0.7);
+  border: 1px solid var(--color-dark-border);
+  border-radius: 30px;
+  padding: 0.5rem 1.15rem;
+  color: var(--color-gold-light);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out-quad);
+}
+
+.btn-sound-toggle:hover {
+  background: rgba(26, 92, 58, 0.4);
+  border-color: var(--color-jade-light);
+  box-shadow: 0 0 15px var(--color-jade-glow);
+  transform: translateY(-1px);
+}
+
+.sound-waves {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 12px;
+}
+
+.sound-bar {
+  width: 2px;
+  height: 100%;
+  background-color: var(--color-gold-sun);
+  border-radius: 1px;
+  animation: soundBarPulse 1.2s ease-in-out infinite alternate;
+}
+
+.sound-bar:nth-child(2) { animation-delay: 0.2s; height: 70%; }
+.sound-bar:nth-child(3) { animation-delay: 0.4s; height: 40%; }
+
+.sound-muted .sound-bar {
+  animation: none;
+  height: 2px;
+  background-color: var(--color-text-muted);
+}
+
+@keyframes soundBarPulse {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
+}
+
+/* Enlace directo a la tienda / galería */
+.btn-gallery-link {
+  background: linear-gradient(135deg, var(--color-jade-mid) 0%, var(--color-jade-deep) 100%);
+  border: 1px solid var(--color-jade-light);
+  border-radius: 30px;
+  padding: 0.5rem 1.25rem;
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s var(--ease-out-quad);
+  box-shadow: 0 0 12px rgba(26, 92, 58, 0.4);
+}
+
+.btn-gallery-link:hover {
+  background: linear-gradient(135deg, var(--color-jade-light) 0%, var(--color-jade-mid) 100%);
+  box-shadow: 0 0 22px var(--color-jade-glow);
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   Indicador Lateral de Ascenso (Altímetro Maya)
+   -------------------------------------------------------------------------- */
+.altimeter-hud {
+  position: fixed;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  pointer-events: auto;
+}
+
+.altimeter-track {
+  width: 3px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.altimeter-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, var(--color-gold-sun) 0%, var(--color-jade-light) 100%);
+  box-shadow: 0 0 8px var(--color-gold-sun);
+  transition: height 0.15s ease-out;
+}
+
+.altimeter-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.altimeter-glyph {
+  font-size: 1.1rem;
+  color: var(--color-gold-sun);
+  filter: drop-shadow(0 0 6px var(--color-orange-glow));
+}
+
+.altimeter-value {
+  font-family: var(--font-serif-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-gold-light);
+  letter-spacing: 0.05em;
+}
+
+.altimeter-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll Prompt (Indicador de scroll inicial)
+   -------------------------------------------------------------------------- */
+.scroll-indicator-cue {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: none;
+  transition: opacity 0.5s ease-out;
+}
+
+.scroll-indicator-text {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.scroll-indicator-arrow {
+  width: 22px;
+  height: 36px;
+  border: 1.5px solid var(--color-gold-sun);
+  border-radius: 18px;
+  position: relative;
+  box-shadow: 0 0 10px var(--color-orange-glow);
+}
+
+.scroll-indicator-arrow::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 7px;
+  border-radius: 2px;
+  background-color: var(--color-gold-sun);
+  animation: mouseWheelMove 1.8s ease-in-out infinite;
+}
+
+@keyframes mouseWheelMove {
+  0% { transform: translate(-50%, 0); opacity: 1; }
+  100% { transform: translate(-50%, 14px); opacity: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   Secciones Narrativas Flotantes (Story Cards)
+   -------------------------------------------------------------------------- */
+.story-wrapper {
+  position: relative;
+  z-index: 50;
+  width: 100%;
+  pointer-events: none;
+}
+
+.story-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+/* Alternancia de posición de tarjetas para enriquecer el recorrido */
+.story-section[data-align="left"] {
+  justify-content: flex-start;
+  padding-left: clamp(2rem, 8vw, 10rem);
+}
+
+.story-section[data-align="center"] {
+  justify-content: center;
+}
+
+.story-section[data-align="right"] {
+  justify-content: flex-end;
+  padding-right: clamp(2rem, 8vw, 10rem);
+}
+
+.story-card {
+  max-width: 520px;
+  width: 100%;
+  background: var(--color-dark-card);
+  border: 1px solid var(--color-dark-border);
+  border-radius: 18px;
+  padding: 2.25rem 2.5rem;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.75), 0 0 25px rgba(245, 158, 11, 0.1);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(40px) scale(0.97);
+  transition: opacity 0.8s var(--ease-cinematic), transform 0.8s var(--ease-cinematic);
+}
+
+.story-card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Elementos dentro de la Story Card */
+.story-chapter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(26, 92, 58, 0.35);
+  border: 1px solid var(--color-jade-light);
+  border-radius: 20px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--color-jade-light);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.story-title {
+  font-family: var(--font-serif-display);
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  font-weight: 700;
+  color: var(--color-text-title);
+  line-height: 1.25;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.story-title span {
+  color: var(--color-gold-sun);
+}
+
+.story-desc {
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: var(--color-text-body);
+  margin-bottom: 1.5rem;
+}
+
+.story-quote {
+  border-left: 2px solid var(--color-gold-sun);
+  padding-left: 1rem;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--color-gold-light);
+  line-height: 1.6;
+}
+
+.story-action-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-story-cta {
+  background: linear-gradient(135deg, var(--color-gold-sun) 0%, #D97706 100%);
+  color: #000000;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.6rem;
+  border-radius: 30px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255, 183, 3, 0.45);
+  transition: all 0.3s var(--ease-out-quad);
+}
+
+.btn-story-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255, 183, 3, 0.7);
+  filter: brightness(1.1);
+}
+
+/* --------------------------------------------------------------------------
+   Fase Final (Cúspide de Pakal Tun)
+   -------------------------------------------------------------------------- */
+.final-sanctuary-card {
+  text-align: center;
+  max-width: 620px;
+  border-color: rgba(61, 170, 110, 0.45);
+  background: radial-gradient(circle at 50% 20%, rgba(26, 92, 58, 0.35) 0%, rgba(14, 11, 9, 0.95) 80%);
+  box-shadow: 0 0 50px rgba(61, 170, 110, 0.25), 0 20px 60px rgba(0, 0, 0, 0.9);
+}
+
+.sanctuary-icon {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  animation: jadeGlowPulse 4s ease-in-out infinite;
+}
+
+@keyframes jadeGlowPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(61, 170, 110, 0.4)); }
+  50% { transform: scale(1.08); filter: drop-shadow(0 0 24px rgba(61, 170, 110, 0.85)); }
+}
+
+.final-action-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-secondary-link {
+  background: transparent;
+  border: 1px solid var(--color-gold-sun);
+  color: var(--color-gold-light);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.6rem;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s var(--ease-out-quad);
+}
+
+.btn-secondary-link:hover {
+  background: rgba(255, 183, 3, 0.15);
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive & Mobile Optimization
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hud-header {
+    padding: 0.85rem 1rem;
+  }
+
+  .hud-title {
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+  }
+
+  .hud-subtitle {
+    display: none;
+  }
+
+  .btn-sound-toggle {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+  }
+
+  .btn-gallery-link {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.72rem;
+  }
+
+  .altimeter-hud {
+    left: auto;
+    right: 1rem;
+    top: auto;
+    bottom: 1.25rem;
+    transform: none;
+    background: rgba(14, 11, 9, 0.85);
+    border: 1px solid var(--color-dark-border);
+    border-radius: 25px;
+    padding: 0.35rem 0.75rem;
+    backdrop-filter: blur(10px);
+    flex-direction: row;
+    gap: 0.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+  }
+
+  .altimeter-track {
+    width: 48px;
+    height: 4px;
+    border-radius: 2px;
+  }
+
+  .altimeter-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-gold-sun) 0%, var(--color-jade-light) 100%);
+  }
+
+  .altimeter-data {
+    flex-direction: row;
+    gap: 0.3rem;
+  }
+
+  .altimeter-label {
+    display: none;
+  }
+
+  .altimeter-value {
+    font-size: 0.78rem;
+  }
+
+  .story-section {
+    min-height: 90vh;
+    padding: 2.5rem 1rem;
+  }
+
+  .story-section[data-align="left"],
+  .story-section[data-align="right"] {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    justify-content: center;
+  }
+
+  .story-card {
+    padding: 1.6rem 1.35rem;
+    border-radius: 14px;
+  }
+
+  .story-title {
+    font-size: 1.25rem;
+  }
+
+  .story-desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .story-quote {
+    font-size: 0.8rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .btn-story-cta {
+    padding: 0.65rem 1.3rem;
+    font-size: 0.76rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .final-action-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .final-action-group a {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Accesibilidad: Reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .parallax-layer,
+  .layer-sun-flare,
+  .layer-mist {
+    animation: none !important;
+    transition: none !important;
+  }
+  .story-card {
+    transition: opacity 0.3s ease !important;
+    transform: none !important;
+  }
+}
